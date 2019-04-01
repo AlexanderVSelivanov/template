@@ -1,7 +1,7 @@
 import {all} from 'redux-saga/effects';
 
-import {rootSaga} from 'src/root';
-import {userSaga} from 'src/modules/user';
+import {rootSaga} from 'src/store/root';
+import {userSaga} from 'src/store/modules/user';
 
 function* saga() {
   yield all([

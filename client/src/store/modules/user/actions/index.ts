@@ -1,8 +1,5 @@
-import Id from 'src/types/entity/Id';
-import User from 'src/types/entity/User';
-import Token from 'src/root/types/Token';
-import Login from 'src/root/types/Login';
-import ApplicationError from 'src/types/ApplicationError';
+import {Id, User} from 'template-common/entity';
+import {ApplicationError, Login, Token} from 'template-common';
 
 import {loginCreator, getUserCreator, getUserByIdCreator} from './types';
 

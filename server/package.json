@@ -2,10 +2,22 @@
   "name": "template-server",
   "version": "0.1.0",
   "author": "Alex Arus",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --build",
+    "start": "tsc --build --watch",
+    "deploy": "yarn build | pm2 reload",
+    "test": "jest --watch"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "template-common": "../common",
+    "typeorm": "^0.2.16",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.3.4000"
   }
 }

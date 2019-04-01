@@ -1,4 +1,4 @@
-import ApplicationError from 'src/types/ApplicationError';
+import {ApplicationError} from 'template-common';
 
 import {initializeCompleteCreator, initializeFailCreator} from './types';
 
