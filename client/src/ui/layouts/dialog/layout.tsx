@@ -3,12 +3,11 @@ import {WithStyles} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 
 import styles from './styles';
-import {DialogProps} from '@material-ui/core/es/Dialog';
 
-type DialogLayoutProps = WithStyles<typeof styles> & React.ComponentType<DialogProps> & {
+type DialogLayoutProps = WithStyles<typeof styles> & {
   children: React.ReactNode | React.ReactNodeArray,
-  open: boolean
-}
+  open: boolean,
+};
 
 const DialogLayout: React.FC<DialogLayoutProps> = ({children, open, classes, ...other }) => {
   return (
