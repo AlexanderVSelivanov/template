@@ -11,6 +11,6 @@ storiesOf('Components', module)
       <PasswordTextField
         password="password"
         onPasswordChange={password => action(`onPasswordChange: ${password}`)}
-      />
-    )
+      />,
+    ),
   );

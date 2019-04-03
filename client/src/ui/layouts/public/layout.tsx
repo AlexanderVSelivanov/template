@@ -5,8 +5,8 @@ import {WithStyles} from '@material-ui/core';
 import styles from './styles';
 
 type PublicLayoutProps = WithStyles<typeof styles> & {
-  children: React.ReactNode | React.ReactNodeArray
-}
+  children: React.ReactNode | React.ReactNodeArray,
+};
 
 const PublicLayout: React.FC<PublicLayoutProps> = ({children, classes}) => {
   return (

@@ -3,7 +3,7 @@ import {getType} from 'typesafe-actions';
 
 import {login, getUser, getUserById} from '../actions';
 import getUserSaga from './getUser';
-import loginSaga from './loginSaga'
+import loginSaga from './loginSaga';
 
 export default function* accountSagas() {
   yield takeLatest(getType(login.request), loginSaga);

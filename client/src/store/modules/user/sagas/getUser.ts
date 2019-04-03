@@ -2,14 +2,14 @@ import {put} from 'redux-saga/effects';
 import {ActionType, getType} from 'typesafe-actions';
 
 import {User} from 'template-common/entity';
-import {getUser, getUserById} from '../actions'
+import {getUser, getUserById} from '../actions';
 
 export default function* getUserSaga(
   action: ActionType<typeof getUser.request> | ActionType<typeof getUserById>,
 ) {
   try {
     if (action.type === getType(getUserById)) {
-      const id = action.payload
+      const id = action.payload;
     } else {
 
     }

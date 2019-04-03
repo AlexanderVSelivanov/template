@@ -10,14 +10,14 @@ storiesOf('Pages', module)
   .add(
     'Loading page',
     () => withTheme(
-      <LoadingPage/>
-    )
+      <LoadingPage/>,
+    ),
   )
   .add(
     'Login page',
     () => withTheme(
       <LoginPage
         onSubmit={action('onSubmit')}
-      />
-    )
+      />,
+    ),
   );

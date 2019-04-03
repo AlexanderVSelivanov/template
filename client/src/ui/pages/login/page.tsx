@@ -9,7 +9,7 @@ import PasswordTextField from 'src/ui/components/inputs/PasswordTextField';
 type LoginPageProps = {
   defaultLogin?: string,
   onSubmit: (login: string, password: string) => void,
-}
+};
 
 const LoginPage: React.FC<LoginPageProps> = ({defaultLogin, onSubmit}) => {
   const [login, setLogin] = useState(defaultLogin ? defaultLogin : '');
@@ -44,7 +44,7 @@ const LoginPage: React.FC<LoginPageProps> = ({defaultLogin, onSubmit}) => {
         <Grid item xs={12}>
           <PasswordTextField
             password={password}
-            onPasswordChange={password => setPassword(password)}
+            onPasswordChange={newPassword => setPassword(newPassword)}
             fullWidth
           />
         </Grid>

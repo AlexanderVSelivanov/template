@@ -1,6 +1,6 @@
 import {put} from 'redux-saga/effects';
 
-import {initializeComplete, initializeFail} from '../actions'
+import {initializeComplete, initializeFail} from '../actions';
 
 export default function* initializeSaga() {
   try {

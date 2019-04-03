@@ -1,14 +1,15 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 
-import {withTheme} from "src/ui/theme";
-import PublicLayout from "src/ui/layouts/public";
+import {withTheme} from 'src/ui/theme';
+import PublicLayout from 'src/ui/layouts/public';
 import LoadingPage from 'src/ui/pages/loading';
 import LoginPage from 'src/ui/pages/login';
 
 const Root: React.FC<{ isApplicationInitialized: boolean }> = ({isApplicationInitialized}) => {
-  if (!isApplicationInitialized)
+  if (!isApplicationInitialized) {
     return withTheme(<LoadingPage />);
+  }
 
   return withTheme(
     <BrowserRouter>
@@ -17,8 +18,8 @@ const Root: React.FC<{ isApplicationInitialized: boolean }> = ({isApplicationIni
           onSubmit={((login, password) => console.log(`onSubmit ${login} ${password}`))}
         />
       </PublicLayout>
-    </BrowserRouter>
-  )
+    </BrowserRouter>,
+  );
 };
 
 export default Root;

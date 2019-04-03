@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import Root from './Root';
 import StateType from 'src/store/stateType';
-import {isApplicationInitialized} from 'src/store/root/selectors'
+import {isApplicationInitialized} from 'src/store/root/selectors';
 
 const mapStateToProps = (state: StateType) => ({
   isApplicationInitialized: isApplicationInitialized(state),

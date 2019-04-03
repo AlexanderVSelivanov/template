@@ -16,22 +16,22 @@ storiesOf('Layouts', module)
         open
       >
         Dialog layout
-      </DialogLayout>
-    )
+      </DialogLayout>,
+    ),
   )
   .add(
     'Private',
     () => withTheme(
       <PrivateLayout>
         Private layout
-      </PrivateLayout>
-    )
+      </PrivateLayout>,
+    ),
   )
   .add(
     'Public',
     () => withTheme(
       <PublicLayout>
         Public layout
-      </PublicLayout>
-    )
+      </PublicLayout>,
+    ),
   );
