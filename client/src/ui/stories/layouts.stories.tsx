@@ -11,7 +11,7 @@ storiesOf('Layouts', module)
   .add(
     'Dialog',
     () => withTheme(
-      <DialogLayout open>
+      <DialogLayout title="Dialog layout" open>
         Dialog layout
       </DialogLayout>,
     ),
