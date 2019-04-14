@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+
+import {WithStyles} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -6,12 +8,14 @@ import Grid from '@material-ui/core/Grid';
 
 import PasswordTextField from 'src/ui/components/inputs/PasswordTextField';
 
-type LoginPageProps = {
+import styles from './styles';
+
+type LoginPageProps = WithStyles<typeof styles> & {
   defaultLogin?: string,
   onSubmit: (login: string, password: string) => void,
 };
 
-const LoginPage: React.FC<LoginPageProps> = ({defaultLogin, onSubmit}) => {
+const LoginPage: React.FC<LoginPageProps> = ({classes, defaultLogin, onSubmit}) => {
   const [login, setLogin] = useState(defaultLogin ? defaultLogin : '');
   const [password, setPassword] = useState('');
 
@@ -24,13 +28,13 @@ const LoginPage: React.FC<LoginPageProps> = ({defaultLogin, onSubmit}) => {
 
   return (
     <form onSubmit={loginSubmit}>
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
+      <Grid container spacing={24} className={classes.container}>
+        <Grid item xs={12} className={classes.title}>
           <Typography
             component="h1"
             variant="h4"
           >
-            Application login:
+            template
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -44,7 +48,7 @@ const LoginPage: React.FC<LoginPageProps> = ({defaultLogin, onSubmit}) => {
         <Grid item xs={12}>
           <PasswordTextField
             password={password}
-            onPasswordChange={newPassword => setPassword(newPassword)}
+            onPasswordChange={setPassword}
             fullWidth
           />
         </Grid>

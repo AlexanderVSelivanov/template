@@ -9,7 +9,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: 'gray',
   },
   content: {
-    minHeight: 640,
+    minHeight: 300,
     minWidth: 480,
     padding: theme.spacing.unit * 2,
   },
