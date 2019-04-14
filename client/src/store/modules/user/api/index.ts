@@ -1,4 +1,6 @@
+export const login = () => {
 
-export const
-  login = () => {},
-  getUser = () => {};
+};
+export const getUser = () => {
+
+};
