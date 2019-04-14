@@ -5,14 +5,16 @@ import {MuiThemeProvider} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import 'typeface-roboto';
+import './styles.css';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
+  // @ts-ignore
   interface Theme {
     appDrawer: {
       width: React.CSSProperties['width'],
     };
   }
-
+  // @ts-ignore
   interface ThemeOptions {
     appDrawer: {
       width: React.CSSProperties['width'],
