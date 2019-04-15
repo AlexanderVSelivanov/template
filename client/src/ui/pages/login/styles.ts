@@ -7,6 +7,9 @@ const styles = (theme: Theme) => createStyles({
   title: {
     textAlign: 'center',
   },
+  footer: {
+    textAlign: 'right',
+  },
 });
 
 export default styles;

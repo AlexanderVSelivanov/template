@@ -34,6 +34,7 @@ import HelpIcon from '@material-ui/icons/Help';
 
 import styles from './styles';
 import {WithStyles} from '@material-ui/core';
+import {VERSION} from 'src/config';
 
 type PrivateLayoutProps = WithStyles<typeof styles> & {
   children: React.ReactNode | React.ReactNodeArray,
@@ -94,7 +95,7 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({classes, children}) => {
             <MenuIcon/>
           </IconButton>
           <Typography variant="h6" color="inherit" noWrap>
-            template
+            template <sup>{VERSION}</sup>
           </Typography>
           <div className={classes.grow}/>
           <div className={classes.search}>

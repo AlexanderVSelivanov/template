@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 
 import PasswordTextField from 'src/ui/components/inputs/PasswordTextField';
 
+import {VERSION} from 'src/config';
+
 import styles from './styles';
 
 type LoginPageProps = WithStyles<typeof styles> & {
@@ -59,6 +61,9 @@ const LoginPage: React.FC<LoginPageProps> = ({classes, defaultLogin, onSubmit}) 
           >
             Login
           </Button>
+        </Grid>
+        <Grid item xs={12} className={classes.footer}>
+          <Typography>template {VERSION}</Typography>
         </Grid>
       </Grid>
     </form>
