@@ -24,6 +24,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import LayersIcon from '@material-ui/icons/Layers';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TableChartIcon from '@material-ui/icons/TableChart';
@@ -153,6 +154,10 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({classes, children}) => {
           <ListItem button>
             <ListItemIcon><DashboardIcon/></ListItemIcon>
             <ListItemText primary="Dashboard"/>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon><AssignmentIcon/></ListItemIcon>
+            <ListItemText primary="Form"/>
           </ListItem>
           <ListItem button>
             <ListItemIcon><LayersIcon/></ListItemIcon>
