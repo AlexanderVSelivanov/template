@@ -1,23 +1,37 @@
 {
   "name": "template-server",
-  "version": "0.1.0",
-  "author": "Alex Arus",
+  "version": "0.0.1",
+  "author": {
+    "name": "Alex Arus",
+    "email": "mr.alex.arus@gmail.com"
+  },
+  "homepage": "https://gitlab.com/alex.arus/template",
+  "repository": "https://gitlab.com/alex.arus/template.git",
   "license": "GPL-3.0",
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc --build",
-    "start": "tsc --build --watch",
-    "deploy": "yarn build | pm2 reload",
+    "setup": "cp config/example.env .env",
+    "development:build": "tsc --build --watch ./config/development.tsconfig.json",
+    "development:start": "npx nodemon 'build/development/app.js' --watch 'build/development'",
+    "start": "npx concurrently -p '[{time} {name}]' -t 'HH:mm:ss' -c 'yellow.bold,green.bold' 'npm:development:build' 'npm:dev:start'",
+    "build": "rm -r build && tsc --build ./config/production.tsconfig.json",
+    "lint": "tslint -c tslint.json -t stylish 'src/**/*.ts'",
+    "lint:fix": "tslint -c tslint.json -t stylish 'src/**/*.ts' --fix",
     "test": "jest --watch"
   },
   "dependencies": {
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "template-common": "../common",
     "typeorm": "^0.2.16",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "typescript": "^3.3.4000"
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.16.1",
+    "@types/node": "^11.13.4",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.1"
   }
 }

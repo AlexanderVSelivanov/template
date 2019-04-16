@@ -1,7 +1,11 @@
 {
-
   "compilerOptions": {
     "outDir": "build",
+    "baseUrl": "./src",
+    "target": "ES2016",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "incremental": true,
     "strict": true,
     "pretty": true
   },
