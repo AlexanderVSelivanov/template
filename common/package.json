@@ -1,7 +1,12 @@
 {
   "name": "template-common",
-  "version": "0.1.0",
-  "author": "Alex Arus",
+  "version": "0.0.1",
+  "author": {
+    "name": "Alex Arus",
+    "email": "mr.alex.arus@gmail.com"
+  },
+  "homepage": "https://gitlab.com/alex.arus/template",
+  "repository": "https://gitlab.com/alex.arus/template.git",
   "license": "GPL-3.0",
   "description": "",
   "main": "index.ts",

@@ -1,7 +1,12 @@
 {
   "name": "template-client",
   "version": "0.0.1",
-  "author": "Alex Arus",
+  "author": {
+    "name": "Alex Arus",
+    "email": "mr.alex.arus@gmail.com"
+  },
+  "homepage": "https://gitlab.com/alex.arus/template",
+  "repository": "https://gitlab.com/alex.arus/template.git",
   "license": "GPL-3.0",
   "scripts": {
     "setup": "cp config/example.env .env",
