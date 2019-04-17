@@ -1,7 +1,7 @@
 import {Router} from 'express';
 
-import root from 'root';
-import user from 'modules/user';
+import root from './root';
+import user from './modules/user';
 
 export default [
   {

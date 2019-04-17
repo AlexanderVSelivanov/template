@@ -13,7 +13,7 @@
   "scripts": {
     "setup": "cp config/example.env .env",
     "development:build": "tsc --build --watch ./config/development.tsconfig.json",
-    "development:start": "npx nodemon 'build/development/app.js' --watch 'build/development'",
+    "development:start": "npx nodemon 'build/development/index.js' --watch 'build/development'",
     "start": "npx concurrently -p '[{time} {name}]' -t 'HH:mm:ss' -c 'yellow.bold,green.bold' 'npm:development:build' 'npm:dev:start'",
     "build": "rm -r build && tsc --build ./config/production.tsconfig.json",
     "lint": "tslint -c tslint.json -t stylish 'src/**/*.ts'",

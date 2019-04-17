@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import winston from 'winston';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as winston from 'winston';
 
-import {NODE_ENV, LOG_PATH, NodeEnvironment} from 'config';
+import {NODE_ENV, LOG_PATH, NodeEnvironment} from '../config';
 
 if (!fs.existsSync(LOG_PATH)) {
   fs.mkdirSync(LOG_PATH);

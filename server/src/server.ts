@@ -1,10 +1,10 @@
-import http from 'http';
-import express from 'express';
+import * as http from 'http';
+import * as express from 'express';
 
-import {PORT} from 'config';
-import logger from 'services/loggerService';
+import {PORT} from './config';
+import logger from './services/loggerService';
 
-import routers from 'routers';
+import routers from './routers';
 
 const expressServer = express();
 expressServer.use(express.json());

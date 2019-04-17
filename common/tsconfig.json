@@ -6,7 +6,6 @@
       "esnext"
     ],
     "strict": true,
-    "allowSyntheticDefaultImports": true,
     "pretty": true
   },
   "include": [
