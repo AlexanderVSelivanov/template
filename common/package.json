@@ -9,7 +9,6 @@
   "repository": "https://gitlab.com/alex.arus/template.git",
   "license": "GPL-3.0",
   "description": "",
-  "main": "index.ts",
   "scripts": {
     "test": "jest"
   },

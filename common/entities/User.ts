@@ -1,6 +1,5 @@
-import Entity from './Entity';
-
-type User = Entity & Readonly<{
+type User = Readonly<{
+  login: string
   firstName: string
   lastName: string
 }>

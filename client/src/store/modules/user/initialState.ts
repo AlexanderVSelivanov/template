@@ -1,7 +1,8 @@
-import {ApplicationError} from 'template-common';
-import {User} from 'template-common/entity';
+import {ApplicationError, Token} from 'template-common/types';
+import {UserEntity} from 'template-common/entities';
 
 export default {
-  user: null as User | null,
+  token: null as Token | null,
+  user: null as UserEntity | null,
   error: null as ApplicationError | null,
 };
