@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,13 +21,14 @@
     "pretty": true
   },
   "include": [
-    "src",
-    "node_modules/template-common"
+    "src"
   ],
   "exclude": [
     "node_modules",
     "build",
-    "scripts"
+    "scripts",
+    "stories",
+    "**/*.test.ts"
   ],
   "extends": "./config/tsconfig.paths.json"
 }

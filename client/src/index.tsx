@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import * as serviceWorker from './serviceWorker';
 
-import Root from './ui/root';
+import Root from './root/view';
 import store from './store';
 
 ReactDOM.render(<Provider store={store}><Root /></Provider>, document.getElementById('root'));

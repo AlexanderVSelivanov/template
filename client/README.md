@@ -23,3 +23,7 @@ Builds the app for production to the `build` folder:<br>
 ```
 yarn build
 ```
+
+## Change logger level
+
+Set local storage value of LOCAL_STORAGE_LOGGER_LEVEL_KEY_NAME (see /src/config.ts). Possible value: trace, debug, info, warn, error, silent

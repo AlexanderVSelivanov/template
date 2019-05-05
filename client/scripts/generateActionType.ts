@@ -1,73 +1,57 @@
-import * as fs from 'fs';
-import * as path from 'path';
+const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> = [
+  {
+    name: 'root', specialPath: 'root',
+    actions: [
+      {type: 'initializeComplete', template: 'sync'},
+      {type: 'initializeFail', template: 'sync'},
+      {type: 'error', template: 'sync'},
+    ],
+  },
+  {
+    name: 'account',
+    actions: [
+      {type: 'login', template: 'async'},
+      {type: 'logout', template: 'async'},
+      {type: 'getAccountUser', template: 'async'},
+    ],
+  },
+  {
+    name: 'user',
+    actions: [
+      {type: 'getUserById', template: 'async'},
+    ],
+  },
+  {
+    name: 'calendar',
+    actions: [],
+  },
+  {
+    name: 'form',
+    actions: [],
+  },
+  {
+    name: 'map',
+    actions: [],
+  },
+  {
+    name: 'report',
+    actions: [],
+  },
+  {
+    name: 'richTextEditor',
+    actions: [],
+  },
+  {
+    name: 'table',
+    actions: [],
+  },
+  {
+    name: 'settings',
+    actions: [],
+  },
+];
 
 const actionTypesFileName = 'types.ts';
-
-/**
- * Module abstraction
- */
-class Module {
-  readonly path: string;
-  readonly name: string;
-  readonly actionTypes: Array<ActionType>;
-
-  constructor(path: string, actionTypes: Array<ActionType>, name: string = path) {
-    this.path = path === 'root' ? 'store/' + path : 'store/modules/' + path;
-    this.actionTypes = actionTypes;
-    this.name = name;
-  }
-}
-
-/**
- * ActionType abstraction
- */
-type ActionType = {
-  name: string
-  template: ActionTemplate
-}
-
-/**
- * ActionType generator templates
- */
-enum ActionTemplate { sync, async }
-
-/**
- * Helpers
- */
-const
-  sync = ActionTemplate.sync,
-  async = ActionTemplate.async,
-  actionType = (name: string, template = sync): ActionType => ({name, template}),
-  asyncActionType = (name: string): ActionType => actionType(name, async),
-  asyncActionTemplate = {
-    request: 'request',
-    success: 'success',
-    failure: 'failure',
-  };
-
-/**
- * Modules and Actions
- */
-const modules: Array<Module> = [
-  new Module('root', [
-    actionType('initializeComplete'),
-    actionType('initializeFail'),
-  ]),
-  new Module('user', [
-    asyncActionType('login'),
-    asyncActionType('getUser'),
-    actionType('getUserById'),
-  ]),
-
-  new Module('calendar', []),
-  new Module('form', []),
-  new Module('map', []),
-  new Module('report', []),
-  new Module('richTextEditor', []),
-  new Module('table', []),
-
-  new Module('settings', []),
-];
 
 const generatedFileHeader =
   `/**
@@ -80,43 +64,57 @@ import {createStandardAction, createAsyncAction} from 'typesafe-actions';
 
 `;
 
+import * as fs from 'fs';
+import * as path from 'path';
+
+type Action = {
+  type: string
+  template: 'sync' | 'async',
+};
+
+const asyncActionTemplate = {
+  request: 'request',
+  success: 'success',
+  failure: 'failure',
+};
+
 /**
  * Action types code generator
- * @param modules
+ * @param moduleList
  */
-const generator = (modules: Array<Module>) => {
-  console.info('Generate action types...');
+const generator = (moduleList: typeof modules) => {
+  logger('Generate action types...');
 
   let moduleActionTypesFile: number;
-  modules.forEach(module => {
-    const modulePath = path.join(__dirname, '..', 'src', module.path, 'actions');
+  moduleList.forEach(module => {
+    const moduleActionsPath = module.specialPath
+      ? path.join(__dirname, '..', 'src', module.specialPath, 'actions', actionTypesFileName)
+      : path.join(__dirname, '..', 'src', 'modules', module.name, 'actions', actionTypesFileName);
 
-    if (module.actionTypes.length > 0) {
-      console.info(`Generate action for ${module.name} path ${modulePath}`);
+    if (module.actions.length > 0) {
+      logger(`Generate action for ${module.name} path ${moduleActionsPath}`);
 
-      const actionTypesPath = path.join(modulePath, actionTypesFileName);
-      moduleActionTypesFile = fs.openSync(actionTypesPath, 'a');
+      moduleActionTypesFile = fs.openSync(moduleActionsPath, 'a');
       clearFile(moduleActionTypesFile);
       appendHeader(moduleActionTypesFile);
       try {
-        module.actionTypes.forEach(actionType => {
-          const types = createActionTypeValues(module.name, actionType);
+        module.actions.forEach(action => {
+          const types = createActionTypeValues(module.name, action);
           types.forEach(type => {
             checkActionTypeUnique(type.value);
             const actionTypeCode = createActionTypeTSCode(type);
             fs.appendFileSync(moduleActionTypesFile, actionTypeCode);
           });
-          const actionCreatorCode = createActionCreatorTSCode(module.name, actionType);
+          const actionCreatorCode = createActionCreatorTSCode(module.name, action);
           fs.appendFileSync(moduleActionTypesFile, actionCreatorCode);
         });
       } catch (error) {
-        console.error(`Error generate action types (module ${module.name}): `, error);
-        throw error;
+        throw new Error(`Error generate action types (module ${module.name}): ` + error);
       } finally {
         fs.closeSync(moduleActionTypesFile);
       }
     }
-  })
+  });
 };
 
 function clearFile(descriptor: number) {
@@ -131,7 +129,7 @@ const actionTypes = new Set<string>();
 
 function checkActionTypeUnique(type: string) {
   if (actionTypes.has(type)) {
-    throw new Error(`Action type ${type} already exist`)
+    throw new Error(`Action type ${type} already exist`);
   } else {
     actionTypes.add(type);
   }
@@ -139,15 +137,15 @@ function checkActionTypeUnique(type: string) {
 
 const createConstantName = (str: string) => str.split(/(?=[A-Z])/).join('_').toUpperCase();
 
-const createActionTypeName = (moduleName: string, actionType: ActionType) => moduleName + '_' + actionType.name;
-const createActionTypeValue = (moduleName: string, actionType: ActionType) => '@' + moduleName + '/' + actionType.name;
+const createActionTypeName = (moduleName: string, type: Action) => moduleName + '_' + type.type;
+const createActionTypeValue = (moduleName: string, type: Action) => '@' + moduleName + '/' + type.type;
 
-function createActionTypeValues(moduleName: string, actionType: ActionType): Array<{ name: string, value: string }> {
-  const actionTypeName = createActionTypeName(moduleName, actionType);
-  const actionTypeValue = createActionTypeValue(moduleName, actionType);
+function createActionTypeValues(moduleName: string, type: Action): Array<{ name: string, value: string }> {
+  const actionTypeName = createActionTypeName(moduleName, type);
+  const actionTypeValue = createActionTypeValue(moduleName, type);
 
   const result = new Array<{ name: string, value: string }>();
-  if (actionType.template === ActionTemplate.async) {
+  if (type.template === 'async') {
     result.push({
       name: createConstantName(actionTypeName + '_' + asyncActionTemplate.request),
       value: createConstantName(actionTypeValue + '/' + asyncActionTemplate.request),
@@ -172,18 +170,23 @@ function createActionTypeTSCode({name, value}: { name: string, value: string }):
   return `const ${name} = '${value}';` + newLine;
 }
 
-function createActionCreatorTSCode(moduleName: string, actionType: ActionType) {
-  const actionTypeName = createActionTypeName(moduleName, actionType);
-  if (actionType.template === ActionTemplate.async) {
+function createActionCreatorTSCode(moduleName: string, type: Action) {
+  const actionTypeName = createActionTypeName(moduleName, type);
+  if (type.template === 'async') {
     const asyncActionTypeNames =
       createConstantName(actionTypeName + '_' + asyncActionTemplate.request) + ', '
       + createConstantName(actionTypeName + '_' + asyncActionTemplate.success) + ', '
-      + createConstantName(actionTypeName + '_' + asyncActionTemplate.failure)+ ',';
-    return `export const ${actionType.name}Creator = createAsyncAction(` + newLine
+      + createConstantName(actionTypeName + '_' + asyncActionTemplate.failure) + ',';
+    return `export const ${type.type}Creator = createAsyncAction(` + newLine
       + `   ${asyncActionTypeNames}` + newLine
       + `);` + newLine;
   }
-  return `export const ${actionType.name}Creator = createStandardAction(${createConstantName(actionTypeName)});` + newLine;
+  return `export const ${type.type}Creator = createStandardAction(${createConstantName(actionTypeName)});`
+    + newLine;
+}
+
+function logger(text: string) {
+  console.log(text);
 }
 
 generator(modules);

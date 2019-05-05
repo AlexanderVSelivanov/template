@@ -8,44 +8,49 @@ const rl = readline.createInterface({
 });
 
 function readLine(question: string): Promise<string> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     rl.question(question, resolve);
-  })
+  });
 }
 
-function createModuleFolders(modulePath: string) {
-  fs.mkdirSync(modulePath);
-
-  const actionPath = path.join(modulePath, 'actions');
-  fs.mkdirSync(actionPath);
-
-  const actionApi = path.join(modulePath, 'api');
-  fs.mkdirSync(actionApi);
-
-  const actionSagas = path.join(modulePath, 'sagas');
-  fs.mkdirSync(actionSagas);
-
-  const actionTypes = path.join(modulePath, 'types');
-  fs.mkdirSync(actionTypes);
-}
+const createFolder = (paths: string[]) => {
+  const folderPath = path.join(...paths);
+  fs.mkdirSync(folderPath);
+};
+const createFile = (paths: string[]) => {
+  const filePath = path.join(...paths);
+  fs.writeFileSync(filePath, '');
+};
 
 async function initialize() {
   try {
     const moduleNameInput = await readLine('Module name: ');
-    const moduleName = moduleNameInput.toUpperCase();
-
     const modulePathInput = await readLine('Module path (empty to use same as name): ');
-    const modulePath = path
-      .join(
-        __dirname, '..', 'src', 'modules',
-        modulePathInput ? modulePathInput : moduleNameInput,
-      );
+    const modulePath =
+      path.join(__dirname, '..', 'src', 'modules', modulePathInput ? modulePathInput : moduleNameInput);
 
     const modulePathExist = fs.existsSync(modulePath);
-    if (modulePathExist)
+    if (modulePathExist) {
       throw new Error(`Module path already exist (${modulePath})`);
+    }
 
-    createModuleFolders(modulePath);
+    const folders = [
+      [modulePath],
+      [modulePath, 'actions'],
+      [modulePath, 'sagas'],
+      [modulePath, 'types'],
+      [modulePath, 'view'],
+      [modulePath, 'view', 'pages'],
+      [modulePath, 'view', 'components'],
+    ];
+    folders.forEach(createFolder);
+
+    const files = [
+      [modulePath, 'index.ts.ts'],
+      [modulePath, 'actions', 'index.ts.ts'],
+      [modulePath, 'sagas', 'index.ts.ts'],
+    ];
+    files.forEach(createFile);
 
   } catch (e) {
     console.error('ERROR: ', e);

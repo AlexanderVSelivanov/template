@@ -1,9 +1,14 @@
 import log from 'loglevel';
 
-import {IS_PRODUCTION} from 'src/config';
+import {
+  DEFAULT_LOGGER_LEVEL,
+  LOCAL_STORAGE_LOGGER_LEVEL_KEY_NAME,
+} from 'src/config';
 
-if (IS_PRODUCTION) {
-  log.setLevel('error');
+const logLevel = localStorage.getItem(LOCAL_STORAGE_LOGGER_LEVEL_KEY_NAME) && DEFAULT_LOGGER_LEVEL;
+
+if (logLevel) {
+  log.setLevel(logLevel);
 } else {
   log.enableAll();
 }
@@ -14,12 +19,6 @@ if (IS_PRODUCTION) {
  * @return {Logger}
  */
 export const getLogger = (loggerName: string) => log.getLogger(loggerName);
-
-/**
- * Logger for API requests
- * @type {Logger}
- */
-export const apiLogger = getLogger('API');
 
 /**
  * Get default logger

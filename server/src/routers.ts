@@ -1,7 +1,7 @@
 import {Router} from 'express';
 
 import root from './root';
-import user from './modules/user';
+import account from './modules/account';
 
 export default [
   {
@@ -9,7 +9,7 @@ export default [
     router: root,
   },
   {
-    path: '/user',
-    router: user,
+    path: '/account',
+    router: account,
   },
 ] as Array<{ path: string, router: Router }>;

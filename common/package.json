@@ -8,11 +8,13 @@
   "homepage": "https://gitlab.com/alex.arus/template",
   "repository": "https://gitlab.com/alex.arus/template.git",
   "license": "GPL-3.0",
+  "main": "build/index.js",
   "description": "",
   "scripts": {
+    "build": "rm -r -f build && tsc --build",
     "test": "jest"
   },
   "devDependencies": {
-    "typescript": "^3.3.4000"
+    "typescript": "^3.4.5"
   }
 }
