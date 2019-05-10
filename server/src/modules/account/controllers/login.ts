@@ -1,4 +1,4 @@
-import * as express from 'express';
+import {RequestHandler} from 'express';
 import * as jwt from 'jsonwebtoken';
 
 import {Login, Token, TokenPayload, ResponseStatus} from 'template-common';
@@ -7,7 +7,7 @@ import logger from '../../../services/loggerService';
 
 const tokenExpiresIn = '24h';
 
-const loginController: express.RequestHandler = (request, response) => {
+const loginController: RequestHandler = (request, response) => {
   try {
     // todo: check login
     const login: Login = request.body;

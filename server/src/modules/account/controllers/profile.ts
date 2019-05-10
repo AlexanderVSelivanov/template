@@ -1,8 +1,9 @@
-import * as express from 'express';
+import {RequestHandler} from 'express';
 
 import {UserEntity} from 'template-common';
+import {authorizationDecorator} from '../../../services/serverService';
 
-const profileController: express.RequestHandler = (req, res) => {
+const profileController: RequestHandler = authorizationDecorator(null, (req, res) => {
   const user: UserEntity = {
     id: 1,
     created: new Date(),
@@ -11,7 +12,8 @@ const profileController: express.RequestHandler = (req, res) => {
     lastName: 'Testovich',
     deleted: false,
   };
+
   res.json(user);
-};
+});
 
 export default profileController;

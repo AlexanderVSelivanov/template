@@ -15,8 +15,9 @@ export const LOG_PATH = process.env.LOG_PATH || path.join(__dirname, '..', '..',
 export const PORT = process.env.PORT || 5000;
 
 function secretKeyNotDefined(): string {
+  const warningMessage = 'Secret key not defined. It will use temporary key.';
   // tslint:disable-next-line
-  console.error('Secret key not defined. It will use temporary key.');
+  console.warn(warningMessage);
   const temporarySecretKeySize = 48;
   const temporarySecretKeyBase64Url = crypto.randomBytes(temporarySecretKeySize).toString('base64')
     .replace(/\+/g, '-')
