@@ -1,4 +1,4 @@
-import {API_REQUEST_TIMEOUT, API_URL} from 'src/config';
+import {API_REQUEST_TIMEOUT, API_URL} from 'config';
 import axios, {AxiosResponse} from 'axios';
 
 export enum RequestMethod {

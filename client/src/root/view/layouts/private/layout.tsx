@@ -33,11 +33,11 @@ import TableChartIcon from '@material-ui/icons/TableChart';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpIcon from '@material-ui/icons/Help';
 
-import {VERSION} from 'src/config';
-import routes from 'src/root/routes';
+import {VERSION} from 'config';
+import routes from 'root/routes';
 import styles from './styles';
-import {Route} from 'src/types/Route';
-import RouteMenuItem from 'src/root/view/layouts/private/RouteMenuItem';
+import {Route} from 'types/Route';
+import RouteMenuItem from 'root/view/layouts/private/RouteMenuItem';
 
 type PrivateLayoutProps = WithStyles<typeof styles> & RouteComponentProps & {
   children: React.ReactNode | React.ReactNodeArray,

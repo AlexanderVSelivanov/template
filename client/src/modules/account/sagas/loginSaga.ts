@@ -6,7 +6,7 @@ import {Token, UserEntity} from 'template-common';
 
 import {getAccountUserAction, loginAction as loginAction} from '../actions';
 import {getAccountUserEndPoint, loginEndPoint} from '../endPoints';
-import {errorAction} from 'src/root/actions';
+import {errorAction} from 'root/actions';
 
 export default function* loginSaga(action: ActionType<typeof loginAction.request>) {
   try {

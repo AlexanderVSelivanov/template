@@ -3,7 +3,7 @@ import log from 'loglevel';
 import {
   DEFAULT_LOGGER_LEVEL,
   LOCAL_STORAGE_LOGGER_LEVEL_KEY_NAME,
-} from 'src/config';
+} from 'config';
 
 const logLevel = localStorage.getItem(LOCAL_STORAGE_LOGGER_LEVEL_KEY_NAME) && DEFAULT_LOGGER_LEVEL;
 

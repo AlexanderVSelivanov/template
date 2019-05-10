@@ -1,11 +1,11 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 
-import {withTheme} from 'src/root/view/theme';
+import {withTheme} from 'root/view/theme';
 
-import DialogLayout from 'src/root/view/layouts/dialog';
-import PublicLayout from 'src/root/view/layouts/public';
-import PrivateLayout from 'src/root/view/layouts/private';
+import DialogLayout from 'root/view/layouts/dialog';
+import PublicLayout from 'root/view/layouts/public';
+import PrivateLayout from 'root/view/layouts/private';
 
 storiesOf('Layouts', module)
   .add(

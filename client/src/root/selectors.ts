@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import StateType from 'src/types/StateType';
+import StateType from 'types/StateType';
 
 const getRoot = (state: StateType) => state.root;
 

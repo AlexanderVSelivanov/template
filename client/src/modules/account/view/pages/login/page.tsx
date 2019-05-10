@@ -8,10 +8,10 @@ import Grid from '@material-ui/core/Grid';
 
 import {UserEntity} from 'template-common';
 import {ApplicationError} from 'template-common';
-import {loginAction} from 'src/modules/account/actions';
-import PasswordTextField from 'src/root/view/components/inputs/PasswordTextField';
+import {loginAction} from 'modules/account/actions';
+import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
 
-import {VERSION} from 'src/config';
+import {VERSION} from 'config';
 
 import styles from './styles';
 

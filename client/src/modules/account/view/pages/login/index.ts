@@ -2,12 +2,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 import {withStyles} from '@material-ui/core';
 
-import {LOCAL_STORAGE_LAST_USER_NAME_KEY_NAME} from 'src/config';
+import {LOCAL_STORAGE_LAST_USER_NAME_KEY_NAME} from 'config';
 
-import StateType from 'src/types/StateType';
+import StateType from 'types/StateType';
 
-import {errorSelector} from 'src/root/selectors';
-import {loginAction} from 'src/modules/account/actions';
+import {errorSelector} from 'root/selectors';
+import {loginAction} from 'modules/account/actions';
 
 import styles from './styles';
 import page from './page';

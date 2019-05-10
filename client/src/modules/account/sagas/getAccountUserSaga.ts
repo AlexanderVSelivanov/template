@@ -7,7 +7,7 @@ import {UserEntity} from 'template-common';
 import {getAccountUserAction} from '../actions';
 import {tokenSelector} from '../selectors';
 import {getAccountUserEndPoint} from '../endPoints';
-import {errorAction} from 'src/root/actions';
+import {errorAction} from 'root/actions';
 
 export default function* getAccountUserSaga(action: ActionType<typeof getAccountUserAction.request>) {
   try {

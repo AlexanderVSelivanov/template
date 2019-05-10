@@ -6,11 +6,11 @@ import {ApplicationError, UserEntity} from 'template-common';
 import {withTheme} from './theme';
 import PublicLayout from './layouts/public';
 import LoadingPage from './pages/loading';
-import LoginPage from 'src/modules/account/view/pages/login';
-import PrivateLayout from 'src/root/view/layouts/private';
+import LoginPage from 'modules/account/view/pages/login';
+import PrivateLayout from 'root/view/layouts/private';
 
-import routes from 'src/root/routes';
-import documentTitleService from 'src/services/documentTitleService';
+import routes from 'root/routes';
+import documentTitleService from 'services/documentTitleService';
 
 type RootProps = {
   isApplicationInitialized: boolean,

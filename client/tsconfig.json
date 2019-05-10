@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "es6",
     "lib": [
       "dom",
@@ -29,6 +30,5 @@
     "scripts",
     "stories",
     "**/*.test.ts"
-  ],
-  "extends": "./config/tsconfig.paths.json"
+  ]
 }

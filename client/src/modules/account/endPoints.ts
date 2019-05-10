@@ -1,4 +1,4 @@
-import {getEndPoint, postEndPoint} from 'src/services/endPointService';
+import {getEndPoint, postEndPoint} from 'services/endPointService';
 
 import {Token, UserEntity} from 'template-common';
 import {Login} from 'template-common';

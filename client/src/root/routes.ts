@@ -1,12 +1,12 @@
-import {createRoute} from 'src/types/Route';
+import {createRoute} from 'types/Route';
 
 import DashboardPage from './view/pages/dashboard';
-import RichTextEditorPage from 'src/modules/richTextEditor/view/pages/main';
-import CalendarPage from 'src/modules/calendar/view/pages/main';
-import TablePage from 'src/modules/table/view/pages/main';
-import FormPage from 'src/modules/form/view/pages/main';
-import MapPage from 'src/modules/map/view/pages/main';
-import ReportsPage from 'src/modules/reports/view/pages/main';
+import RichTextEditorPage from 'modules/richTextEditor/view/pages/main';
+import CalendarPage from 'modules/calendar/view/pages/main';
+import TablePage from 'modules/table/view/pages/main';
+import FormPage from 'modules/form/view/pages/main';
+import MapPage from 'modules/map/view/pages/main';
+import ReportsPage from 'modules/reports/view/pages/main';
 import SettingsPage from './view/pages/settings';
 import HelpPage from './view/pages/help';
 

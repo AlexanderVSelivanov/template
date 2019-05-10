@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import {Route} from 'src/types/Route';
+import {Route} from 'types/Route';
 
 type RouteMenuItemProps = RouteComponentProps & {
   route: Route,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ROUTER_PREFIX} from 'src/config';
+import {ROUTER_PREFIX} from 'config';
 
 export type Route = {
   title: string,
