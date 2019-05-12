@@ -22,7 +22,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   }
 }
 
-const defaultTheme = createMuiTheme();
+// const defaultTheme = createMuiTheme();
 
 const theme = createMuiTheme({
   typography: {

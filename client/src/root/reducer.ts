@@ -15,7 +15,7 @@ const reducer = (state = initialState, action: RootActionType) => {
     case getType(actions.initializeFailAction):
       return {
         ...state,
-        isApplicationInitialized: false,
+        isApplicationInitialized: true,
       };
 
     case getType(actions.errorAction):

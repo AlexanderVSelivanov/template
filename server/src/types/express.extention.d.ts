@@ -1,10 +1,10 @@
-import {Id} from 'template-common';
+import AccountEntity from '../store/entities/AccountEntity';
 
 declare global {
   namespace Express {
     // tslint:disable-next-line
     export interface Request {
-      auth: undefined | { userId: Id };
+      account: AccountEntity | undefined;
     }
   }
 }

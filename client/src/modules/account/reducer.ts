@@ -1,4 +1,4 @@
-import {ActionType, getType} from 'typesafe-actions';
+import {ActionType, createReducer, getType} from 'typesafe-actions';
 
 import * as actions from './actions';
 import initialState from './initialState';
@@ -13,6 +13,12 @@ const reducer = (state = initialState, action: UserActionType) => {
         token: action.payload,
       };
     case getType(actions.loginAction.failure):
+      return {
+        ...state,
+        token: null,
+      };
+
+    case getType(actions.logoutAction.success):
       return {
         ...state,
         token: null,

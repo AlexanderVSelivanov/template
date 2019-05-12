@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import {UserEntity} from 'template-common';
 import {ApplicationError} from 'template-common';
 import {loginAction} from 'modules/account/actions';
 import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
@@ -48,7 +47,7 @@ const LoginPage: React.FC<LoginPageProps> = ({classes, error, defaultLogin, logi
         </Grid>
         <Grid item xs={12}>
           <TextField
-            label="Login"
+            label="Username"
             value={username}
             onChange={event => setUsername(event.currentTarget.value)}
             fullWidth

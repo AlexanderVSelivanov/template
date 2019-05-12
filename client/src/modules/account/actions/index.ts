@@ -1,7 +1,7 @@
-import {UserEntity, Token} from 'template-common';
-import {Login} from 'template-common';
+import {ApplicationError, LoginDto, TokenDto, UserEntityDto} from 'template-common';
 
-import {loginCreator, getAccountUserCreator} from './types';
+import {loginCreator, getAccountUserCreator, logoutCreator} from './types';
 
-export const loginAction = loginCreator<Login, Token, undefined>();
-export const getAccountUserAction = getAccountUserCreator<void, UserEntity, undefined>();
+export const loginAction = loginCreator<LoginDto, TokenDto, ApplicationError>();
+export const logoutAction = logoutCreator<void, void, ApplicationError>();
+export const getAccountUserAction = getAccountUserCreator<void, UserEntityDto, ApplicationError>();

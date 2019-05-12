@@ -1,13 +1,20 @@
+import EntityListRequest from './src/types/EntityListRequest';
+
 export {default as ApplicationError} from './src/ApplicationError';
 
-export {default as Login} from './src/api/Login';
-export {default as Token} from './src/api/Token';
-export {default as TokenPayload} from './src/api/TokenPayload';
+export {default as Id} from './src/types/Id';
+export {default as EntityListRequest} from './src/types/EntityListRequest';
+export {default as EntityList} from './src/types/EntityList';
 
-export {default as Id} from './src/entities/Id';
-export {default as Entity} from './src/entities/Entity';
+export {default as IdDto} from './src/dto/Id';
+export {default as LoginDto} from './src/dto/Login';
+export {default as TokenDto} from './src/dto/Token';
+export {default as TokenPayloadDto} from './src/dto/TokenPayload';
 
-export {default as User, UserEntity} from './src/entities/User';
+export {default as EntityDto} from './src/dto/Entity';
+export {default as UserDto, UserEntityDto} from './src/dto/User';
+export {default as AccountDto, AccountEntityDto} from './src/dto/Account';
+export {default as NoteDto, NoteEntityDto} from './src/dto/Note';
 
 export enum Environment {
   Production = 'production',

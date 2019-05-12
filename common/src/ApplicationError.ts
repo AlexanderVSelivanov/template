@@ -1,3 +1,5 @@
-type ApplicationError = Readonly<{ message: string }>;
+class ApplicationError extends Error{
+
+}
 
 export default ApplicationError;

@@ -18,15 +18,25 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
   {
     name: 'user',
     actions: [
+      {type: 'getUsers', template: 'async'},
       {type: 'getUserById', template: 'async'},
+      {type: 'createUser', template: 'async'},
+      {type: 'updateUserById', template: 'async'},
+      {type: 'deleteUserById', template: 'async'},
+    ],
+  },
+  {
+    name: 'notes',
+    actions: [
+      {type: 'getNotes', template: 'async'},
+      {type: 'getNoteById', template: 'async'},
+      {type: 'createNote', template: 'async'},
+      {type: 'updateNoteById', template: 'async'},
+      {type: 'deleteNoteById', template: 'async'},
     ],
   },
   {
     name: 'calendar',
-    actions: [],
-  },
-  {
-    name: 'form',
     actions: [],
   },
   {
@@ -35,14 +45,6 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
   },
   {
     name: 'report',
-    actions: [],
-  },
-  {
-    name: 'richTextEditor',
-    actions: [],
-  },
-  {
-    name: 'table',
     actions: [],
   },
   {
@@ -59,6 +61,8 @@ const generatedFileHeader =
  * @see scripts/generateActionType.ts
  *
  */
+
+/* eslint-disable no-unused-vars */
 
 import {createStandardAction, createAsyncAction} from 'typesafe-actions';
 

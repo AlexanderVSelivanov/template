@@ -9,6 +9,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: 'gray',
   },
   content: {
+    display: 'flex',
     minHeight: 300,
     minWidth: 480,
     padding: theme.spacing.unit * 2,

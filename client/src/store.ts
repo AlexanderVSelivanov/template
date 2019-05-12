@@ -6,17 +6,23 @@ import { IS_PRODUCTION } from 'config';
 
 import {rootReducer, rootSaga} from 'root';
 import {accountReducer, accountSaga} from 'modules/account';
+import {userReducer, userSaga} from 'modules/user';
+import {notesReducer, notesSaga} from 'modules/notes';
 
 function* saga() {
   yield all([
     rootSaga(),
     accountSaga(),
+    userSaga(),
+    notesSaga(),
   ]);
 }
 
 export const reducer = combineReducers({
   root: rootReducer,
   account: accountReducer,
+  user: userReducer,
+  notes: notesReducer,
 });
 
 const initializeReduxDevTools = () => {

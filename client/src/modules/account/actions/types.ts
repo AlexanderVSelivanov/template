@@ -4,6 +4,8 @@
  *
  */
 
+/* eslint-disable no-unused-vars */
+
 import {createStandardAction, createAsyncAction} from 'typesafe-actions';
 
 const ACCOUNT_LOGIN_REQUEST = '@ACCOUNT/LOGIN/REQUEST';

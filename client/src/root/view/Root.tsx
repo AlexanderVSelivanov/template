@@ -1,31 +1,34 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 
-import {ApplicationError, UserEntity} from 'template-common';
+import {ApplicationError, UserEntityDto} from 'template-common';
 
 import {withTheme} from './theme';
+import documentTitleService from 'services/documentTitleService';
+import {logoutAction} from 'modules/account/actions';
 import PublicLayout from './layouts/public';
 import LoadingPage from './pages/loading';
 import LoginPage from 'modules/account/view/pages/login';
 import PrivateLayout from 'root/view/layouts/private';
 
 import routes from 'root/routes';
-import documentTitleService from 'services/documentTitleService';
 
 type RootProps = {
   isApplicationInitialized: boolean,
-  accountUser: UserEntity | null,
+  accountUser: UserEntityDto | null,
   error: ApplicationError | null,
+  logout: typeof logoutAction.request,
 };
 
 const Root: React.FC<RootProps> =
   ({
      isApplicationInitialized,
      accountUser,
+     logout,
      error,
    }) => {
     if (!isApplicationInitialized) {
-      return withTheme(<LoadingPage/>);
+      return withTheme(<PublicLayout><LoadingPage/></PublicLayout>);
     }
 
     if (!accountUser) {
@@ -34,7 +37,7 @@ const Root: React.FC<RootProps> =
 
     return withTheme(
       <BrowserRouter>
-        <PrivateLayout>
+        <PrivateLayout logout={logout}>
           <Switch>
             {
               Object.values(routes)

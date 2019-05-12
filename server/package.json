@@ -21,19 +21,24 @@
     "test": "jest --watch"
   },
   "dependencies": {
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "template-common": "file:../common",
-    "typeorm": "^0.2.16",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^4.0.7",
+    "template-common": "file:../common/",
+    "typeorm": "^0.2.17",
     "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.1",
     "@types/jsonwebtoken": "^8.3.2",
-    "@types/node": "^11.13.4",
+    "@types/lodash": "^4.14.126",
+    "@types/node": "^12.0.0",
+    "ts-node": "^8.1.0",
     "tslint": "^5.15.0",
     "typescript": "^3.4.5"
   }

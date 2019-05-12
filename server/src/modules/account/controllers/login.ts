@@ -1,30 +1,28 @@
 import {RequestHandler} from 'express';
 import * as jwt from 'jsonwebtoken';
 
-import {Login, Token, TokenPayload, ResponseStatus} from 'template-common';
+import {LoginDto, TokenDto, TokenPayloadDto, ResponseStatus} from 'template-common';
 import {SECRET_KEY} from '../../../config';
-import logger from '../../../services/loggerService';
+import accountRepositoryFactory from '../../../store/repository/accountRepository';
 
 const tokenExpiresIn = '24h';
 
-const loginController: RequestHandler = (request, response) => {
+const loginController: RequestHandler = async (request, response, next) => {
   try {
-    // todo: check login
-    const login: Login = request.body;
-    if (login.username && login.password) {
-
+    const login: LoginDto = request.body;
+    const account = await accountRepositoryFactory().validateLogin(login);
+    if (account) {
+      const tokenPayload: TokenPayloadDto = {
+        accountId: account.id,
+        username: account.username,
+      };
+      const token: TokenDto = jwt.sign(tokenPayload, SECRET_KEY, {expiresIn: tokenExpiresIn, algorithm: 'HS256'});
+      response.send(token);
+    } else {
+      response.sendStatus(ResponseStatus.BadRequest);
     }
-
-    const tokenPayload: TokenPayload = {
-      userId: 1,
-    };
-    const token: Token = jwt.sign(tokenPayload, SECRET_KEY, {expiresIn: tokenExpiresIn, algorithm: 'HS256'});
-    response.send(token);
   } catch (error) {
-    logger.error(error);
-    response
-      .status(ResponseStatus.InternalServerError)
-      .send(error);
+    next(error);
   }
 };
 

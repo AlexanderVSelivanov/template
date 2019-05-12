@@ -11,10 +11,10 @@ type LoadingPageProps = WithStyles<typeof styles> & {
 
 const LoadingPage: React.FC<LoadingPageProps> = ({text = 'Loading...', classes}) => {
   return (
-    <>
-      <CircularProgress/>
+    <div className={classes.root}>
+      <CircularProgress className={classes.icon}/>
       {text}
-    </>
+    </div>
   );
 };
 
