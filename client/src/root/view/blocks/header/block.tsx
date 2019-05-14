@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import AppBar from '@material-ui/core/AppBar';
 import classNames from 'classnames';
+import {WithStyles} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/core/SvgIcon/SvgIcon';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
@@ -13,7 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import {WithStyles} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import {VERSION} from 'config';
 import {logoutAction} from 'modules/account/actions';
@@ -53,7 +53,7 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({classes, logout, isDrawerOpen,
       onClose={handleProfileMenuClose}
     >
       <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={logout() && handleProfileMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={() => logout() && handleProfileMenuClose}>Logout</MenuItem>
     </Menu>
   );
   return (

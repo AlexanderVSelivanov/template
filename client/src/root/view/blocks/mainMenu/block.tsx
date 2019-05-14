@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 
-import ChevronLeftIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
