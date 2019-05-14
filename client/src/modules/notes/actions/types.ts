@@ -4,7 +4,7 @@
  *
  */
 
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 
 import {createStandardAction, createAsyncAction} from 'typesafe-actions';
 

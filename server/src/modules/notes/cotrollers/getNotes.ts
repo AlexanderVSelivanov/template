@@ -14,7 +14,7 @@ const getNotesController: RequestHandler = async (request, response, next) => {
       .take(entityListRequest.take)
       .execute();
     const count = await noteRepository.count();
-    const entityList: EntityList<NoteEntityDto> = {count, data: notes};
+    const entityList: EntityList<NoteEntityDto> = {count, items: notes};
     response.send(entityList);
   } catch (error) {
     next(error);

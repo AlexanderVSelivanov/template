@@ -8,7 +8,7 @@ export default function* logoutSaga(action: ActionType<typeof logoutAction.reque
   try {
     yield put(logoutAction.success());
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY_NAME);
-    location.reload();
+    window.location.reload();
   } catch (error) {
     yield put(logoutAction.failure(error));
   }

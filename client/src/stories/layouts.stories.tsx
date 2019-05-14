@@ -6,6 +6,8 @@ import {withTheme} from 'root/view/theme';
 import DialogLayout from 'root/view/layouts/dialog';
 import PublicLayout from 'root/view/layouts/public';
 import PrivateLayout from 'root/view/layouts/private';
+import ActionMock from './ActionMock';
+import {logoutAction} from '../modules/account/actions';
 
 storiesOf('Layouts', module)
   .add(
@@ -19,7 +21,9 @@ storiesOf('Layouts', module)
   .add(
     'Private',
     () => withTheme(
-      <PrivateLayout>
+      <PrivateLayout
+        logout={() => ActionMock(logoutAction.request())}
+      >
         Private layout
       </PrivateLayout>,
     ),

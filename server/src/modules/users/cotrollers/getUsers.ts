@@ -13,7 +13,7 @@ const getUsersController: RequestHandler = async (request, response, next) => {
       .take(entityListRequest.take)
       .execute();
     const count = await userRepository.count();
-    const entityList: EntityList<NoteEntityDto> = {count, data: users};
+    const entityList: EntityList<NoteEntityDto> = {count, items: users};
     response.send(entityList);
   } catch (error) {
     next(error);

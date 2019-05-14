@@ -1,10 +1,10 @@
 import {EntityList, UserEntityDto} from 'template-common';
-import LoadingProperty, {Empty} from 'types/LoadingProperty';
+import {LoadingProperty, NotLoaded} from 'types/LoadingProperty';
 
 export default {
-  users: Empty as LoadingProperty<EntityList<UserEntityDto>>,
+  users: NotLoaded as LoadingProperty<EntityList<UserEntityDto>>,
 
-  editUser: Empty as LoadingProperty<UserEntityDto>,
-  createdUser: Empty as LoadingProperty<UserEntityDto>,
-  deletedUser: Empty as LoadingProperty<UserEntityDto>,
+  editUser: NotLoaded as LoadingProperty<UserEntityDto>,
+  createdUser: NotLoaded as LoadingProperty<UserEntityDto>,
+  deletedUser: NotLoaded as LoadingProperty<UserEntityDto>,
 };

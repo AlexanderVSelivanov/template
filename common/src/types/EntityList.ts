@@ -1,5 +1,5 @@
 type EntityList<T> = {
-  data: T[],
+  items: T[],
   count: number,
 }
 

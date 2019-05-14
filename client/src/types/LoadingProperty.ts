@@ -1,7 +1,7 @@
-export enum LoadingPropertyState { Empty, Loading, Loaded, Error}
+export enum LoadingPropertyState { NotLoaded, Loading, Loaded, Error}
 
-type LoadingPropertyEmpty = { state: LoadingPropertyState.Empty };
-export const Empty: LoadingPropertyEmpty = {state: LoadingPropertyState.Empty};
+type LoadingPropertyNotLoaded = { state: LoadingPropertyState.NotLoaded };
+export const NotLoaded: LoadingPropertyNotLoaded = {state: LoadingPropertyState.NotLoaded};
 
 type LoadingPropertyLoading = { state: LoadingPropertyState.Loading };
 export const Loading: LoadingPropertyLoading = {state: LoadingPropertyState.Loading};
@@ -14,7 +14,5 @@ export const setLoadingProperty = <T>(data: T): LoadingPropertyLoaded<T> => ({
 type LoadingPropertyError = { state: LoadingPropertyState.Error, error: Error };
 export const setLoadingError = (error: Error): LoadingPropertyError => ({state: LoadingPropertyState.Error, error});
 
-type LoadingProperty<T> =
-  LoadingPropertyEmpty | LoadingPropertyLoading | LoadingPropertyLoaded<T> | LoadingPropertyError;
-
-export default LoadingProperty;
+export type LoadingProperty<T> =
+  LoadingPropertyNotLoaded | LoadingPropertyLoading | LoadingPropertyLoaded<T> | LoadingPropertyError;

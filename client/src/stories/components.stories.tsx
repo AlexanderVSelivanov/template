@@ -10,7 +10,7 @@ storiesOf('Components', module)
     () => withTheme(
       <PasswordTextField
         password="password"
-        onPasswordChange={password => action(`onPasswordChange: ${password}`)}
+        onPasswordChange={action}
       />,
     ),
   );
