@@ -7,14 +7,14 @@ import { IS_PRODUCTION } from 'config';
 import {rootReducer, rootSaga} from 'root';
 import {accountReducer, accountSaga} from 'modules/account';
 import {userReducer, userSaga} from 'modules/user';
-import {notesReducer, notesSaga} from 'modules/notes';
+import {notebookReducer, notebookSaga} from 'modules/notebook';
 
 function* saga() {
   yield all([
     rootSaga(),
     accountSaga(),
     userSaga(),
-    notesSaga(),
+    notebookSaga(),
   ]);
 }
 
@@ -22,7 +22,7 @@ export const reducer = combineReducers({
   root: rootReducer,
   account: accountReducer,
   user: userReducer,
-  notes: notesReducer,
+  notebook: notebookReducer,
 });
 
 const initializeReduxDevTools = () => {

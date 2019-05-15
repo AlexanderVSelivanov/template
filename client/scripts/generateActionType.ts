@@ -26,7 +26,7 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
     ],
   },
   {
-    name: 'notes',
+    name: 'notebook',
     actions: [
       {type: 'getNotes', template: 'async'},
       {type: 'getNoteById', template: 'async'},

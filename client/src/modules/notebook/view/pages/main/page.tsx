@@ -9,7 +9,7 @@ import {
   getNoteByIdAction,
   getNotesAction,
   updateNoteByIdAction,
-} from 'modules/notes/actions';
+} from 'modules/notebook/actions';
 
 import styles from './styles';
 

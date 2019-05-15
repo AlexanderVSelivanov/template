@@ -1,7 +1,7 @@
 import root from './root';
 import account from './modules/account';
-import users from './modules/users';
-import notes from './modules/notes';
+import users from './modules/user';
+import notes from './modules/notebook';
 import RouterDescription from './types/RouterDescription';
 
 export default [
@@ -14,11 +14,11 @@ export default [
     router: account,
   },
   {
-    path: '/users',
+    path: '/user',
     router: users,
   },
   {
-    path: '/notes',
+    path: '/notebook',
     router: notes,
   },
 ] as RouterDescription[];

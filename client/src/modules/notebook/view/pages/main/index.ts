@@ -8,14 +8,14 @@ import {
   createNoteAction,
   updateNoteByIdAction,
   deleteNoteByIdAction,
-} from 'modules/notes/actions';
-import {notesSelector, createdNoteSelector, editNoteSelector, deletedNoteSelector} from 'modules/notes/selectors';
+} from 'modules/notebook/actions';
+import {notesSelector, createdNoteSelector, editNoteSelector, deletedNoteSelector} from 'modules/notebook/selectors';
 
 import styles from './styles';
 import page from './page';
 
 const mapStateToProps = (state: StateType) => ({
-  notes: notesSelector(state),
+  notebook: notesSelector(state),
   createdNote: createdNoteSelector(state),
   editNote: editNoteSelector(state),
   deletedNote: deletedNoteSelector(state),

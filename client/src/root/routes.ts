@@ -1,7 +1,7 @@
 import {createRoute} from 'types/Route';
 
 import DashboardPage from './view/pages/dashboard';
-import Notes from 'modules/notes/view/pages/main';
+import Notebook from 'modules/notebook/view/pages/main';
 import CalendarPage from 'modules/calendar/view/pages/main';
 import UserPage from 'modules/user/view/pages/main';
 import MapPage from 'modules/map/view/pages/main';
@@ -12,7 +12,7 @@ import HelpPage from './view/pages/help';
 const routes = {
   dashboard: createRoute('Dashboard', 'dashboard', DashboardPage),
   calendar: createRoute('Calendar', 'calendar', CalendarPage),
-  notes: createRoute('Notes', 'notes', Notes),
+  notebook: createRoute('Notebook', 'notebook', Notebook),
   user: createRoute('User', 'user', UserPage),
   map: createRoute('Map', 'map', MapPage),
   reports: createRoute('Report', 'report', ReportsPage),

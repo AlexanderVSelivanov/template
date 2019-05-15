@@ -2,7 +2,7 @@ import {deleteEndPoint, getEndPoint, postEndPoint, putEndPoint} from 'services/e
 
 import {IdDto, NoteDto, NoteEntityDto, EntityListRequest, EntityList} from 'template-common';
 
-const prefix = 'notes';
+const prefix = 'notebook';
 
 export const createNoteEndPoint = putEndPoint<NoteDto, NoteEntityDto>(`${prefix}`);
 export const deleteNoteByIdEndPoint = deleteEndPoint<IdDto, NoteEntityDto>(`${prefix}/{id}`);

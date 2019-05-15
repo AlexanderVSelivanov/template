@@ -56,7 +56,7 @@ const MainMenuBlock: React.FC<MainMenuBlockProps> = ({classes, isDrawerOpen, set
       <List>
         <RouteMenuItem route={routes.dashboard} icon={<DashboardIcon/>}/>
         <RouteMenuItem route={routes.calendar} icon={<CalendarTodayIcon/>}/>
-        <RouteMenuItem route={routes.notes} icon={<FormatAlignJustifyIcon/>}/>
+        <RouteMenuItem route={routes.notebook} icon={<FormatAlignJustifyIcon/>}/>
         <RouteMenuItem route={routes.user} icon={<AssignmentIcon/>}/>
         <RouteMenuItem route={routes.map} icon={<LayersIcon/>}/>
         <RouteMenuItem route={routes.reports} icon={<EqualizerIcon/>}/>
