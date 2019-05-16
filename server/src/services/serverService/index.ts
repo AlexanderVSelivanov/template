@@ -1,5 +1,6 @@
 import * as http from 'http';
 import * as express from 'express';
+import * as cors from 'cors';
 
 import RouterDescription from '../../types/RouterDescription';
 
@@ -9,6 +10,7 @@ import serverErrorLoggerMiddleware from './serverErrorLoggerMiddleware';
 import serverRequestLoggerMiddleware from './serverRequestLoggerMiddleware';
 
 const expressServer = express();
+expressServer.use(cors());
 expressServer.use(serverErrorLoggerMiddleware);
 expressServer.use(express.json());
 expressServer.use(serverRequestLoggerMiddleware);
