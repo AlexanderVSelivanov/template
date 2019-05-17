@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {WithStyles} from '@material-ui/core';
 
-import {LoadingProperty, NotLoaded} from 'types/LoadingProperty';
+import {LoadProperty, NotLoaded} from 'types/LoadProperty';
 import {EntityList, UserEntityDto} from 'template-common';
 import {
   createUserAction,
@@ -14,10 +14,10 @@ import {
 import styles from './styles';
 
 type PageProps = WithStyles<typeof styles> & {
-  users: LoadingProperty<EntityList<UserEntityDto>>,
-  editUser: LoadingProperty<UserEntityDto>,
-  createdUser: LoadingProperty<UserEntityDto>,
-  deletedUser: LoadingProperty<UserEntityDto>,
+  users: LoadProperty<EntityList<UserEntityDto>>,
+  editUser: LoadProperty<UserEntityDto>,
+  createdUser: LoadProperty<UserEntityDto>,
+  deletedUser: LoadProperty<UserEntityDto>,
 
   getUsers: typeof getUsersAction.request,
   getUserById: typeof getUserByIdAction.request,

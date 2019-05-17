@@ -1,10 +1,10 @@
 import {EntityList, NoteEntityDto} from 'template-common';
-import {LoadingProperty, NotLoaded} from 'types/LoadingProperty';
+import {LoadProperty, NotLoaded} from 'types/LoadProperty';
 
 export default {
-  notes: NotLoaded as LoadingProperty<EntityList<NoteEntityDto>>,
+  notes: NotLoaded as LoadProperty<EntityList<NoteEntityDto>>,
 
-  editNote: NotLoaded as LoadingProperty<NoteEntityDto>,
-  createdNote: NotLoaded as LoadingProperty<NoteEntityDto>,
-  deletedNote: NotLoaded as LoadingProperty<NoteEntityDto>,
+  editNote: NotLoaded as LoadProperty<NoteEntityDto>,
+  createdNote: NotLoaded as LoadProperty<NoteEntityDto>,
+  deletedNote: NotLoaded as LoadProperty<NoteEntityDto>,
 };

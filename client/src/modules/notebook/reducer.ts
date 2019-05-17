@@ -2,7 +2,7 @@ import {ActionType, createReducer, getType} from 'typesafe-actions';
 
 import * as actions from './actions';
 import initialState from './initialState';
-import {Loading, setLoadingError, setLoadingProperty} from '../../types/LoadingProperty';
+import {Loading, setLoadingError, setLoadingProperty} from '../../types/LoadProperty';
 
 type NotesActionType = ActionType<typeof actions>;
 
@@ -15,7 +15,7 @@ type NotesActionType = ActionType<typeof actions>;
 const reducer = (state = initialState, action: NotesActionType) => {
   switch (action.type) {
 
-    // todo implement helper for async action and LoadingProperty
+    // todo implement helper for async action and LoadProperty
     case getType(actions.createNoteAction.request):
       return {
         ...state,

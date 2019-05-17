@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {WithStyles} from '@material-ui/core';
 
-import {LoadingProperty} from 'types/LoadingProperty';
+import {LoadProperty} from 'types/LoadProperty';
 import {EntityList, NoteEntityDto} from 'template-common';
 import {
   createNoteAction,
@@ -14,10 +14,10 @@ import {
 import styles from './styles';
 
 type PageProps = WithStyles<typeof styles> & {
-  notes: LoadingProperty<EntityList<NoteEntityDto>>,
-  editNote: LoadingProperty<NoteEntityDto>,
-  createdNote: LoadingProperty<NoteEntityDto>,
-  deletedNote: LoadingProperty<NoteEntityDto>,
+  notes: LoadProperty<EntityList<NoteEntityDto>>,
+  editNote: LoadProperty<NoteEntityDto>,
+  createdNote: LoadProperty<NoteEntityDto>,
+  deletedNote: LoadProperty<NoteEntityDto>,
 
   getNotes: typeof getNotesAction.request,
   getNoteById: typeof getNoteByIdAction.request,
