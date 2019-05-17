@@ -25,7 +25,7 @@ export type SavingEditProperty = { state: EditPropertyState.Saving };
 export const Saving: EditProperty<any> = {state: EditPropertyState.Saving};
 
 export type ErrorEditProperty = { state: EditPropertyState.Error, error: Error };
-export const setErrorEditProperty = (error: Error): EditProperty<any> => ({
+export const setError = (error: Error): EditProperty<any> => ({
   error,
   state: EditPropertyState.Error,
 });

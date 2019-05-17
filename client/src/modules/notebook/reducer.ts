@@ -2,66 +2,83 @@ import {ActionType, createReducer, getType} from 'typesafe-actions';
 
 import * as actions from './actions';
 import initialState from './initialState';
-import {Loading, setLoadingError, setLoadingProperty} from '../../types/LoadProperty';
+import {Loading, setLoadError, setLoadProperty} from '../../types/LoadProperty';
+import {Saving, setCreated, setDeleted, setError, setLoaded, setSaved} from '../../types/EditProperty';
 
 type NotesActionType = ActionType<typeof actions>;
 
 // const reducer = createReducer<typeof initialState, NotesActionType>(initialState)
 //   .handleAction(actions.createNoteAction.success, (state, action) => ({
 //     ...state,
-//     createdNote: setLoadingProperty(action.payload),
+//     createdNote: setLoadProperty(action.payload),
 //   }));
 
 const reducer = (state = initialState, action: NotesActionType) => {
   switch (action.type) {
 
+    case getType(actions.getNotesAction.request):
+      return {
+        ...state,
+        notes: Loading,
+      };
+    case getType(actions.getNotesAction.success):
+      return {
+        ...state,
+        notes: setLoaded(action.payload),
+      };
+    case getType(actions.getNotesAction.failure):
+      return {
+        ...state,
+        notes: setLoadError(action.payload),
+      };
+
     // todo implement helper for async action and LoadProperty
     case getType(actions.createNoteAction.request):
       return {
         ...state,
-        createdNote: Loading,
+        editNote: Saving,
       };
     case getType(actions.createNoteAction.success):
       return {
         ...state,
-        createdNote: setLoadingProperty(action.payload),
+        editNote: setCreated(action.payload),
       };
     case getType(actions.createNoteAction.failure):
       return {
         ...state,
-        createdNote: setLoadingError(action.payload),
+        editNote: setError(action.payload),
       };
 
     case getType(actions.updateNoteByIdAction.request):
       return {
         ...state,
-        editNote: Loading,
+        editNote: Saving,
       };
     case getType(actions.updateNoteByIdAction.success):
       return {
         ...state,
-        editNote: setLoadingProperty(action.payload),
+        editNote: setSaved(action.payload),
       };
     case getType(actions.updateNoteByIdAction.failure):
       return {
         ...state,
-        editNote: setLoadingError(action.payload),
+        editNote: setError(action.payload),
       };
 
     case getType(actions.deleteNoteByIdAction.request):
       return {
         ...state,
-        deletedNote: Loading,
+        editNote: Saving,
       };
     case getType(actions.deleteNoteByIdAction.success):
       return {
         ...state,
-        deletedNote: setLoadingProperty(action.payload),
+        editNote: setDeleted(action.payload),
       };
     case getType(actions.deleteNoteByIdAction.failure):
       return {
         ...state,
-        deletedNote: setLoadingError(action.payload),
+        editNote: setError(action.payload),
       };
 
     default:
