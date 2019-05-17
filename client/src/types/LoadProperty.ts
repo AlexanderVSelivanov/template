@@ -16,3 +16,12 @@ export const setLoadingError = (error: Error): ErrorLoadProperty => ({state: Loa
 
 export type LoadProperty<T> =
   NotLoadedLoadProperty | LoadingLoadProperty | LoadedLoadProperty<T> | ErrorLoadProperty;
+
+export const isNotLoaded =
+  <T>(property: LoadProperty<T>): property is NotLoadedLoadProperty => property.state === LoadPropertyState.NotLoaded;
+export const isLoading =
+  <T>(property: LoadProperty<T>): property is LoadingLoadProperty => property.state === LoadPropertyState.Loading;
+export const isLoaded =
+  <T>(property: LoadProperty<T>): property is LoadedLoadProperty<T> => property.state === LoadPropertyState.Loaded;
+export const isError =
+  <T>(property: LoadProperty<T>): property is ErrorLoadProperty => property.state === LoadPropertyState.Error;
