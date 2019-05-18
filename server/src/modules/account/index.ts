@@ -1,13 +1,12 @@
 import * as express from 'express';
 
-import authorizationMiddleware from '../../services/serverService/authorizationMiddleware';
-
 import loginController from './controllers/login';
 import profileController from './controllers/profile';
+import {simplePrivetController, simplePublicController} from '../../utils/ControllerBuilder';
 
 const router = express.Router();
 
-router.post('/login', loginController);
-router.get('/profile', authorizationMiddleware(), profileController);
+router.post('/login', simplePublicController(loginController));
+router.get('/profile', simplePrivetController(profileController));
 
 export default router;

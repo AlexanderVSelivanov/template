@@ -1,26 +1,19 @@
-import {RequestHandler} from 'express';
-
-import {Id, ResponseStatus} from 'template-common';
+import {Id, NoteEntityDto} from 'template-common';
 import noteRepositoryFactory from '../../../store/repository/noteRepository';
+import {Controller, notFound, ok, badRequest} from '../../../utils/ControllerBuilder';
+import noteToNoteDto from '../../../types/mapper/noteToNoteDto';
 
-const deleteNoteByIdController: RequestHandler = async (request, response, next) => {
-  try {
-    if (request.params.id) {
-      const id: Id = request.params.id;
-      const noteRepository = noteRepositoryFactory();
-      const note = await noteRepository.findOne(id);
-      if (note) {
-        const removedNote = await noteRepository.remove(note);
-        response.send(removedNote);
-      } else {
-        response.status(ResponseStatus.NotFound).send('Note entity not found');
-      }
-    } else {
-      response.status(ResponseStatus.BadRequest).send('Invalid note id');
+const deleteNoteByIdController: Controller<undefined, NoteEntityDto, { id: Id }> = async ({params}) => {
+  if (params && params.id) {
+    const noteRepository = noteRepositoryFactory();
+    const note = await noteRepository.findOne(params.id);
+    if (note) {
+      const removedNote = await noteRepository.remove(note);
+      return ok(noteToNoteDto(removedNote));
     }
-  } catch (error) {
-    next(error);
+    return notFound('Note entity not found');
   }
+  return badRequest('Invalid note id');
 };
 
 export default deleteNoteByIdController;

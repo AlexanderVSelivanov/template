@@ -1,24 +1,17 @@
-import {RequestHandler} from 'express';
-
 import noteRepositoryFactory from '../../../store/repository/noteRepository';
 import {EntityListRequest, EntityList, NoteEntityDto} from 'template-common';
+import {Controller, ok} from '../../../utils/ControllerBuilder';
+import noteToNoteDto from '../../../types/mapper/noteToNoteDto';
 
-const getNotesController: RequestHandler = async (request, response, next) => {
-  try {
-    const entityListRequest: EntityListRequest = request.body;
-    const noteRepository = noteRepositoryFactory();
-    const notes = await noteRepository
-      .createQueryBuilder()
-      .select(['id', 'title', 'tags'])
-      .skip(entityListRequest.skip)
-      .take(entityListRequest.take)
-      .execute();
-    const count = await noteRepository.count();
-    const entityList: EntityList<NoteEntityDto> = {count, items: notes};
-    response.send(entityList);
-  } catch (error) {
-    next(error);
-  }
+const getNotesController: Controller<EntityListRequest, EntityList<NoteEntityDto>> = async ({input}) => {
+  const noteRepository = noteRepositoryFactory();
+  const [notes, count] = await noteRepository
+    .findAndCount({skip: input.skip, take: input.take});
+  const entityList: EntityList<NoteEntityDto> = {
+    count,
+    items: notes.map(note => noteToNoteDto(note)),
+  };
+  return ok(entityList);
 };
 
 export default getNotesController;

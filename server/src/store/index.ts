@@ -6,6 +6,7 @@ import {DataBaseLogger} from './DataBaseLogger';
 import {default as InitializeMigration} from './migrations/initialize';
 import AccountEntity from './entities/AccountEntity';
 import UserEntity from './entities/UserEntity';
+import NoteEntity from './entities/NoteEntity';
 
 export const connect = createConnection({
   type: 'sqlite',
@@ -14,6 +15,7 @@ export const connect = createConnection({
   entities: [
     AccountEntity,
     UserEntity,
+    NoteEntity,
   ],
   migrations: [
     InitializeMigration,

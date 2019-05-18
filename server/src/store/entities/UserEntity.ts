@@ -1,7 +1,8 @@
-import {Column, Entity, OneToOne} from 'typeorm';
+import {Column, Entity, OneToMany, OneToOne} from 'typeorm';
 
 import BaseEntity from './BaseEntity';
 import AccountEntity from './AccountEntity';
+import NoteEntity from './NoteEntity';
 
 @Entity()
 class UserEntity extends BaseEntity {
@@ -11,8 +12,12 @@ class UserEntity extends BaseEntity {
   lastName!: string;
   @Column()
   email!: string;
+
   @OneToOne(type => AccountEntity, account => account.user)
   account?: AccountEntity;
+
+  @OneToMany(type => NoteEntity, note => note.user)
+  notes?: NoteEntity[];
 }
 
 export default UserEntity;

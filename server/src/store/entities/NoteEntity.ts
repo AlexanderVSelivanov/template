@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, OneToOne} from 'typeorm';
+import {Column, Entity, ManyToOne} from 'typeorm';
 
 import BaseEntity from './BaseEntity';
 import UserEntity from './UserEntity';
@@ -12,8 +12,7 @@ class NoteEntity extends BaseEntity {
   @Column('simple-array')
   tags?: string[];
 
-  @OneToOne(type => UserEntity)
-  @JoinColumn()
+  @ManyToOne(type => UserEntity, user => user.notes)
   user!: UserEntity;
 }
 
