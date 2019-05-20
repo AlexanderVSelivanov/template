@@ -1,21 +1,18 @@
-import {RequestHandler} from 'express';
-
-import {Id, ResponseStatus} from 'template-common';
+import {Id, UserEntityDto} from 'template-common';
 import userRepositoryFactory from '../../../store/repository/userRepository';
+import {badRequest, Controller, ok} from '../../../utils/ControllerBuilder';
+import userToUserDto from '../../../types/mapper/userToUserDto';
 
-const getUserByIdController: RequestHandler = async (request, response, next) => {
-  try {
-    if (request.params.id) {
-      const id: Id = request.params.id;
-      const userRepository = userRepositoryFactory();
-      const user = await userRepository.findOne(id);
-      response.send(user);
-    } else {
-      response.status(ResponseStatus.BadRequest).send('Invalid user id');
+const getUserByIdController: Controller<undefined, UserEntityDto, { id: Id }> = async ({params}) => {
+  if (params && params.id) {
+    const userRepository = userRepositoryFactory();
+    const user = await userRepository.findOne(params.id);
+    if (user) {
+      return ok(userToUserDto(user));
     }
-  } catch (error) {
-    next(error);
+    return badRequest('User not found');
   }
+  return badRequest('Invalid user id');
 };
 
 export default getUserByIdController;

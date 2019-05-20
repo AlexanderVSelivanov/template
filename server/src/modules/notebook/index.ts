@@ -1,19 +1,18 @@
 import * as express from 'express';
-
-import authorizationMiddleware from '../../services/serverService/authorizationMiddleware';
+import {simplePrivetController} from '../../utils/ControllerBuilder';
 
 import getNotesController from './cotrollers/getNotes';
-import putNoteController from './cotrollers/putNote';
+import postNoteController from './cotrollers/postNote';
 import getNoteByIdController from './cotrollers/getNoteById';
-import postNoteByIdController from './cotrollers/postNoteById';
+import putNoteByIdController from './cotrollers/putNoteById';
 import deleteNoteByIdController from './cotrollers/deleteNoteById';
 
 const router = express.Router();
 
-router.get('/', authorizationMiddleware(), getNotesController);
-router.put('/', authorizationMiddleware(), putNoteController);
-router.get('/:id', authorizationMiddleware(), getNoteByIdController);
-router.post('/:id', authorizationMiddleware(), postNoteByIdController);
-router.delete('/:id', authorizationMiddleware(), deleteNoteByIdController);
+router.get('/', simplePrivetController(getNotesController));
+router.post('/', simplePrivetController(postNoteController));
+router.get('/:id', simplePrivetController(getNoteByIdController));
+router.put('/:id', simplePrivetController(putNoteByIdController));
+router.delete('/:id', simplePrivetController(deleteNoteByIdController));
 
 export default router;

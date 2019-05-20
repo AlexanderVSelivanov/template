@@ -3,7 +3,7 @@ import Id from './Id';
 type Entity = Id & Readonly<{
   created: Date,
   updated: Date,
-  deleted: boolean,
+  disable: boolean,
 }>
 
 export default Entity;

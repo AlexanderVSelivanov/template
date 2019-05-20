@@ -27,5 +27,3 @@ const setupServerRoutes = (routers: RouterDescription[]) => {
 };
 
 export default setupServerRoutes;
-
-export {default as authorizationMiddleware} from './authorizationMiddleware';
