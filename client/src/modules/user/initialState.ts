@@ -1,8 +1,8 @@
 import {EntityList, UserEntityDto} from 'template-common';
-import {LoadProperty, NotLoaded} from 'types/LoadProperty';
 import {EditProperty, Empty} from '../../types/EditProperty';
+import {AsyncProperty, EmptyProperty} from '../../types/AsyncProperty';
 
 export default {
-  users: NotLoaded as LoadProperty<EntityList<UserEntityDto>>,
+  users: EmptyProperty as AsyncProperty<EntityList<UserEntityDto>>,
   editUser: Empty as EditProperty<UserEntityDto>,
 };

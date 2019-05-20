@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {WithStyles} from '@material-ui/core';
 
-import {LoadProperty, NotLoaded} from 'types/LoadProperty';
+import {AsyncProperty} from 'types/AsyncProperty';
+import {EditProperty} from 'types/EditProperty';
 import {EntityList, UserEntityDto} from 'template-common';
 import {
   createUserAction,
@@ -14,11 +15,8 @@ import {
 import styles from './styles';
 
 type PageProps = WithStyles<typeof styles> & {
-  users: LoadProperty<EntityList<UserEntityDto>>,
-  editUser: LoadProperty<UserEntityDto>,
-  createdUser: LoadProperty<UserEntityDto>,
-  deletedUser: LoadProperty<UserEntityDto>,
-
+  users: AsyncProperty<EntityList<UserEntityDto>>,
+  editUser: EditProperty<UserEntityDto>,
   getUsers: typeof getUsersAction.request,
   getUserById: typeof getUserByIdAction.request,
   createUser: typeof createUserAction.request,
@@ -31,8 +29,6 @@ const Page: React.FC<PageProps> =
      classes,
      users,
      editUser,
-     createdUser,
-     deletedUser,
      getUsers,
      getUserById,
      createUser,

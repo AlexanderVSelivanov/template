@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {WithStyles} from '@material-ui/core';
 
-import {LoadProperty} from 'types/LoadProperty';
 import {EntityList, NoteEntityDto} from 'template-common';
 import {
   createNoteAction,
@@ -10,14 +9,14 @@ import {
   getNotesAction,
   updateNoteByIdAction,
 } from 'modules/notebook/actions';
+import {EditProperty} from 'types/EditProperty';
+import {AsyncProperty} from 'types/AsyncProperty';
 
 import styles from './styles';
 
 type PageProps = WithStyles<typeof styles> & {
-  notes: LoadProperty<EntityList<NoteEntityDto>>,
-  editNote: LoadProperty<NoteEntityDto>,
-  createdNote: LoadProperty<NoteEntityDto>,
-  deletedNote: LoadProperty<NoteEntityDto>,
+  notes: AsyncProperty<EntityList<NoteEntityDto>>,
+  editNote: EditProperty<NoteEntityDto>,
 
   getNotes: typeof getNotesAction.request,
   getNoteById: typeof getNoteByIdAction.request,
@@ -31,8 +30,6 @@ const Page: React.FC<PageProps> =
      classes,
      notes,
      editNote,
-     createdNote,
-     deletedNote,
      getNotes,
      getNoteById,
      createNote,

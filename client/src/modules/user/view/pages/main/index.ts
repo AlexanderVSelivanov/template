@@ -9,16 +9,14 @@ import {
   updateUserByIdAction,
   deleteUserByIdAction,
 } from 'modules/user/actions';
-import {usersSelector, createdUserSelector, editUserSelector, deletedUserSelector} from 'modules/user/selectors';
+import {usersSelector, editUserSelector} from 'modules/user/selectors';
 
 import styles from './styles';
 import page from './page';
 
 const mapStateToProps = (state: StateType) => ({
   users: usersSelector(state),
-  createdUser: createdUserSelector(state),
   editUser: editUserSelector(state),
-  deletedUser: deletedUserSelector(state),
 });
 
 const dispatchProps = {

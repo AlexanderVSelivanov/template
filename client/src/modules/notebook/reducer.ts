@@ -2,8 +2,8 @@ import {ActionType, createReducer, getType} from 'typesafe-actions';
 
 import * as actions from './actions';
 import initialState from './initialState';
-import {Loading, setLoadError, setLoadProperty} from '../../types/LoadProperty';
-import {Saving, setCreated, setDeleted, setError, setLoaded, setSaved} from '../../types/EditProperty';
+import {Saving, setCreated, setDeleted, setError, setSaved} from '../../types/EditProperty';
+import {RequestProperty, setFailureProperty, setSuccessProperty} from '../../types/AsyncProperty';
 
 type NotesActionType = ActionType<typeof actions>;
 
@@ -19,20 +19,20 @@ const reducer = (state = initialState, action: NotesActionType) => {
     case getType(actions.getNotesAction.request):
       return {
         ...state,
-        notes: Loading,
+        notes: RequestProperty,
       };
     case getType(actions.getNotesAction.success):
       return {
         ...state,
-        notes: setLoaded(action.payload),
+        notes: setSuccessProperty(action.payload),
       };
     case getType(actions.getNotesAction.failure):
       return {
         ...state,
-        notes: setLoadError(action.payload),
+        notes: setFailureProperty(action.payload),
       };
 
-    // todo implement helper for async action and LoadProperty
+    // todo implement helper for async action and AsyncProperty
     case getType(actions.createNoteAction.request):
       return {
         ...state,
