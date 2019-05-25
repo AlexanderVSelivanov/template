@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 import {WithStyles} from '@material-ui/core';
 
-import {AsyncProperty} from 'types/AsyncProperty';
-import {EditProperty} from 'types/EditProperty';
-import {EntityList, UserEntityDto} from 'template-common';
+import {EntityList, UserEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
 import {
   createUserAction,
   deleteUserByIdAction,
@@ -15,8 +13,8 @@ import {
 import styles from './styles';
 
 type PageProps = WithStyles<typeof styles> & {
-  users: AsyncProperty<EntityList<UserEntityDto>>,
-  editUser: EditProperty<UserEntityDto>,
+  users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
+  editUser: EmptyOr<EditAsyncProperty<UserEntityDto>>,
   getUsers: typeof getUsersAction.request,
   getUserById: typeof getUserByIdAction.request,
   createUser: typeof createUserAction.request,

@@ -1,9 +1,8 @@
 import {ActionType, createReducer, getType} from 'typesafe-actions';
+import {RequestProperty, setSuccessProperty, setFailureProperty} from 'template-common';
 
 import * as actions from './actions';
 import initialState from './initialState';
-import {Saving, setCreated, setDeleted, setError, setSaved} from '../../types/EditProperty';
-import {RequestProperty, setFailureProperty, setSuccessProperty} from '../../types/AsyncProperty';
 
 type NotesActionType = ActionType<typeof actions>;
 
@@ -33,53 +32,53 @@ const reducer = (state = initialState, action: NotesActionType) => {
       };
 
     // todo implement helper for async action and AsyncProperty
-    case getType(actions.createNoteAction.request):
-      return {
-        ...state,
-        editNote: Saving,
-      };
-    case getType(actions.createNoteAction.success):
-      return {
-        ...state,
-        editNote: setCreated(action.payload),
-      };
-    case getType(actions.createNoteAction.failure):
-      return {
-        ...state,
-        editNote: setError(action.payload),
-      };
-
-    case getType(actions.updateNoteByIdAction.request):
-      return {
-        ...state,
-        editNote: Saving,
-      };
-    case getType(actions.updateNoteByIdAction.success):
-      return {
-        ...state,
-        editNote: setSaved(action.payload),
-      };
-    case getType(actions.updateNoteByIdAction.failure):
-      return {
-        ...state,
-        editNote: setError(action.payload),
-      };
-
-    case getType(actions.deleteNoteByIdAction.request):
-      return {
-        ...state,
-        editNote: Saving,
-      };
-    case getType(actions.deleteNoteByIdAction.success):
-      return {
-        ...state,
-        editNote: setDeleted(action.payload),
-      };
-    case getType(actions.deleteNoteByIdAction.failure):
-      return {
-        ...state,
-        editNote: setError(action.payload),
-      };
+    // case getType(actions.createNoteAction.request):
+    //   return {
+    //     ...state,
+    //     editNote: Saving,
+    //   };
+    // case getType(actions.createNoteAction.success):
+    //   return {
+    //     ...state,
+    //     editNote: setCreated(action.payload),
+    //   };
+    // case getType(actions.createNoteAction.failure):
+    //   return {
+    //     ...state,
+    //     editNote: setError(action.payload),
+    //   };
+    //
+    // case getType(actions.updateNoteByIdAction.request):
+    //   return {
+    //     ...state,
+    //     editNote: Saving,
+    //   };
+    // case getType(actions.updateNoteByIdAction.success):
+    //   return {
+    //     ...state,
+    //     editNote: setSaved(action.payload),
+    //   };
+    // case getType(actions.updateNoteByIdAction.failure):
+    //   return {
+    //     ...state,
+    //     editNote: setError(action.payload),
+    //   };
+    //
+    // case getType(actions.deleteNoteByIdAction.request):
+    //   return {
+    //     ...state,
+    //     editNote: Saving,
+    //   };
+    // case getType(actions.deleteNoteByIdAction.success):
+    //   return {
+    //     ...state,
+    //     editNote: setDeleted(action.payload),
+    //   };
+    // case getType(actions.deleteNoteByIdAction.failure):
+    //   return {
+    //     ...state,
+    //     editNote: setError(action.payload),
+    //   };
 
     default:
       return state;

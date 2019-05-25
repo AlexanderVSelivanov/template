@@ -1,8 +1,6 @@
-import {EntityList, UserEntityDto} from 'template-common';
-import {EditProperty, Empty} from '../../types/EditProperty';
-import {AsyncProperty, EmptyProperty} from '../../types/AsyncProperty';
+import {EntityList, UserEntityDto, Empty, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
 
 export default {
-  users: EmptyProperty as AsyncProperty<EntityList<UserEntityDto>>,
-  editUser: Empty as EditProperty<UserEntityDto>,
+  users: Empty as EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
+  editUser: Empty as EmptyOr<EditAsyncProperty<UserEntityDto>>,
 };

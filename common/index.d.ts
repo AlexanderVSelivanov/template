@@ -1,5 +1,52 @@
 import EntityListRequest from './src/types/EntityListRequest';
 
+export {Empty, isEmpty, EmptyProperty, EmptyOr} from './src/EmptyProperty';
+export {
+  AsyncProperty,
+  RequestProperty,
+  isRequestProperty,
+  setSuccessProperty,
+  isSuccessProperty,
+  setFailureProperty,
+  isFailureProperty,
+} from './src/AsyncProperty';
+export {
+  EditAsyncProperty,
+  CreateAsyncProperty,
+  CreateProperty,
+  isCreateProperty,
+  CreatingProperty,
+  isCreatingProperty,
+  setCreatedProperty,
+  isCreatedProperty,
+  setCreatingFailedProperty,
+  isCreatingFailedProperty,
+  UpdateAsyncProperty,
+  UpdateProperty,
+  isUpdateProperty,
+  LoadingProperty,
+  isLoadingProperty,
+  setLoadedProperty,
+  isLoadedProperty,
+  setLoadingFailedProperty,
+  isLoadingFailedProperty,
+  setSavingProperty,
+  isSavingProperty,
+  setSavedProperty,
+  isSavedProperty,
+  setSavingFailedProperty,
+  isSavingFailedProperty,
+  DeleteAsyncProperty,
+  DeleteProperty,
+  isDeleteProperty,
+  DeletingProperty,
+  isDeletingProperty,
+  setDeletedProperty,
+  isDeletedProperty,
+  setDeletingFailedProperty,
+  isDeletingFailedProperty,
+} from './src/EditAsyncProperty';
+
 export {default as ApplicationError} from './src/ApplicationError';
 
 export {default as Id} from './src/types/Id';
@@ -35,3 +82,7 @@ export enum ResponseStatus {
   InternalServerError = 500,
   NotImplemented = 501,
 }
+
+export enum AsyncPropertyState { Request, Success, Failure}
+
+export enum EditPropertyType {Create, Update, Delete}

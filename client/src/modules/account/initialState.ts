@@ -1,6 +1,6 @@
-import {TokenDto, UserEntityDto} from 'template-common';
+import {Empty, EmptyOr, TokenDto, UserEntityDto} from 'template-common';
 
 export default {
-  token: null as TokenDto | null,
-  user: null as UserEntityDto | null,
+  token: Empty as EmptyOr<TokenDto>,
+  user: Empty as EmptyOr<UserEntityDto>,
 };

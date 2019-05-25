@@ -1,8 +1,6 @@
-import {EntityList, NoteEntityDto} from 'template-common';
-import {EditProperty, Empty} from '../../types/EditProperty';
-import {AsyncProperty, EmptyProperty} from '../../types/AsyncProperty';
+import {Empty, EmptyOr, AsyncProperty, EditAsyncProperty, EntityList, NoteEntityDto} from 'template-common';
 
 export default {
-  notes: EmptyProperty as AsyncProperty<EntityList<NoteEntityDto>>,
-  editNote: Empty as EditProperty<NoteEntityDto>,
+  notes: Empty as EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
+  editNote: Empty as EmptyOr<EditAsyncProperty<NoteEntityDto>>,
 };

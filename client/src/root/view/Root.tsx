@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 
-import {ApplicationError, UserEntityDto} from 'template-common';
+import {EmptyOr, ApplicationError, UserEntityDto} from 'template-common';
 
 import {withTheme} from './theme';
 import documentTitleService from 'services/documentTitleService';
@@ -15,8 +15,8 @@ import routes from 'root/routes';
 
 type RootProps = {
   isApplicationInitialized: boolean,
-  accountUser: UserEntityDto | null,
-  error: ApplicationError | null,
+  accountUser: EmptyOr<UserEntityDto>,
+  error: EmptyOr<ApplicationError>,
   logout: typeof logoutAction.request,
 };
 

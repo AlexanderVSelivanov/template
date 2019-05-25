@@ -1,4 +1,5 @@
 import {ActionType, createReducer, getType} from 'typesafe-actions';
+import {Empty} from 'template-common';
 
 import * as actions from './actions';
 import initialState from './initialState';
@@ -15,13 +16,13 @@ const reducer = (state = initialState, action: UserActionType) => {
     case getType(actions.loginAction.failure):
       return {
         ...state,
-        token: null,
+        token: Empty,
       };
 
     case getType(actions.logoutAction.success):
       return {
         ...state,
-        token: null,
+        token: Empty,
       };
 
     case getType(actions.getAccountUserAction.success):
@@ -32,7 +33,7 @@ const reducer = (state = initialState, action: UserActionType) => {
     case getType(actions.getAccountUserAction.failure):
       return {
         ...state,
-        user: null,
+        user: Empty,
       };
 
     default:

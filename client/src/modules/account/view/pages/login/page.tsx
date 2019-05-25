@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import {ApplicationError} from 'template-common';
+import {EmptyOr, ApplicationError} from 'template-common';
 import {loginAction} from 'modules/account/actions';
 import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
 
@@ -15,8 +15,8 @@ import {VERSION} from 'config';
 import styles from './styles';
 
 type LoginPageProps = WithStyles<typeof styles> & {
-  error: ApplicationError | null,
-  defaultLogin?: string | null,
+  error: EmptyOr<ApplicationError>,
+  defaultLogin?: EmptyOr<string>,
 
   login: typeof loginAction.request,
 };

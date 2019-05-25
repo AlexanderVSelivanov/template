@@ -1,6 +1,6 @@
-import {ApplicationError} from 'template-common';
+import {ApplicationError, EmptyOr, Empty} from 'template-common';
 
 export default {
   isApplicationInitialized: false,
-  error: null as ApplicationError | null,
+  error: Empty as EmptyOr<ApplicationError>,
 };
