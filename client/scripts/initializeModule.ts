@@ -46,13 +46,14 @@ async function initialize() {
     folders.forEach(createFolder);
 
     const files = [
-      [modulePath, 'index.ts.ts'],
-      [modulePath, 'actions', 'index.ts.ts'],
-      [modulePath, 'sagas', 'index.ts.ts'],
+      [modulePath, 'index.ts'],
+      [modulePath, 'actions', 'index.ts'],
+      [modulePath, 'sagas', 'index.ts'],
     ];
     files.forEach(createFile);
 
   } catch (e) {
+    // tslint:disable-next-line:no-console
     console.error('ERROR: ', e);
   } finally {
     rl.close();
