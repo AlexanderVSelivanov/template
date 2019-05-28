@@ -8,7 +8,7 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
   },
   icon: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
 });
 

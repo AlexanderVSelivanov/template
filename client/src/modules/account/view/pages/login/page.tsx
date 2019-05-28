@@ -36,7 +36,7 @@ const LoginPage: React.FC<LoginPageProps> = ({classes, error, defaultLogin, logi
 
   return (
     <form onSubmit={loginSubmit}>
-      <Grid container spacing={24} className={classes.container}>
+      <Grid container spacing={5} className={classes.container}>
         <Grid item xs={12} className={classes.title}>
           <Typography
             component="h1"

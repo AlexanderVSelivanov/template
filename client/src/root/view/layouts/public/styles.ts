@@ -12,7 +12,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     minHeight: 300,
     minWidth: 480,
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
 });
 
