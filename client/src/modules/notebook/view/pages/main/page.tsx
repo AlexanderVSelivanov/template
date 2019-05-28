@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {WithStyles} from '@material-ui/core';
 
 import {EntityList, NoteEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
 import {
@@ -10,13 +9,13 @@ import {
   updateNoteByIdAction,
 } from 'modules/notebook/actions';
 
-import styles from './styles';
+import useStyles from './styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import TextField from '@material-ui/core/TextField';
 
-type PageProps = WithStyles<typeof styles> & {
+type PageProps = {
   notes: EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
   editNote: EmptyOr<EditAsyncProperty<NoteEntityDto>>,
 
@@ -29,7 +28,6 @@ type PageProps = WithStyles<typeof styles> & {
 
 const Page: React.FC<PageProps> =
   ({
-     classes,
      notes,
      editNote,
      getNotes,
@@ -38,6 +36,7 @@ const Page: React.FC<PageProps> =
      updateNoteById,
      deleteNoteById,
    }) => {
+    const classes = useStyles();
     const [noteText, setNoteText] = useState('');
     // useEffect(() => {
     //   getNotes({skip: 0, take: 25});

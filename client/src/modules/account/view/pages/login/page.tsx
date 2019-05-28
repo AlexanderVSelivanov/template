@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
 
-import {WithStyles} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -12,16 +11,17 @@ import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
 
 import {VERSION} from 'config';
 
-import styles from './styles';
+import useStyles from './styles';
 
-type LoginPageProps = WithStyles<typeof styles> & {
+type LoginPageProps = {
   error: EmptyOr<ApplicationError>,
   defaultLogin?: EmptyOr<string>,
 
   login: typeof loginAction.request,
 };
 
-const LoginPage: React.FC<LoginPageProps> = ({classes, error, defaultLogin, login}) => {
+const LoginPage: React.FC<LoginPageProps> = ({error, defaultLogin, login}) => {
+  const classes = useStyles();
   const [username, setUsername] = useState(defaultLogin ? defaultLogin : '');
   const [password, setPassword] = useState('');
 

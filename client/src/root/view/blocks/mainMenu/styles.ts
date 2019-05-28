@@ -1,6 +1,7 @@
-import {createStyles, Theme} from '@material-ui/core';
+import {Theme} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
     width: theme.appDrawer.width,
     flexShrink: 0,
@@ -32,6 +33,6 @@ const styles = (theme: Theme) => createStyles({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-});
+}));
 
-export default styles;
+export default useStyles;

@@ -1,20 +1,19 @@
 import React, {useState} from 'react';
 
-import {WithStyles} from '@material-ui/core';
-
 import {logoutAction} from 'modules/account/actions';
 
 import Header from '../../blocks/header';
 import MainMenu from '../../blocks/mainMenu';
 
-import styles from './styles';
+import useStyles from './styles';
 
-type PrivateLayoutProps = WithStyles<typeof styles> & {
+type PrivateLayoutProps = {
   logout: typeof logoutAction.request,
   children: React.ReactNode | React.ReactNodeArray,
 };
 
-const PrivateLayout: React.FC<PrivateLayoutProps> = ({classes, logout, children}) => {
+const PrivateLayout: React.FC<PrivateLayoutProps> = ({logout, children}) => {
+  const classes = useStyles();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <div className={classes.root}>

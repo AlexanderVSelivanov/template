@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
-import {WithStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,17 +14,19 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {VERSION} from 'config';
 import {logoutAction} from 'modules/account/actions';
 
-import styles from './styles';
+import useStyles from './styles';;
 
-type HeaderBlockProps = WithStyles<typeof styles> & {
+type HeaderBlockProps = {
   isDrawerOpen: boolean,
   setIsDrawerOpen: (value: boolean) => void,
   logout: typeof logoutAction.request,
 };
 
-const HeaderBlock: React.FC<HeaderBlockProps> = ({classes, logout, isDrawerOpen, setIsDrawerOpen}) => {
+const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDrawerOpen}) => {
 
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState<null | HTMLElement>(null);
+
+  const classes = useStyles();
 
   function handleDrawerOpen() {
     setIsDrawerOpen(true);

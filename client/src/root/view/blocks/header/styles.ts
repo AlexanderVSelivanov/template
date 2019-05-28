@@ -1,6 +1,7 @@
-import {createStyles, Theme} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
+import {Theme} from '@material-ui/core';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -27,6 +28,6 @@ const styles = (theme: Theme) => createStyles({
   hide: {
     display: 'none',
   },
-});
+}));
 
-export default styles;
+export default useStyles;

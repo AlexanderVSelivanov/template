@@ -1,5 +1,5 @@
 import React from 'react';
-import {WithStyles} from '@material-ui/core';
+
 
 import Drawer from '@material-ui/core/Drawer';
 import classNames from 'classnames';
@@ -20,14 +20,16 @@ import HelpIcon from '@material-ui/icons/Help';
 import RouteMenuItem from './RouteMenuItem';
 import routes from 'root/routes';
 
-import styles from './styles';
+import useStyles from './styles';;
 
-type MainMenuBlockProps = WithStyles<typeof styles> & {
+type MainMenuBlockProps = {
   isDrawerOpen: boolean,
   setIsDrawerOpen: (value: boolean) => void,
 };
 
-const MainMenuBlock: React.FC<MainMenuBlockProps> = ({classes, isDrawerOpen, setIsDrawerOpen}) => {
+const MainMenuBlock: React.FC<MainMenuBlockProps> = ({isDrawerOpen, setIsDrawerOpen}) => {
+  const classes = useStyles();
+
   function handleDrawerClose() {
     setIsDrawerOpen(false);
   }

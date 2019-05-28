@@ -1,6 +1,7 @@
-import {createStyles, Theme} from '@material-ui/core';
+import {Theme} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     minHeight: 480,
@@ -18,6 +19,6 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing(3),
     height: '100%',
   },
-});
+}));
 
-export default styles;
+export default useStyles;

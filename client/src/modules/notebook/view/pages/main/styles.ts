@@ -1,6 +1,7 @@
-import {createStyles, Theme} from '@material-ui/core';
+import {Theme} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -14,6 +15,6 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 250,
     marginLeft: 25,
   },
-});
+}));
 
-export default styles;
+export default useStyles;

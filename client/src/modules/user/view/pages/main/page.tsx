@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {WithStyles} from '@material-ui/core';
 
 import {EntityList, UserEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
 import {
@@ -10,9 +9,9 @@ import {
   updateUserByIdAction,
 } from 'modules/user/actions';
 
-import styles from './styles';
+import useStyles from './styles';
 
-type PageProps = WithStyles<typeof styles> & {
+type PageProps = {
   users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
   editUser: EmptyOr<EditAsyncProperty<UserEntityDto>>,
   getUsers: typeof getUsersAction.request,
@@ -24,7 +23,6 @@ type PageProps = WithStyles<typeof styles> & {
 
 const Page: React.FC<PageProps> =
   ({
-     classes,
      users,
      editUser,
      getUsers,
@@ -33,6 +31,7 @@ const Page: React.FC<PageProps> =
      updateUserById,
      deleteUserById,
    }) => {
+    const classes = useStyles();
     useEffect(() => {
       getUsers({skip: 0, take: 25});
     }, []);

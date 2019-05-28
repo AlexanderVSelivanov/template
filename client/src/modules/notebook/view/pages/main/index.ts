@@ -1,5 +1,4 @@
 import {connect} from 'react-redux';
-import {withStyles} from '@material-ui/core';
 
 import StateType from 'types/StateType';
 import {
@@ -11,7 +10,6 @@ import {
 } from 'modules/notebook/actions';
 import {notesSelector, editNoteSelector} from 'modules/notebook/selectors';
 
-import styles from './styles';
 import page from './page';
 
 const mapStateToProps = (state: StateType) => ({
@@ -27,7 +25,6 @@ const dispatchProps = {
   deleteNoteById: deleteNoteByIdAction.request,
 };
 
-const connectedPage = connect(mapStateToProps, dispatchProps)(page);
-const withStylePage = withStyles(styles)(connectedPage);
+const container = connect(mapStateToProps, dispatchProps)(page);
 
-export default withStylePage;
+export default container;

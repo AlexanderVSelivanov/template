@@ -1,15 +1,15 @@
 import React from 'react';
-import {WithStyles} from '@material-ui/core';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import styles from './styles';
+import useStyles from './styles';
 
-type LoadingPageProps = WithStyles<typeof styles> & {
+type LoadingPageProps = {
   text?: string,
 };
 
-const LoadingPage: React.FC<LoadingPageProps> = ({text = 'Loading...', classes}) => {
+const LoadingPage: React.FC<LoadingPageProps> = ({text = 'Loading...'}) => {
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <CircularProgress className={classes.icon}/>

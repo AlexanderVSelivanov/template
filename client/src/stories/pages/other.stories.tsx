@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/react';
 import {Empty} from 'template-common';
 
 import {withTheme} from 'root/view/theme';
-import {LoginPageComponent} from 'modules/account/view/pages/login';
+import LoginPage from 'modules/account/view/pages/login/page';
 import LoadingPage from 'root/view/pages/loading';
 import {loginAction} from 'modules/account/actions';
 import ActionMock from 'stories/ActionMock';
@@ -18,7 +18,7 @@ storiesOf('Pages', module)
   .add(
     'Login page',
     () => withTheme(
-      <LoginPageComponent
+      <LoginPage
         error={Empty}
         login={payload => ActionMock(loginAction.request(payload))}
       />,

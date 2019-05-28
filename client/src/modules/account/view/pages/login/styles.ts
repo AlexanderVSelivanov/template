@@ -1,6 +1,7 @@
-import {createStyles, Theme} from '@material-ui/core';
+import {Theme} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     maxWidth: 480,
   },
@@ -15,6 +16,6 @@ const styles = (theme: Theme) => createStyles({
     color: theme.palette.error.main,
     fontWeight: 500,
   },
-});
+}));
 
-export default styles;
+export default useStyles;

@@ -1,12 +1,12 @@
 import React from 'react';
-import {WithStyles} from '@material-ui/core';
 
-import styles from './styles';
+import useStyles from './styles';
 import Typography from '@material-ui/core/Typography';
 
-type PageProps = WithStyles<typeof styles> & {};
+type PageProps = {};
 
-const Page: React.FC<PageProps> = ({classes}) => {
+const Page: React.FC<PageProps> = () => {
+  const classes = useStyles();
   return (
     <>
       <Typography variant="h3">template</Typography>

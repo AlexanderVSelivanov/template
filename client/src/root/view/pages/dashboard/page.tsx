@@ -1,11 +1,11 @@
 import React from 'react';
-import {WithStyles} from '@material-ui/core';
 
-import styles from './styles';
+import useStyles from './styles';
 
-type PageProps = WithStyles<typeof styles> & {};
+type PageProps = {};
 
-const Page: React.FC<PageProps> = ({classes}) => {
+const Page: React.FC<PageProps> = () => {
+  const classes = useStyles();
   return (
     <>
       Dashboard
