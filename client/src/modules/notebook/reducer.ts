@@ -4,15 +4,15 @@ import {RequestProperty, setSuccessProperty, setFailureProperty} from 'template-
 import * as actions from './actions';
 import initialState from './initialState';
 
-type NotesActionType = ActionType<typeof actions>;
+type NotebookActionType = ActionType<typeof actions>;
 
-// const reducer = createReducer<typeof initialState, NotesActionType>(initialState)
+// const reducer = createReducer<typeof initialState, NotebookActionType>(initialState)
 //   .handleAction(actions.createNoteAction.success, (state, action) => ({
 //     ...state,
 //     createdNote: setLoadProperty(action.payload),
 //   }));
 
-const reducer = (state = initialState, action: NotesActionType) => {
+const reducer = (state = initialState, action: NotebookActionType) => {
   switch (action.type) {
 
     case getType(actions.getNotesAction.request):

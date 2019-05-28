@@ -3,6 +3,7 @@ import {createStyles, Theme} from '@material-ui/core';
 const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
+    minHeight: 480,
   },
   // todo: move to theme
   toolbar: {
@@ -15,8 +16,8 @@ const styles = (theme: Theme) => createStyles({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    height: '100%',
   },
-
 });
 
 export default styles;

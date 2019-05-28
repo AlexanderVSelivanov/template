@@ -11,7 +11,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -78,23 +77,6 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({classes, logout, isDrawerOpen,
           template <sup>{VERSION}</sup>
         </Typography>
         <div className={classes.grow}/>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon/>
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-          />
-        </div>
-        <IconButton color="inherit">
-          <Badge badgeContent={1} color="secondary">
-            <MailIcon/>
-          </Badge>
-        </IconButton>
         <IconButton color="inherit">
           <Badge badgeContent={1} color="secondary">
             <NotificationsIcon/>

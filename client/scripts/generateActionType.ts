@@ -16,6 +16,14 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
     ],
   },
   {
+    name: 'calendar',
+    actions: [],
+  },
+  {
+    name: 'map',
+    actions: [],
+  },
+  {
     name: 'user',
     actions: [
       {type: 'getUsers', template: 'async'},
@@ -36,12 +44,10 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
     ],
   },
   {
-    name: 'calendar',
-    actions: [],
-  },
-  {
-    name: 'map',
-    actions: [],
+    name: 'notification',
+    actions: [
+      {type: 'notify', template: 'sync'},
+    ],
   },
   {
     name: 'report',
