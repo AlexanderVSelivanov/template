@@ -6,6 +6,9 @@ import initialState from './initialState';
 
 type UserActionType = ActionType<typeof actions>;
 
+// const reducer = createReducer<typeof initialState, UserActionType>(initialState)
+//   .handleAction()
+
 const reducer = (state = initialState, action: UserActionType) => {
   switch (action.type) {
     case getType(actions.loginAction.success):

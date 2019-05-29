@@ -1,7 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Fab, List, ListItem, ListItemText, TextField} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import {EntityList, NoteEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
+import {
+  EntityList,
+  NoteEntityDto,
+  EmptyOr,
+  AsyncProperty,
+  EditAsyncProperty,
+  isEmpty,
+  isRequestProperty,
+} from 'template-common';
 import {
   createNoteAction,
   deleteNoteByIdAction,
@@ -11,6 +19,7 @@ import {
 } from 'modules/notebook/actions';
 import DialogLayout from 'root/view/layouts/dialog';
 import useStyles from './styles';
+import InProgress from '../../../../../root/view/components/InProgress';
 
 type PageProps = {
   notes: EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
@@ -56,6 +65,9 @@ const Page: React.FC<PageProps> =
           />
         </div>
         <div className={classes.noteList}>
+          {
+            !isEmpty(notes) && isRequestProperty(notes) && <InProgress text="Notes loading..."/>
+          }
           <List>
             <ListItem button>
               <ListItemText primary="Note 1"/>
@@ -68,13 +80,13 @@ const Page: React.FC<PageProps> =
             </ListItem>
           </List>
         </div>
+
         <Fab className={classes.addButton} color="primary" onClick={() => setShowDialog(true)}>
           <AddIcon/>
         </Fab>
+
         <DialogLayout
-
           fullWidth
-
           open={showDialog}
           title="Create new note"
           actions={
@@ -91,6 +103,7 @@ const Page: React.FC<PageProps> =
             fullWidth
           />
         </DialogLayout>
+
       </div>
     );
   };

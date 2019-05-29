@@ -5,11 +5,13 @@ import {NoteEntityDto} from 'template-common';
 import {deleteNoteByIdAction} from '../actions';
 import {deleteNoteByIdEndPoint} from '../endPoints';
 import {tokenSelector} from '../../account/selectors';
+import {AxiosResponse} from 'axios';
 
 export default function* deleteNoteByIdSaga(action: ActionType<typeof deleteNoteByIdAction.request>) {
   try {
     const token = yield select(tokenSelector);
-    const note: NoteEntityDto = yield call(deleteNoteByIdEndPoint, action.payload, token);
+    const noteResponse: AxiosResponse<NoteEntityDto> = yield call(deleteNoteByIdEndPoint, action.payload, token);
+    const note = noteResponse.data;
     yield put(deleteNoteByIdAction.success(note));
   } catch (error) {
     yield put(deleteNoteByIdAction.failure(error));

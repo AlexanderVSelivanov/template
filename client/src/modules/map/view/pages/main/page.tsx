@@ -18,8 +18,8 @@ const Page: React.FC<PageProps> = () => {
     setViewport(DEFAULT_VIEWPORT);
   };
 
-  const onViewportChanged = (viewport: Viewport) => {
-    setViewport(viewport);
+  const onViewportChanged = (viewportValue: Viewport) => {
+    setViewport(viewportValue);
   };
   return (
     <Map
