@@ -4,8 +4,8 @@ import {IdDto, NoteDto, NoteEntityDto, EntityListRequest, EntityList} from 'temp
 
 const prefix = 'notebook';
 
-export const createNoteEndPoint = putEndPoint<NoteDto, NoteEntityDto>(`${prefix}`);
-export const deleteNoteByIdEndPoint = deleteEndPoint<IdDto, NoteEntityDto>(`${prefix}/{id}`);
-export const getNoteByIdEndPoint = getEndPoint<IdDto, NoteEntityDto>(`${prefix}/{id}`);
 export const getNotesEndPoint = getEndPoint<EntityListRequest, EntityList<NoteEntityDto>>(`${prefix}`);
+export const getNoteByIdEndPoint = getEndPoint<IdDto, NoteEntityDto>(`${prefix}/{id}`);
+export const createNoteEndPoint = putEndPoint<NoteDto, NoteEntityDto>(`${prefix}`);
 export const updateNoteByIdEndPoint = postEndPoint<NoteDto, NoteEntityDto>(`${prefix}/{id}`);
+export const deleteNoteByIdEndPoint = deleteEndPoint<IdDto, NoteEntityDto>(`${prefix}/{id}`);

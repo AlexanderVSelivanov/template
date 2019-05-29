@@ -1,11 +1,11 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
+import Dialog, {DialogProps} from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 
 import DialogActions from '@material-ui/core/DialogActions';
 
-type DialogLayoutProps = {
+type DialogLayoutProps = DialogProps & {
   open: boolean,
   title?: string,
   actions?: React.ReactNode | React.ReactNodeArray,

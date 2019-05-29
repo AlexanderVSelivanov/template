@@ -10,10 +10,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   editor: {
     flexGrow: 1,
   },
+  textField: {
+    minWidth: 150,
+    minHeight: 480,
+  },
   noteList: {
     maxWidth: 350,
     minWidth: 250,
     marginLeft: 25,
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
 }));
 

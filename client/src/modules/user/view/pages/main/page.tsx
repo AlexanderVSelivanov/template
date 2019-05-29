@@ -10,6 +10,7 @@ import {
 } from 'modules/user/actions';
 
 import useStyles from './styles';
+import {Table, TableBody, TableCell, TableFooter, TableHead, TableRow} from '@material-ui/core';
 
 type PageProps = {
   users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
@@ -37,7 +38,35 @@ const Page: React.FC<PageProps> =
     }, []);
     return (
       <>
-        User list and edit form
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell align="right">Email</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>John</TableCell>
+              <TableCell>Smith</TableCell>
+              <TableCell align="right">test@mail.com</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>John</TableCell>
+              <TableCell>Smith</TableCell>
+              <TableCell align="right">test@mail.com</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>John</TableCell>
+              <TableCell>Smith</TableCell>
+              <TableCell align="right">test@mail.com</TableCell>
+            </TableRow>
+          </TableBody>
+          <TableFooter>
+
+          </TableFooter>
+        </Table>
       </>
     );
   };

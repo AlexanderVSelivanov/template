@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-
+import {Button, Fab, List, ListItem, ListItemText, TextField} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import {EntityList, NoteEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
 import {
   createNoteAction,
@@ -8,12 +9,8 @@ import {
   getNotesAction,
   updateNoteByIdAction,
 } from 'modules/notebook/actions';
-
+import DialogLayout from 'root/view/layouts/dialog';
 import useStyles from './styles';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import TextField from '@material-ui/core/TextField';
 
 type PageProps = {
   notes: EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
@@ -38,9 +35,11 @@ const Page: React.FC<PageProps> =
    }) => {
     const classes = useStyles();
     const [noteText, setNoteText] = useState('');
-    // useEffect(() => {
-    //   getNotes({skip: 0, take: 25});
-    // }, []);
+    const [editNoteTitle, setEditNoteTitle] = useState('');
+    const [showDialog, setShowDialog] = useState(false);
+    useEffect(() => {
+      getNotes({skip: 0, take: 25});
+    }, []);
     return (
       <div className={classes.container}>
         <div className={classes.editor}>
@@ -48,6 +47,9 @@ const Page: React.FC<PageProps> =
             label="Note 1"
             value={noteText}
             onChange={event => setNoteText(event.target.value)}
+            inputProps={{
+              className: classes.textField,
+            }}
             variant="outlined"
             fullWidth
             multiline
@@ -66,6 +68,29 @@ const Page: React.FC<PageProps> =
             </ListItem>
           </List>
         </div>
+        <Fab className={classes.addButton} color="primary" onClick={() => setShowDialog(true)}>
+          <AddIcon/>
+        </Fab>
+        <DialogLayout
+
+          fullWidth
+
+          open={showDialog}
+          title="Create new note"
+          actions={
+            <>
+              <Button color="primary">Create</Button>
+              <Button color="secondary" onClick={() => setShowDialog(false)}>Cancel</Button>
+            </>
+          }
+        >
+          <TextField
+            label="Title"
+            value={editNoteTitle}
+            onChange={event => setEditNoteTitle(event.target.value)}
+            fullWidth
+          />
+        </DialogLayout>
       </div>
     );
   };
