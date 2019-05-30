@@ -6,7 +6,7 @@ import {withTheme} from 'root/view/theme';
 import LoginPage from 'modules/account/view/pages/login/page';
 import LoadingPage from 'root/view/pages/loading';
 import {loginAction} from 'modules/account/actions';
-import ActionMock from 'stories/ActionMock';
+import ActionMock from '../ActionMock';
 
 storiesOf('Pages', module)
   .add(

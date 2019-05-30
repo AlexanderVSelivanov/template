@@ -1,148 +1,75 @@
-import {
-  ActionType, createReducer, getType, Action,
-  TypeConstant, AsyncActionCreator, isActionOf, PayloadAction,
-} from 'typesafe-actions';
-import {
-  RequestProperty,
-  setSuccessProperty,
-  setFailureProperty,
-  AsyncProperty,
-  Empty,
-  EmptyOr,
-  ApplicationError,
-  CreatingProperty,setCreatedProperty,setCreatingFailedProperty,
-} from 'template-common';
-
+import {ActionType, createReducer, isActionOf} from 'typesafe-actions';
+import {isEmpty, isSuccessProperty} from 'template-common';
 import * as actions from './actions';
 import initialState from './initialState';
+import handleAsyncProperty from 'utils/handleAsyncProperty';
 
 type NotebookActionType = ActionType<typeof actions>;
+type NotebookStateType = typeof initialState;
 
-function handleAsyncProperty<T>(
-  action: PayloadAction<string, any | T | ApplicationError>,
-  asyncActionCreator: AsyncActionCreator<any, [string, T], [string, ApplicationError]>,
-): EmptyOr<AsyncProperty<T>> {
-  if (isActionOf(asyncActionCreator.request, action)) {
-    return RequestProperty;
-  }
-  if (isActionOf(asyncActionCreator.success, action)) {
-    return setSuccessProperty((action as PayloadAction<string, T>).payload);
-  }
-  if (isActionOf(asyncActionCreator.failure, action)) {
-    return setFailureProperty((action as PayloadAction<string, ApplicationError>).payload);
-  }
-  return Empty;
-}
-
-// function handleEditAsyncProperty<T>(
-//   action: PayloadAction<string, any | T | ApplicationError>,
-//   createAsyncActionCreator: AsyncActionCreator<any, [string, T], [string, ApplicationError]>,
-//   getAsyncActionCreator: AsyncActionCreator<any, [string, T], [string, ApplicationError]>,
-//   updateAsyncActionCreator: AsyncActionCreator<any, [string, T], [string, ApplicationError]>,
-//   deleteAsyncActionCreator: AsyncActionCreator<any, [string, T], [string, ApplicationError]>,
-// ): EmptyOr<AsyncProperty<T>> {
-//   if (isActionOf(asyncActionCreator.request, action)) {
-//     return RequestProperty;
-//   }
-//   if (isActionOf(asyncActionCreator.success, action)) {
-//     return setSuccessProperty((action as PayloadAction<string, T>).payload);
-//   }
-//   if (isActionOf(asyncActionCreator.failure, action)) {
-//     return setFailureProperty((action as PayloadAction<string, ApplicationError>).payload);
-//   }
-//
-//
-//
-//   return Empty;
-// }
-
-const reducer = createReducer<typeof initialState, NotebookActionType>(initialState)
+const reducer = createReducer<NotebookStateType, NotebookActionType>(initialState)
   .handleAction(
     [
       actions.getNotesAction.request,
       actions.getNotesAction.success,
       actions.getNotesAction.failure,
-    ], (state, action) => ({
+    ], (state, action): NotebookStateType => ({
       ...state,
       notes: handleAsyncProperty(action, actions.getNotesAction),
     }),
   )
-
   .handleAction(
-    actions.createNoteAction.request, state => ({
+    [
+      actions.getNoteByIdAction.request,
+      actions.getNoteByIdAction.success,
+      actions.getNoteByIdAction.failure,
+    ], (state, action): NotebookStateType => {
+      const notes = state.notes;
+      if (
+        isActionOf(actions.getNoteByIdAction.success, action)
+        && !isEmpty(notes)
+        && isSuccessProperty(notes)
+        && notes.value.items.length > 0
+      ) {
+        const index = notes.value.items.findIndex(note => note.id === action.payload.id);
+        notes.value.items[index] = action.payload;
+      }
+      return ({
+        ...state,
+        note: handleAsyncProperty(action, actions.getNoteByIdAction),
+        notes,
+      });
+    },
+  )
+  .handleAction(
+    [
+      actions.createNoteAction.request,
+      actions.createNoteAction.success,
+      actions.createNoteAction.failure,
+    ], (state, action): NotebookStateType => ({
       ...state,
-      editNote: CreatingProperty,
+      createdNote: handleAsyncProperty(action, actions.createNoteAction),
     }),
   )
   .handleAction(
-    actions.createNoteAction.success, (state, action) => ({
+    [
+      actions.updateNoteByIdAction.request,
+      actions.updateNoteByIdAction.success,
+      actions.updateNoteByIdAction.failure,
+    ], (state, action): NotebookStateType => ({
       ...state,
-      editNote: setCreatedProperty(action.payload),
+      updatedNote: handleAsyncProperty(action, actions.updateNoteByIdAction),
     }),
   )
   .handleAction(
-    actions.createNoteAction.failure, (state, action) => ({
+    [
+      actions.deleteNoteByIdAction.request,
+      actions.deleteNoteByIdAction.success,
+      actions.deleteNoteByIdAction.failure,
+    ], (state, action): NotebookStateType => ({
       ...state,
-      editNote: setCreatingFailedProperty(action.payload),
+      deletedNote: handleAsyncProperty(action, actions.deleteNoteByIdAction),
     }),
   );
-
-// const reducer = (state = initialState, action: NotebookActionType) => {
-//   test(action, actions.getNotesAction);
-//   switch (action.type) {
-//
-//     // todo implement helper for async action and AsyncProperty
-//     // case getType(actions.createNoteAction.request):
-//     //   return {
-//     //     ...state,
-//     //     editNote: Saving,
-//     //   };
-//     // case getType(actions.createNoteAction.success):
-//     //   return {
-//     //     ...state,
-//     //     editNote: setCreated(action.payload),
-//     //   };
-//     // case getType(actions.createNoteAction.failure):
-//     //   return {
-//     //     ...state,
-//     //     editNote: setError(action.payload),
-//     //   };
-//     //
-//     // case getType(actions.updateNoteByIdAction.request):
-//     //   return {
-//     //     ...state,
-//     //     editNote: Saving,
-//     //   };
-//     // case getType(actions.updateNoteByIdAction.success):
-//     //   return {
-//     //     ...state,
-//     //     editNote: setSaved(action.payload),
-//     //   };
-//     // case getType(actions.updateNoteByIdAction.failure):
-//     //   return {
-//     //     ...state,
-//     //     editNote: setError(action.payload),
-//     //   };
-//     //
-//     // case getType(actions.deleteNoteByIdAction.request):
-//     //   return {
-//     //     ...state,
-//     //     editNote: Saving,
-//     //   };
-//     // case getType(actions.deleteNoteByIdAction.success):
-//     //   return {
-//     //     ...state,
-//     //     editNote: setDeleted(action.payload),
-//     //   };
-//     // case getType(actions.deleteNoteByIdAction.failure):
-//     //   return {
-//     //     ...state,
-//     //     editNote: setError(action.payload),
-//     //   };
-//
-//     default:
-//       return state;
-//   }
-// };
 
 export default reducer;

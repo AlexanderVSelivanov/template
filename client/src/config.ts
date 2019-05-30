@@ -44,6 +44,13 @@ export const IS_PRODUCTION = NODE_ENV === Environment.Production;
 export const API_REQUEST_TIMEOUT = parseInt(process.env.REACT_APP_API_REQUEST_TIMEOUT || '', 10) || 0;
 
 /**
+ * API request debounce
+ * @type {number}
+ * @default 0 - no timeout
+ */
+export const API_REQUEST_DEBOUNCE = parseInt(process.env.REACT_APP_API_REQUEST_DEBOUNCE || '', 10) || 250;
+
+/**
  * Default logger level (can be change by local storage)
  * @type {string}
  */

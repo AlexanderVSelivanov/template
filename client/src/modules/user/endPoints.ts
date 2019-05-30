@@ -4,8 +4,8 @@ import {IdDto, UserDto, UserEntityDto, EntityListRequest, EntityList} from 'temp
 
 const prefix = 'user';
 
-export const createUserEndPoint = putEndPoint<UserDto, UserEntityDto>(`${prefix}`);
-export const deleteUserByIdEndPoint = deleteEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);
-export const getUserByIdEndPoint = getEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);
 export const getUsersEndPoint = getEndPoint<EntityListRequest, EntityList<UserEntityDto>>(`${prefix}`);
-export const updateUserByIdEndPoint = postEndPoint<UserDto, UserEntityDto>(`${prefix}/{id}`);
+export const getUserByIdEndPoint = getEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);
+export const createUserEndPoint = postEndPoint<UserDto, UserEntityDto>(`${prefix}`);
+export const updateUserByIdEndPoint = putEndPoint<UserDto, UserEntityDto>(`${prefix}/{id}`);
+export const deleteUserByIdEndPoint = deleteEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);

@@ -8,13 +8,22 @@ import {
   updateNoteByIdAction,
   deleteNoteByIdAction,
 } from 'modules/notebook/actions';
-import {notesSelector, editNoteSelector} from 'modules/notebook/selectors';
+import {
+  createdNoteSelector,
+  deletedNoteSelector,
+  noteSelector,
+  notesSelector,
+  updatedNoteSelector,
+} from 'modules/notebook/selectors';
 
 import page from './page';
 
 const mapStateToProps = (state: StateType) => ({
-  notebook: notesSelector(state),
-  editNote: editNoteSelector(state),
+  notes: notesSelector(state),
+  note: noteSelector(state),
+  createdNote: createdNoteSelector(state),
+  updatedNote: updatedNoteSelector(state),
+  deletedNote: deletedNoteSelector(state),
 });
 
 const dispatchProps = {

@@ -11,5 +11,5 @@ import {
 export const getNotesAction = getNotesCreator<EntityListRequest, EntityList<NoteEntityDto>, ApplicationError>();
 export const getNoteByIdAction = getNoteByIdCreator<IdDto, NoteEntityDto, ApplicationError>();
 export const createNoteAction = createNoteCreator<NoteDto, NoteEntityDto, ApplicationError>();
-export const updateNoteByIdAction = updateNoteByIdCreator<NoteDto, NoteEntityDto, ApplicationError>();
+export const updateNoteByIdAction = updateNoteByIdCreator<NoteEntityDto, NoteEntityDto, ApplicationError>();
 export const deleteNoteByIdAction = deleteNoteByIdCreator<IdDto, NoteEntityDto, ApplicationError>();

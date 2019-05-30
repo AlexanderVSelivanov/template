@@ -7,9 +7,9 @@ import UserEntity from './UserEntity';
 class NoteEntity extends BaseEntity {
   @Column()
   title!: string;
-  @Column()
+  @Column({nullable: true})
   text?: string;
-  @Column('simple-array')
+  @Column('simple-array', {nullable: true})
   tags?: string[];
 
   @ManyToOne(type => UserEntity, user => user.notes)

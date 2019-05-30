@@ -1,6 +1,6 @@
-import {takeLatest} from 'redux-saga/effects';
+import {takeLatest, debounce} from 'redux-saga/effects';
 import {getType} from 'typesafe-actions';
-
+import {API_REQUEST_DEBOUNCE} from '../../../config';
 import {
   createNoteAction,
   deleteNoteByIdAction,
@@ -8,7 +8,6 @@ import {
   getNotesAction,
   updateNoteByIdAction,
 } from '../actions';
-
 import createNoteSaga from './createNoteSaga';
 import deleteNoteByIdSaga from './deleteNoteByIdSaga';
 import getNoteByIdSaga from './getNoteByIdSaga';
@@ -20,5 +19,5 @@ export default function* accountSagas() {
   yield takeLatest(getType(deleteNoteByIdAction.request), deleteNoteByIdSaga);
   yield takeLatest(getType(getNoteByIdAction.request), getNoteByIdSaga);
   yield takeLatest(getType(getNotesAction.request), getNotesSaga);
-  yield takeLatest(getType(updateNoteByIdAction.request), updateNoteByIdSaga);
+  yield debounce(API_REQUEST_DEBOUNCE, getType(updateNoteByIdAction.request), updateNoteByIdSaga);
 }

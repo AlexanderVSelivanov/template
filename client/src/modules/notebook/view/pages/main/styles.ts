@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'row',
     height: '100%',
   },
+  note: {
+    flexGrow: 1,
+  },
   editor: {
     flexGrow: 1,
   },

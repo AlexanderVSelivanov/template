@@ -2,7 +2,7 @@ import React from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import {Theme} from '@material-ui/core';
+import {Theme, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   icon: {
     marginRight: theme.spacing(2),
+    fontSize: theme.spacing(2),
+  },
+  text: {
+    fontSize: theme.spacing(2),
   },
 }));
 
@@ -22,7 +26,7 @@ const InProgress: React.FC<{ text?: string }> = React.memo(({text = 'Loading...'
   return (
     <div className={classes.root}>
       <CircularProgress className={classes.icon}/>
-      {text}
+      {text && <Typography variant="caption" className={classes.text}>{text}</Typography>}
     </div>
   );
 });
