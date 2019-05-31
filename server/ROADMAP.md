@@ -1,0 +1,2 @@
+- use ts-node to build and start application
+- replace tslint by eslint
