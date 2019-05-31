@@ -7,6 +7,7 @@ import {
   createNoteAction,
   updateNoteByIdAction,
   deleteNoteByIdAction,
+  setUpdatedNoteEmptyAction,
 } from 'modules/notebook/actions';
 import {
   createdNoteSelector,
@@ -32,6 +33,7 @@ const dispatchProps = {
   createNote: createNoteAction.request,
   updateNoteById: updateNoteByIdAction.request,
   deleteNoteById: deleteNoteByIdAction.request,
+  setUpdatedNoteEmpty: setUpdatedNoteEmptyAction,
 };
 
 const container = connect(mapStateToProps, dispatchProps)(page);

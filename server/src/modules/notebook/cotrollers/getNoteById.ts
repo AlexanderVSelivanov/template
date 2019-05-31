@@ -3,12 +3,12 @@ import noteRepositoryFactory from '../../../store/repository/noteRepository';
 import {badRequest, Controller, notFound, ok} from '../../../utils/ControllerBuilder';
 import noteToNoteDto from '../../../types/mapper/noteToNoteDto';
 
-const getNoteByIdController: Controller<undefined, NoteEntityDto, { id: Id }> = async ({params}) => {
-  if (params && params.id) {
+const getNoteByIdController: Controller<{ id: Id }, NoteEntityDto> = async ({input}) => {
+  if (input && input.id) {
     const noteRepository = noteRepositoryFactory();
-    const note = await noteRepository.findOne(params.id);
+    const note = await noteRepository.findOne(input.id);
     if (note) {
-      return ok(noteToNoteDto(note));
+      return ok(noteToNoteDto(note, true));
     }
     return notFound('Note not found');
   }

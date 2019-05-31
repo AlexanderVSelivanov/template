@@ -38,9 +38,13 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
     actions: [
       {type: 'getNotes', template: 'async'},
       {type: 'getNoteById', template: 'async'},
+      {type: 'setNoteEmpty', template: 'sync'},
       {type: 'createNote', template: 'async'},
+      {type: 'setCreatedNoteEmpty', template: 'sync'},
       {type: 'updateNoteById', template: 'async'},
+      {type: 'setUpdatedNoteEmpty', template: 'sync'},
       {type: 'deleteNoteById', template: 'async'},
+      {type: 'setDeletedNoteEmpty', template: 'sync'},
     ],
   },
   {

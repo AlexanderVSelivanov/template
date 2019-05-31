@@ -8,9 +8,9 @@ const getUsersController: Controller<EntityListRequest, EntityList<UserEntityDto
   const [users, count] = await userRepository
     .findAndCount({skip: input.skip, take: input.take});
   const entityList: EntityList<UserEntityDto> = {
-      count,
-      items: users.map(user => userToUserDto(user)),
-    };
+    count,
+    items: users.map(user => userToUserDto(user)),
+  };
   return ok(entityList);
 };
 

@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-
+import React, {useEffect, useState} from 'react';
 import {EntityList, UserEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
 import {
   createUserAction,
@@ -8,9 +7,21 @@ import {
   getUsersAction,
   updateUserByIdAction,
 } from 'modules/user/actions';
-
+import {
+  Button,
+  Fab,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TextField,
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import DialogLayout from '../../../../../root/view/layouts/dialog';
 import useStyles from './styles';
-import {Table, TableBody, TableCell, TableFooter, TableHead, TableRow} from '@material-ui/core';
 
 type PageProps = {
   users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
@@ -33,9 +44,18 @@ const Page: React.FC<PageProps> =
      deleteUserById,
    }) => {
     const classes = useStyles();
+    const [showEditUserDialog, setShowEditUserDialog] = useState(false);
     useEffect(() => {
       getUsers({skip: 0, take: 25});
     }, []);
+
+    const handleOpenCreateUserDialog = () => {
+      setShowEditUserDialog(true);
+    };
+    const handleCreateUser = () => {
+
+    };
+
     return (
       <>
         <Table>
@@ -67,6 +87,52 @@ const Page: React.FC<PageProps> =
 
           </TableFooter>
         </Table>
+
+
+        <Fab className={classes.addButton} color="primary" onClick={handleOpenCreateUserDialog}>
+          <AddIcon/>
+        </Fab>
+
+        {/*todo: use route to add/edit user*/}
+        <DialogLayout
+          fullWidth
+          open={showEditUserDialog}
+          title="Create new user"
+          actions={
+            <>
+              <Button color="primary" onClick={handleCreateUser}>Create</Button>
+              <Button color="secondary" onClick={() => setShowEditUserDialog(false)}>Cancel</Button>
+            </>
+          }
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                label="First Name"
+                // value={}
+                // onChange={event => set(event.target.value)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={6}>
+
+              <TextField
+                label="Last Name"
+                // value={}
+                // onChange={event => set(event.target.value)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Email"
+                // value={}
+                // onChange={event => set(event.target.value)}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </DialogLayout>
       </>
     );
   };

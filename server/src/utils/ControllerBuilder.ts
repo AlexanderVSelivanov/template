@@ -27,23 +27,22 @@ const defaultControllerSetting: ControllerSetting = {
   authorize: true,
 };
 
-export type Controller<In, Out, Params = undefined> =
-  (settings: { input: In, params?: Params, account?: AccountEntity }) => Promise<ControllerOutput<Out>>;
+export type Controller<In, Out> =
+  (settings: { input: In, account?: AccountEntity }) => Promise<ControllerOutput<Out>>;
 
-export default class ControllerBuilder<In, Out, Params = undefined> {
+export default class ControllerBuilder<In, Out> {
 
-  private readonly controller: Controller<In, Out, Params>;
+  private readonly controller: Controller<In, Out>;
   private readonly settings: ControllerSetting;
 
-  constructor(controller: Controller<In, Out, Params>, settings: ControllerSetting = defaultControllerSetting) {
+  constructor(controller: Controller<In, Out>, settings: ControllerSetting = defaultControllerSetting) {
     this.controller = controller;
     this.settings = settings;
   }
 
   build = () => async (request: Request, respond: Response, next: NextFunction) => {
     try {
-      const input = request.body as In;
-      const params = request.params as Params;
+      const input = {...request.body, ...request.params, ...request.query} as In;
       if (this.settings.authorize) {
         const token = parseToken(request);
         if (token) {
@@ -56,7 +55,7 @@ export default class ControllerBuilder<In, Out, Params = undefined> {
             const accountRepository = accountRepositoryFactory();
             const account = await accountRepository.findOne(tokenPayload.accountId, {relations: ['user']});
             if (account) {
-              const output = await this.controller({input, params, account});
+              const output = await this.controller({input, account});
               respond.status(output.status).send(output.data ? output.data : output.message);
             } else {
               respond.sendStatus(ResponseStatus.Unauthorized);
@@ -66,21 +65,21 @@ export default class ControllerBuilder<In, Out, Params = undefined> {
           respond.sendStatus(ResponseStatus.Unauthorized);
         }
       } else {
-        const output = await this.controller({input, params});
+        const output = await this.controller({input});
         respond.status(output.status).send(output.data ? output.data : output.message);
       }
     } catch (error) {
       next(error);
     }
-  };
+  }
 }
 
-export const simplePublicController = <In, Out, Params = undefined>(controller: Controller<In, Out, Params>) => {
+export const simplePublicController = <In, Out>(controller: Controller<In, Out>) => {
   const builder = new ControllerBuilder(controller, {authorize: false});
   return builder.build();
 };
 
-export const simplePrivetController = <In, Out, Params = undefined>(controller: Controller<In, Out, Params>) => {
+export const simplePrivetController = <In, Out>(controller: Controller<In, Out>) => {
   const builder = new ControllerBuilder(controller, {authorize: true});
   return builder.build();
 };

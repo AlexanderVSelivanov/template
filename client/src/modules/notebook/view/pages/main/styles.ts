@@ -22,8 +22,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     minWidth: 250,
     marginLeft: 25,
   },
+  pagination: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '&>*': {
+      marginLeft: 5,
+      marginRight: 5,
+    },
+  },
   addButton: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },

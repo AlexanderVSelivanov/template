@@ -35,7 +35,8 @@ const endPoint = <EndPointInput extends InputType, EndPointOutput>(url: string, 
       baseURL: API_URL,
       timeout: API_REQUEST_TIMEOUT,
       headers: token ? {...headers, 'Authorization': 'Bearer ' + token} : headers,
-      data: JSON.stringify(params),
+      params: method === RequestMethod.GET ? params : undefined,
+      data: method !== RequestMethod.GET ? JSON.stringify(params) : undefined,
     });
 
 export const getEndPoint = <In extends InputType, Out>(url: string) => endPoint<In, Out>(url, RequestMethod.GET);

@@ -1,6 +1,18 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Fab, Grid, List, ListItem, ListItemText, TextField, Typography} from '@material-ui/core';
+import {
+  Fab,
+  Grid, IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import {
   EntityList,
   NoteEntityDto,
@@ -16,7 +28,7 @@ import {
   createNoteAction,
   deleteNoteByIdAction,
   getNoteByIdAction,
-  getNotesAction,
+  getNotesAction, setUpdatedNoteEmptyAction,
   updateNoteByIdAction,
 } from 'modules/notebook/actions';
 import useStyles from './styles';
@@ -34,6 +46,7 @@ type PageProps = {
   createNote: typeof createNoteAction.request,
   updateNoteById: typeof updateNoteByIdAction.request,
   deleteNoteById: typeof deleteNoteByIdAction.request,
+  setUpdatedNoteEmpty: typeof setUpdatedNoteEmptyAction,
 };
 
 const Page: React.FC<PageProps> =
@@ -48,26 +61,32 @@ const Page: React.FC<PageProps> =
      createNote,
      updateNoteById,
      deleteNoteById,
+     setUpdatedNoteEmpty,
    }) => {
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [countNotes, setCountNotes] = useState(25);
+    const [notesPerPage, setNotesPerPage] = useState(20);
     const [selectedNote, setSelectedNote] = useState<EmptyOr<NoteEntityDto>>(Empty);
 
     const reloadNotes = useCallback(() => {
-      getNotes({skip: page, take: countNotes});
-    }, [page, countNotes]);
+      getNotes({skip: page * notesPerPage, take: notesPerPage});
+    }, [page, notesPerPage]);
 
     useEffect(() => {
       reloadNotes();
     }, []);
     useEffect(() => {
+      reloadNotes();
+    }, [page]);
+    useEffect(() => {
       if (isEmpty(selectedNote) && !isEmpty(notes) && isSuccessProperty(notes) && notes.value.items.length > 0) {
-        setSelectedNote(notes.value.items[0]);
+        const firstNote = notes.value.items[0];
+        getNoteById({id: firstNote.id});
       }
     }, [notes]);
     useEffect(() => {
-      if (!isEmpty(selectedNote) && !isEmpty(note) && isSuccessProperty(note)) {
+      if (!isEmpty(note) && isSuccessProperty(note)) {
+        setUpdatedNoteEmpty();
         setSelectedNote(note.value);
       }
     }, [note]);
@@ -77,6 +96,14 @@ const Page: React.FC<PageProps> =
       }
     }, [createdNote]);
     useEffect(() => {
+      if (!isEmpty(selectedNote) && !isEmpty(updatedNote) && isSuccessProperty(updatedNote)) {
+        setSelectedNote({
+          ...selectedNote,
+          updated: updatedNote.value.updated,
+        });
+      }
+    }, [updatedNote]);
+    useEffect(() => {
       if (!isEmpty(deletedNote) && isSuccessProperty(deletedNote)) {
         reloadNotes();
       }
@@ -85,21 +112,40 @@ const Page: React.FC<PageProps> =
     const handleCreateNote = () => {
       createNote({title: 'New Note'});
     };
-    const handleNoteClick = (selectedNote: NoteEntityDto) => {
-      getNoteById({id: selectedNote.id});
+    const handleNoteClick = (noteItem: NoteEntityDto) => {
+      if (isEmpty(selectedNote) || selectedNote.id !== noteItem.id) {
+        getNoteById({id: noteItem.id});
+      }
+    };
+    const handleNoteDelete = (noteItem: NoteEntityDto) => {
+      if (!isEmpty(selectedNote) && selectedNote.id === noteItem.id) {
+        setSelectedNote(Empty);
+      }
+      deleteNoteById({id: noteItem.id});
+    };
+
+    const handleNavigateBefore = () => {
+      if (page > 0) {
+        setPage(page - 1);
+      }
+    };
+    const handleNavigateNext = () => {
+      setPage(page + 1);
     };
 
     const updateSelectedNote = (
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
       property: 'title' | 'text' | 'tags',
     ) => {
-      const value = event.target.value;
-      console.log(value);
-      console.log(selectedNote);
-      //
-      // if (!isEmpty(selectedNote)) {
-      //   updateNoteById({...selectedNote, text: noteText});
-      // }
+      if (!isEmpty(selectedNote)) {
+        const value = event.target.value;
+        const newNote: NoteEntityDto = {
+          ...selectedNote,
+          [property]: value,
+        };
+        setSelectedNote(newNote);
+        updateNoteById(newNote);
+      }
     };
 
     const disableSelectNote = useMemo(() => {
@@ -109,8 +155,12 @@ const Page: React.FC<PageProps> =
     return (
       <div className={classes.container}>
         {
+          isEmpty(notes)
+          && <Typography className={classes.note}>There aren't any notes yet.</Typography>
+        }
+        {
           isEmpty(selectedNote)
-          && <Typography className={classes.note}>Select or create note</Typography>
+          && <Typography className={classes.note}>No selected note.</Typography>
         }
         {
           !isEmpty(selectedNote) && (
@@ -152,16 +202,20 @@ const Page: React.FC<PageProps> =
               <Grid item xs={4}>
                 <Typography>Updated: {new Date(selectedNote.updated).toLocaleString()}</Typography>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={2}>
+                {!isEmpty(note) && isRequestProperty(note) && <InProgress text="Loading..."/>}
+                {!isEmpty(note) && isSuccessProperty(note) && <Typography>Loaded</Typography>}
                 {
-                  !isEmpty(note) && isRequestProperty(note)
-                  && <div className={classes.note}><InProgress text="Loading note..."/></div>
+                  !isEmpty(note) && isFailureProperty(note)
+                  && <Typography>Error: {note.error.message}</Typography>
                 }
-                {!isEmpty(updatedNote) && isRequestProperty(updatedNote) && <Typography>Saving...</Typography>}
+              </Grid>
+              <Grid item xs={2}>
+                {!isEmpty(updatedNote) && isRequestProperty(updatedNote) && <InProgress text="Saving..."/>}
                 {!isEmpty(updatedNote) && isSuccessProperty(updatedNote) && <Typography>Saved</Typography>}
                 {
                   !isEmpty(updatedNote) && isFailureProperty(updatedNote)
-                  && <Typography>Error saving: {updatedNote.error.message}</Typography>
+                  && <Typography>Error: {updatedNote.error.message}</Typography>
                 }
               </Grid>
             </Grid>
@@ -172,45 +226,63 @@ const Page: React.FC<PageProps> =
           {
             !isEmpty(notes) && isRequestProperty(notes) && <InProgress text="Notes loading..."/>
           }
-          <List>
-            {
-              !isEmpty(notes) && isSuccessProperty(notes) && notes.value.items.map(noteItem => (
-                  <ListItem
-                    key={noteItem.id}
-                    onClick={() => handleNoteClick(noteItem)}
-                    selected={Boolean(selectedNote && selectedNote.id === noteItem.id)}
-                    button
+          {
+            !isEmpty(notes) && isSuccessProperty(notes) && (
+              <>
+                <div className={classes.pagination}>
+                  <IconButton
+                    edge="end"
+                    aria-label="Before"
+                    onClick={handleNavigateBefore}
+                    disabled={page === 0}
                   >
-                    <ListItemText primary={noteItem.title} secondary={noteItem.tags}/>
-                  </ListItem>
-                ),
-              )
-            }
-          </List>
+                    <NavigateBeforeIcon/>
+                  </IconButton>
+                  <Typography>
+                    {page * notesPerPage + 1}-{page * notesPerPage + notes.value.items.length} of {notes.value.count}
+                  </Typography>
+                  <IconButton
+                    edge="end"
+                    aria-label="Next"
+                    onClick={handleNavigateNext}
+                    disabled={page * notesPerPage + notes.value.items.length >= notes.value.count}
+                  >
+                    <NavigateNextIcon/>
+                  </IconButton>
+                </div>
+                <List>
+                  {
+                    notes.value.items.map(noteItem => (
+                        <ListItem
+                          key={noteItem.id}
+                          onClick={() => handleNoteClick(noteItem)}
+                          selected={Boolean(selectedNote && selectedNote.id === noteItem.id)}
+                          disabled={!isEmpty(note) && isRequestProperty(note)}
+                          button
+                        >
+                          <ListItemText
+                            primary={noteItem.title}
+                            secondary={noteItem.tags && noteItem.tags.join ? noteItem.tags.join(', ') : noteItem.tags}
+                          />
+                          <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="Delete" onClick={() => handleNoteDelete(noteItem)}>
+                              <DeleteIcon/>
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      ),
+                    )
+                  }
+                </List>
+              </>
+            )
+          }
+
         </div>
 
         <Fab className={classes.addButton} color="primary" onClick={handleCreateNote}>
           <AddIcon/>
         </Fab>
-
-        {/*<DialogLayout*/}
-        {/*  fullWidth*/}
-        {/*  open={showDialog}*/}
-        {/*  title="Create new note"*/}
-        {/*  actions={*/}
-        {/*    <>*/}
-        {/*      <Button color="primary" onClick={handleCreateNote}>Create</Button>*/}
-        {/*      <Button color="secondary" onClick={() => setShowDialog(false)}>Cancel</Button>*/}
-        {/*    </>*/}
-        {/*  }*/}
-        {/*>*/}
-        {/*  <TextField*/}
-        {/*    label="Title"*/}
-        {/*    value={editNoteTitle}*/}
-        {/*    onChange={event => setEditNoteTitle(event.target.value)}*/}
-        {/*    fullWidth*/}
-        {/*  />*/}
-        {/*</DialogLayout>*/}
 
       </div>
     );
