@@ -4,12 +4,12 @@ import StateType from 'types/StateType';
 
 import Root from './Root';
 import {errorSelector, isApplicationInitializedSelector} from '../selectors';
-import {accountUserSelector} from 'modules/account/selectors';
+import {currentAccountSelector} from 'modules/account/selectors';
 import {logoutAction} from 'modules/account/actions';
 
 const mapStateToProps = (state: StateType) => ({
   isApplicationInitialized: isApplicationInitializedSelector(state),
-  accountUser: accountUserSelector(state),
+  account: currentAccountSelector(state),
   error: errorSelector(state),
 });
 

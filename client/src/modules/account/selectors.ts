@@ -4,5 +4,5 @@ import StateType from 'types/StateType';
 
 const accountState = (state: StateType) => state.account;
 
-export const accountUserSelector = createSelector(accountState, state => state.user);
+export const currentAccountSelector = createSelector(accountState, state => state.currentAccount);
 export const tokenSelector = createSelector(accountState, state => state.token);

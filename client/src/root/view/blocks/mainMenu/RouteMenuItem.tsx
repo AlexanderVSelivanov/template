@@ -12,8 +12,12 @@ type RouteMenuItemProps = RouteComponentProps & {
   icon: ReactElement,
 };
 
-const RouteMenuItem: React.FC<RouteMenuItemProps> = ({icon, route, history}) => (
-  <ListItem button onClick={() => history.push(route.path)}>
+const RouteMenuItem: React.FC<RouteMenuItemProps> = ({icon, route, history, location}) => (
+  <ListItem
+    button
+    onClick={() => history.push(route.path)}
+    selected={location.pathname.includes(route.path)}
+  >
     <ListItemIcon>{icon}</ListItemIcon>
     <ListItemText primary={route.title}/>
   </ListItem>

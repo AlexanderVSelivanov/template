@@ -7,14 +7,24 @@ import {
   createUserAction,
   updateUserByIdAction,
   deleteUserByIdAction,
+  setUpdatedUserEmptyAction,
 } from 'modules/user/actions';
-import {usersSelector, editUserSelector} from 'modules/user/selectors';
+import {
+  usersSelector,
+  userSelector,
+  createdUserSelector,
+  updatedUserSelector,
+  deletedUserSelector,
+} from 'modules/user/selectors';
 
 import page from './page';
 
 const mapStateToProps = (state: StateType) => ({
   users: usersSelector(state),
-  editUser: editUserSelector(state),
+  user: userSelector(state),
+  createdUser: createdUserSelector(state),
+  updatedUser: updatedUserSelector(state),
+  deletedUser: deletedUserSelector(state),
 });
 
 const dispatchProps = {
@@ -23,6 +33,7 @@ const dispatchProps = {
   createUser: createUserAction.request,
   updateUserById: updateUserByIdAction.request,
   deleteUserById: deleteUserByIdAction.request,
+  setUpdatedUserEmpty: setUpdatedUserEmptyAction,
 };
 
 const container = connect(mapStateToProps, dispatchProps)(page);

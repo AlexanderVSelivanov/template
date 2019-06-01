@@ -12,7 +12,7 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
     actions: [
       {type: 'login', template: 'async'},
       {type: 'logout', template: 'async'},
-      {type: 'getAccountUser', template: 'async'},
+      {type: 'getAccount', template: 'async'},
     ],
   },
   {
@@ -28,9 +28,13 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
     actions: [
       {type: 'getUsers', template: 'async'},
       {type: 'getUserById', template: 'async'},
+      {type: 'setUserEmpty', template: 'sync'},
       {type: 'createUser', template: 'async'},
+      {type: 'setCreatedUserEmpty', template: 'sync'},
       {type: 'updateUserById', template: 'async'},
+      {type: 'setUpdatedUserEmpty', template: 'sync'},
       {type: 'deleteUserById', template: 'async'},
+      {type: 'setDeletedUserEmpty', template: 'sync'},
     ],
   },
   {

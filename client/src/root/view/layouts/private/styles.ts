@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(3),
     height: '100%',
   },
+  contentBlock: {
+    padding: theme.spacing(2),
+  },
 }));
 
 export default useStyles;

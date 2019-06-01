@@ -6,6 +6,7 @@ import Header from '../../blocks/header';
 import MainMenu from '../../blocks/mainMenu';
 
 import useStyles from './styles';
+import {Paper} from '@material-ui/core';
 
 type PrivateLayoutProps = {
   logout: typeof logoutAction.request,
@@ -28,7 +29,9 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({logout, children}) => {
       />
       <main className={classes.content}>
         <div className={classes.toolbar}/>
-        {children}
+        <Paper className={classes.contentBlock}>
+          {children}
+        </Paper>
       </main>
     </div>
   );

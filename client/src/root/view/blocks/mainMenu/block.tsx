@@ -8,19 +8,19 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import LayersIcon from '@material-ui/icons/Layers';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
+import CalendarIcon from '@material-ui/icons/Event';
+import NotebookIcon from '@material-ui/icons/Create';
+import UserIcon from '@material-ui/icons/People';
+import MapIcon from '@material-ui/icons/Layers';
+import ReportIcon from '@material-ui/icons/Equalizer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpIcon from '@material-ui/icons/Help';
 
 import RouteMenuItem from './RouteMenuItem';
 import routes from 'root/routes';
 
-import useStyles from './styles';;
+import useStyles from './styles';
 
 type MainMenuBlockProps = {
   isDrawerOpen: boolean,
@@ -57,11 +57,11 @@ const MainMenuBlock: React.FC<MainMenuBlockProps> = ({isDrawerOpen, setIsDrawerO
       <Divider/>
       <List>
         <RouteMenuItem route={routes.dashboard} icon={<DashboardIcon/>}/>
-        <RouteMenuItem route={routes.calendar} icon={<CalendarTodayIcon/>}/>
-        <RouteMenuItem route={routes.notebook} icon={<FormatAlignJustifyIcon/>}/>
-        <RouteMenuItem route={routes.user} icon={<AssignmentIcon/>}/>
-        <RouteMenuItem route={routes.map} icon={<LayersIcon/>}/>
-        <RouteMenuItem route={routes.reports} icon={<EqualizerIcon/>}/>
+        <RouteMenuItem route={routes.calendar} icon={<CalendarIcon/>}/>
+        <RouteMenuItem route={routes.notebook} icon={<NotebookIcon/>}/>
+        <RouteMenuItem route={routes.user} icon={<UserIcon/>}/>
+        <RouteMenuItem route={routes.map} icon={<MapIcon/>}/>
+        <RouteMenuItem route={routes.reports} icon={<ReportIcon/>}/>
       </List>
       <Divider/>
       <List>

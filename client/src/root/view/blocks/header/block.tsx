@@ -14,15 +14,17 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {VERSION} from 'config';
 import {logoutAction} from 'modules/account/actions';
 
-import useStyles from './styles';;
+import useStyles from './styles';
+import {RouteComponentProps, withRouter} from 'react-router';
+import routes from '../../../routes';
 
-type HeaderBlockProps = {
+type HeaderBlockProps = RouteComponentProps & {
   isDrawerOpen: boolean,
   setIsDrawerOpen: (value: boolean) => void,
   logout: typeof logoutAction.request,
 };
 
-const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDrawerOpen}) => {
+const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDrawerOpen, history}) => {
 
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -40,6 +42,11 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDra
     setProfileMenuAnchorEl(null);
   }
 
+  function handleOpenAccount() {
+    history.push(routes.settingsAccount.path);
+    handleProfileMenuClose();
+  }
+
   const isProfileMenuOpen = Boolean(profileMenuAnchorEl);
 
   const renderMenu = (
@@ -50,7 +57,7 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDra
       open={isProfileMenuOpen}
       onClose={handleProfileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleOpenAccount}>Account</MenuItem>
       <MenuItem onClick={() => logout() && handleProfileMenuClose}>Logout</MenuItem>
     </Menu>
   );
@@ -95,4 +102,4 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDra
   );
 };
 
-export default HeaderBlock;
+export default withRouter(HeaderBlock);

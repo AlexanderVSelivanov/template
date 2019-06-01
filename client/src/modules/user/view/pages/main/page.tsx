@@ -1,10 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {EntityList, UserEntityDto, EmptyOr, AsyncProperty, EditAsyncProperty} from 'template-common';
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+  EntityList,
+  UserEntityDto,
+  EmptyOr,
+  AsyncProperty,
+  isEmpty,
+  isRequestProperty,
+  isSuccessProperty,
+} from 'template-common';
 import {
   createUserAction,
   deleteUserByIdAction,
   getUserByIdAction,
-  getUsersAction,
+  getUsersAction, setUpdatedUserEmptyAction,
   updateUserByIdAction,
 } from 'modules/user/actions';
 import {
@@ -17,36 +25,53 @@ import {
   TableFooter,
   TableHead,
   TableRow,
-  TextField,
+  TextField, Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DialogLayout from '../../../../../root/view/layouts/dialog';
 import useStyles from './styles';
+import InProgress from '../../../../../root/view/components/InProgress';
 
 type PageProps = {
   users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
-  editUser: EmptyOr<EditAsyncProperty<UserEntityDto>>,
+  user: EmptyOr<AsyncProperty<UserEntityDto>>,
+  createdUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+  updatedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+  deletedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+
   getUsers: typeof getUsersAction.request,
   getUserById: typeof getUserByIdAction.request,
   createUser: typeof createUserAction.request,
   updateUserById: typeof updateUserByIdAction.request,
   deleteUserById: typeof deleteUserByIdAction.request,
+  setUpdateUserEmpty: typeof setUpdatedUserEmptyAction,
 };
 
 const Page: React.FC<PageProps> =
   ({
      users,
-     editUser,
+     user,
+     createdUser,
+     updatedUser,
+     deletedUser,
      getUsers,
      getUserById,
      createUser,
      updateUserById,
      deleteUserById,
+     setUpdateUserEmpty,
    }) => {
     const classes = useStyles();
+    const [page, setPage] = useState(0);
+    const [usersPerPage, setUsersPerPage] = useState(20);
     const [showEditUserDialog, setShowEditUserDialog] = useState(false);
+
+    const reloadUsers = useCallback(() => {
+      getUsers({skip: page * usersPerPage, take: usersPerPage});
+    }, [page, usersPerPage]);
+
     useEffect(() => {
-      getUsers({skip: 0, take: 25});
+      reloadUsers();
     }, []);
 
     const handleOpenCreateUserDialog = () => {
@@ -58,36 +83,45 @@ const Page: React.FC<PageProps> =
 
     return (
       <>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>John</TableCell>
-              <TableCell>Smith</TableCell>
-              <TableCell align="right">test@mail.com</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>John</TableCell>
-              <TableCell>Smith</TableCell>
-              <TableCell align="right">test@mail.com</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>John</TableCell>
-              <TableCell>Smith</TableCell>
-              <TableCell align="right">test@mail.com</TableCell>
-            </TableRow>
-          </TableBody>
-          <TableFooter>
+        {
+          isEmpty(users) && <Typography>There aren't any users yet.</Typography>
+        }
+        {
+          !isEmpty(users) && isRequestProperty(users) && <InProgress text="Users loading..."/>
+        }
+        {
+          !isEmpty(users) && isSuccessProperty(users) && (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell align="right">Email</TableCell>
+                  <TableCell align="right">Created</TableCell>
+                  <TableCell align="right">Updated</TableCell>
+                  <TableCell align="right">Disable</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  users.value.items.map(userItem => (
+                    <TableRow key={userItem.id}>
+                      <TableCell>{userItem.firstName}</TableCell>
+                      <TableCell>{userItem.lastName}</TableCell>
+                      <TableCell align="right">{userItem.email}</TableCell>
+                      <TableCell align="right">{new Date(userItem.created).toLocaleString()}</TableCell>
+                      <TableCell align="right">{new Date(userItem.updated).toLocaleString()}</TableCell>
+                      <TableCell align="right">{userItem.disable ? 'disable' : 'active'}</TableCell>
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+              <TableFooter>
 
-          </TableFooter>
-        </Table>
-
+              </TableFooter>
+            </Table>
+          )
+        }
 
         <Fab className={classes.addButton} color="primary" onClick={handleOpenCreateUserDialog}>
           <AddIcon/>

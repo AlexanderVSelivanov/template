@@ -28,15 +28,15 @@ const reducer = (state = initialState, action: UserActionType) => {
         token: Empty,
       };
 
-    case getType(actions.getAccountUserAction.success):
+    case getType(actions.getAccountAction.success):
       return {
         ...state,
-        user: action.payload,
+        currentAccount: action.payload,
       };
-    case getType(actions.getAccountUserAction.failure):
+    case getType(actions.getAccountAction.failure):
       return {
         ...state,
-        user: Empty,
+        currentAccount: Empty,
       };
 
     default:

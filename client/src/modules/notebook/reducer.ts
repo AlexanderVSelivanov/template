@@ -1,8 +1,8 @@
 import {ActionType, createReducer, isActionOf} from 'typesafe-actions';
 import {Empty, isEmpty, isSuccessProperty} from 'template-common';
+import handleAsyncProperty from 'utils/handleAsyncProperty';
 import * as actions from './actions';
 import initialState from './initialState';
-import handleAsyncProperty from 'utils/handleAsyncProperty';
 
 type NotebookActionType = ActionType<typeof actions>;
 type NotebookStateType = typeof initialState;
