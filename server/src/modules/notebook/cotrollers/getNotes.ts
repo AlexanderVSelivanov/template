@@ -1,7 +1,7 @@
 import noteRepositoryFactory from '../../../store/repository/noteRepository';
 import {EntityListRequest, EntityList, NoteEntityDto} from 'template-common';
 import {Controller, ok} from '../../../utils/ControllerBuilder';
-import noteToNoteDto from '../../../types/mapper/noteToNoteDto';
+import noteToNoteDto from '../../../types/mappers/noteToNoteDto';
 
 const getNotesController: Controller<EntityListRequest, EntityList<NoteEntityDto>> = async ({input}) => {
   const noteRepository = noteRepositoryFactory();

@@ -1,7 +1,7 @@
 import userRepositoryFactory from '../../../store/repository/userRepository';
 import {EntityList, EntityListRequest, UserEntityDto} from 'template-common';
 import {Controller, ok} from '../../../utils/ControllerBuilder';
-import userToUserDto from '../../../types/mapper/userToUserDto';
+import userToUserDto from '../../../types/mappers/userToUserDto';
 
 const getUsersController: Controller<EntityListRequest, EntityList<UserEntityDto>> = async ({input}) => {
   const userRepository = userRepositoryFactory();

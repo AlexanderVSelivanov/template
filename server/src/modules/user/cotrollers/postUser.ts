@@ -4,7 +4,7 @@ import {UserDto, UserEntityDto} from 'template-common';
 import UserEntity from '../../../store/entities/UserEntity';
 import AccountEntity from '../../../store/entities/AccountEntity';
 import {Controller, ok} from '../../../utils/ControllerBuilder';
-import userToUserDto from '../../../types/mapper/userToUserDto';
+import userToUserDto from '../../../types/mappers/userToUserDto';
 
 const postUserController: Controller<UserDto, UserEntityDto> = async ({input}) => {
   const userRepository = userRepositoryFactory();

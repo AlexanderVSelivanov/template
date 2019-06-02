@@ -1,28 +1,35 @@
 import {Logger, QueryRunner} from 'typeorm';
 import logger from '../services/loggerService';
 
+const databaseLoggerName = 'DB';
+const queryLoggerName = `${databaseLoggerName} Query`;
+const queryErrorLoggerName = `${databaseLoggerName} QueryError`;
+const querySlowLoggerName = `${databaseLoggerName} QuerySlow`;
+const schemaBuilderLoggerName = `${databaseLoggerName} SchemaBuild`;
+const migrationLoggerName = `${databaseLoggerName} Migration`;
+
 export class DataBaseLogger implements Logger {
   logQuery(query: string, parameters?: any[] | undefined, queryRunner?: QueryRunner | undefined) {
-    logger.info(`[DataBase Query] query: ${query} parameters: ${parameters}`);
+    logger.info(`[${queryLoggerName}] ${query} (parameters: ${parameters})`);
   }
 
   logQueryError(error: string, query: string, parameters?: any[] | undefined, queryRunner?: QueryRunner | undefined) {
-    logger.error(`[DataBase Query] error: ${error} query: ${query} parameters: ${parameters}`);
+    logger.error(`[${queryErrorLoggerName}] ${error} (query: ${query} parameters: ${parameters})`);
   }
 
   logQuerySlow(time: number, query: string, parameters?: any[] | undefined, queryRunner?: QueryRunner | undefined) {
-    logger.info(`[DataBase QuerySlow] time: ${time} query: ${query} parameters ${parameters}`);
+    logger.info(`[${querySlowLoggerName}] time: ${time} (query: ${query} parameters ${parameters})`);
   }
 
   logSchemaBuild(message: string, queryRunner?: QueryRunner | undefined) {
-    logger.info(`[DataBase SchemaBuild] ${message}`);
+    logger.info(`[${schemaBuilderLoggerName}] ${message}`);
   }
 
   logMigration(message: string, queryRunner?: QueryRunner | undefined) {
-    logger.info(`[DataBase Migration] ${message}`);
+    logger.info(`[${migrationLoggerName}] ${message}`);
   }
 
   log(level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner): any {
-    logger.log(level, `[DataBase] ${message}`);
+    logger.log(level, `[${databaseLoggerName}] ${message}`);
   }
 }

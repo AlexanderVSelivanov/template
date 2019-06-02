@@ -2,7 +2,7 @@ import noteRepositoryFactory from '../../../store/repository/noteRepository';
 import {NoteDto, NoteEntityDto} from 'template-common';
 import NoteEntity from '../../../store/entities/NoteEntity';
 import {Controller, internalServerError, ok} from '../../../utils/ControllerBuilder';
-import noteToNoteDto from '../../../types/mapper/noteToNoteDto';
+import noteToNoteDto from '../../../types/mappers/noteToNoteDto';
 
 const postNoteController: Controller<NoteDto, NoteEntityDto> = async ({input, account}) => {
   if (account && account.user) {

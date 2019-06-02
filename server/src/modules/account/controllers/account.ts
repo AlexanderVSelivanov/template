@@ -1,5 +1,5 @@
 import {AccountEntityDto} from 'template-common';
-import accountToAccountDto from '../../../types/mapper/accountToAccountDto';
+import accountToAccountDto from '../../../types/mappers/accountToAccountDto';
 import {Controller, ok} from '../../../utils/ControllerBuilder';
 
 const profileController: Controller<undefined, AccountEntityDto> = async ({account}) =>

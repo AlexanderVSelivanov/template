@@ -1,7 +1,7 @@
 import {Id, UserEntityDto, UserDto} from 'template-common';
 import userRepositoryFactory from '../../../store/repository/userRepository';
 import {badRequest, Controller, notFound, ok} from '../../../utils/ControllerBuilder';
-import userToUserDto from '../../../types/mapper/userToUserDto';
+import userToUserDto from '../../../types/mappers/userToUserDto';
 
 const putUserByIdController: Controller<UserDto & { id: Id }, UserEntityDto> = async ({input}) => {
   if (input && input.id) {

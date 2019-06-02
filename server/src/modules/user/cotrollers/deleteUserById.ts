@@ -1,7 +1,7 @@
 import {Id, UserEntityDto} from 'template-common';
 import userRepositoryFactory from '../../../store/repository/userRepository';
 import {badRequest, Controller, notFound, ok} from '../../../utils/ControllerBuilder';
-import userToUserDto from '../../../types/mapper/userToUserDto';
+import userToUserDto from '../../../types/mappers/userToUserDto';
 
 const deleteUserByIdController: Controller<{ id: Id }, UserEntityDto> = async ({input}) => {
   if (input && input.id) {

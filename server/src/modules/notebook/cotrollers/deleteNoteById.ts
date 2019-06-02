@@ -1,7 +1,7 @@
 import {Id, NoteEntityDto} from 'template-common';
 import noteRepositoryFactory from '../../../store/repository/noteRepository';
 import {Controller, notFound, ok, badRequest} from '../../../utils/ControllerBuilder';
-import noteToNoteDto from '../../../types/mapper/noteToNoteDto';
+import noteToNoteDto from '../../../types/mappers/noteToNoteDto';
 
 const deleteNoteByIdController: Controller<{ id: Id }, NoteEntityDto> = async ({input}) => {
   if (input && input.id) {
