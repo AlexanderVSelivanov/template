@@ -2,6 +2,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 
 import {withTheme} from 'root/view/theme';
+import withRouter from './withRouter';
 
 import DialogLayout from 'root/view/layouts/dialog';
 import PublicLayout from 'root/view/layouts/public';
@@ -21,11 +22,13 @@ storiesOf('Layouts', module)
   .add(
     'Private',
     () => withTheme(
-      <PrivateLayout
-        logout={() => ActionMock(logoutAction.request())}
-      >
-        Private layout
-      </PrivateLayout>,
+      withRouter(
+        <PrivateLayout
+          logout={() => ActionMock(logoutAction.request())}
+        >
+          Private layout
+        </PrivateLayout>,
+      ),
     ),
   )
   .add(

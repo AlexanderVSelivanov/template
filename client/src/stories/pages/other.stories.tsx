@@ -1,14 +1,27 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import {Empty} from 'template-common';
-
+import {linkTo} from '@storybook/addon-links';
 import {withTheme} from 'root/view/theme';
-import LoginPage from 'modules/account/view/pages/login/page';
-import LoadingPage from 'root/view/pages/loading';
-import {loginAction} from 'modules/account/actions';
-import ActionMock from '../ActionMock';
+import withRouter from '../withRouter';
 
-storiesOf('Pages', module)
+import DashboardPage from 'root/view/pages/dashboard/page';
+import HelpPage from 'root/view/pages/help/page';
+import LoadingPage from 'root/view/pages/loading/page';
+import SettingsPage from 'root/view/pages/settings/page';
+
+storiesOf('Pages - Other', module)
+  .add(
+    'Dashboard page',
+    () => withTheme(
+      <DashboardPage/>,
+    ),
+  )
+  .add(
+    'Help page',
+    () => withTheme(
+      <HelpPage/>,
+    ),
+  )
   .add(
     'Loading page',
     () => withTheme(
@@ -16,11 +29,14 @@ storiesOf('Pages', module)
     ),
   )
   .add(
-    'Login page',
+    'Settings page',
     () => withTheme(
-      <LoginPage
-        error={Empty}
-        login={payload => ActionMock(loginAction.request(payload))}
-      />,
+      withRouter(
+        <SettingsPage/>,
+      ),
     ),
+  )
+  .add(
+    'Settings page -  Account',
+    () => <button onClick={linkTo('Pages - Account', 'Account page')}>Open account page</button>,
   );

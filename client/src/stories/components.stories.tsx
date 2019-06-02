@@ -4,6 +4,7 @@ import {storiesOf} from '@storybook/react';
 
 import {withTheme} from 'root/view/theme';
 import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
+import InProgress from 'root/view/components/InProgress';
 
 storiesOf('Components', module)
   .add('PasswordTextField',
@@ -11,6 +12,13 @@ storiesOf('Components', module)
       <PasswordTextField
         password="password"
         onPasswordChange={action}
+      />,
+    ),
+  )
+  .add('InProgress',
+    () => withTheme(
+      <InProgress
+        text="Something in progress..."
       />,
     ),
   );
