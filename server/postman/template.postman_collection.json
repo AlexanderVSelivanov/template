@@ -85,13 +85,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/account/profile",
+							"raw": "{{host}}/account",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"account",
-								"profile"
+								"account"
 							]
 						}
 					},
@@ -576,13 +575,13 @@
 	],
 	"variable": [
 		{
-			"id": "c5a9b44d-6069-4a19-83e8-9a5dbd880fb1",
+			"id": "8128ae28-45ae-460d-8c79-015e533d83f4",
 			"key": "host",
 			"value": "http://localhost:5000",
 			"type": "string"
 		},
 		{
-			"id": "56521b9e-56ab-4bb6-bb6a-b8880d28daa0",
+			"id": "e06e8a5c-efec-4076-bb78-6f22affd2a33",
 			"key": "token",
 			"value": "",
 			"type": "string"
