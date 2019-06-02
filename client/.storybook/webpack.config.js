@@ -1,4 +1,5 @@
-// todo: absolute path (cra v3) doesn't work with storybook
+const path = require('path');
+
 module.exports = ({config}) => {
   config.module.rules.push({
     loader: require.resolve("babel-loader"),
@@ -8,5 +9,6 @@ module.exports = ({config}) => {
     test: /\.(ts|tsx)$/,
   });
   config.resolve.extensions.push(".ts", ".tsx");
+  config.resolve.modules.push(path.resolve(__dirname, "../src"));
   return config;
 };
