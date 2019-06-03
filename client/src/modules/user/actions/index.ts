@@ -5,19 +5,23 @@ import {
   getUserByIdCreator,
   createUserCreator,
   updateUserByIdCreator,
-  deleteUserByIdCreator,
+  activateUserByIdCreator,
+  disableUserByIdCreator,
   setUserEmptyCreator,
   setCreatedUserEmptyCreator,
   setUpdatedUserEmptyCreator,
-  setDeletedUserEmptyCreator,
+  setActivatedUserEmptyCreator,
+  setDisableUserEmptyCreator,
 } from './types';
 
 export const getUsersAction = getUsersCreator<EntityListRequest, EntityList<UserEntityDto>, ApplicationError>();
 export const getUserByIdAction = getUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
 export const createUserAction = createUserCreator<UserDto, UserEntityDto, ApplicationError>();
 export const updateUserByIdAction = updateUserByIdCreator<UserDto, UserEntityDto, ApplicationError>();
-export const deleteUserByIdAction = deleteUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
+export const activateUserByIdAction = activateUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
+export const disableUserByIdAction = disableUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
 export const setUserEmptyAction = setUserEmptyCreator();
 export const setCreatedUserEmptyAction = setCreatedUserEmptyCreator();
 export const setUpdatedUserEmptyAction = setUpdatedUserEmptyCreator();
-export const setDeletedUserEmptyAction = setDeletedUserEmptyCreator();
+export const setActivatedUserEmptyAction = setActivatedUserEmptyCreator();
+export const setDisableUserEmptyAction = setDisableUserEmptyCreator();

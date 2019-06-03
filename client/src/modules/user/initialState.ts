@@ -11,5 +11,6 @@ export default {
   user: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
   createdUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
   updatedUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
-  deletedUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
+  activatedUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
+  disabledUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
 };

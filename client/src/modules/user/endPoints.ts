@@ -1,4 +1,4 @@
-import {deleteEndPoint, getEndPoint, postEndPoint, putEndPoint} from 'services/endPointService';
+import {getEndPoint, patchEndPoint, postEndPoint, putEndPoint} from 'services/endPointService';
 
 import {IdDto, UserDto, UserEntityDto, EntityListRequest, EntityList} from 'template-common';
 
@@ -8,4 +8,5 @@ export const getUsersEndPoint = getEndPoint<EntityListRequest, EntityList<UserEn
 export const getUserByIdEndPoint = getEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);
 export const createUserEndPoint = postEndPoint<UserDto, UserEntityDto>(`${prefix}`);
 export const updateUserByIdEndPoint = putEndPoint<UserDto, UserEntityDto>(`${prefix}/{id}`);
-export const deleteUserByIdEndPoint = deleteEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);
+export const activateUserByIdEndPoint = patchEndPoint<IdDto, UserEntityDto>(`${prefix}/activate/{id}`);
+export const disableUserByIdEndPoint = patchEndPoint<IdDto, UserEntityDto>(`${prefix}/disable/{id}`);

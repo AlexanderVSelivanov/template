@@ -38,7 +38,7 @@ const NotificationList: React.FC<NotificationListProps> = ({notifications, highl
   const classes = useStyles();
 
   if (notifications.length === 0) {
-    return <EmptyPagePlaceholder text="There aren't any notifications yet."/>;
+    return <EmptyPagePlaceholder text="There aren't any new notifications."/>;
   }
 
   function formatText(text: string) {

@@ -3,12 +3,12 @@ import userRepositoryFactory from '../../../store/repository/userRepository';
 import {badRequest, Controller, notFound, ok} from '../../../utils/ControllerBuilder';
 import userToUserDto from '../../../types/mappers/userToUserDto';
 
-const deleteUserByIdController: Controller<{ id: Id }, UserEntityDto> = async ({input}) => {
+const activateUserByIdController: Controller<{ id: Id }, UserEntityDto> = async ({input}) => {
   if (input && input.id) {
     const userRepository = userRepositoryFactory();
     const user = await userRepository.findOne(input.id);
     if (user) {
-      const updatedUser = await userRepository.save({...user, disable: true});
+      const updatedUser = await userRepository.save({...user, disable: false});
       return ok(userToUserDto(updatedUser));
     }
     return notFound('User entity not found');
@@ -16,4 +16,4 @@ const deleteUserByIdController: Controller<{ id: Id }, UserEntityDto> = async ({
   return badRequest('Invalid user id');
 };
 
-export default deleteUserByIdController;
+export default activateUserByIdController;

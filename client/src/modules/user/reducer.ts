@@ -76,17 +76,28 @@ const reducer = createReducer<UserStateType, UserActionType>(initialState)
   )
   .handleAction(
     [
-      actions.deleteUserByIdAction.request,
-      actions.deleteUserByIdAction.success,
-      actions.deleteUserByIdAction.failure,
+      actions.activateUserByIdAction.request,
+      actions.activateUserByIdAction.success,
+      actions.activateUserByIdAction.failure,
     ], (state, action) => ({
       ...state,
-      deletedUser: handleAsyncProperty(action, actions.deleteUserByIdAction),
+      activatedUser: handleAsyncProperty(action, actions.activateUserByIdAction),
+    }),
+  )
+  .handleAction(
+    [
+      actions.disableUserByIdAction.request,
+      actions.disableUserByIdAction.success,
+      actions.disableUserByIdAction.failure,
+    ], (state, action) => ({
+      ...state,
+      disabledUser: handleAsyncProperty(action, actions.disableUserByIdAction),
     }),
   )
   .handleAction(actions.setUserEmptyAction, state => ({...state, User: Empty}))
   .handleAction(actions.setCreatedUserEmptyAction, state => ({...state, createdUser: Empty}))
   .handleAction(actions.setUpdatedUserEmptyAction, state => ({...state, updatedUser: Empty}))
-  .handleAction(actions.setDeletedUserEmptyAction, state => ({...state, deletedUser: Empty}));
+  .handleAction(actions.setActivatedUserEmptyAction, state => ({...state, activatedUser: Empty}))
+  .handleAction(actions.setDisableUserEmptyAction, state => ({...state, disabledUser: Empty}));
 
 export default reducer;

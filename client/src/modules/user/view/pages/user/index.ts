@@ -4,17 +4,14 @@ import StateType from 'types/StateType';
 import {
   getUsersAction,
   getUserByIdAction,
-  createUserAction,
-  updateUserByIdAction,
-  deleteUserByIdAction,
-  setUpdatedUserEmptyAction,
+  activateUserByIdAction,
+  disableUserByIdAction,
 } from 'modules/user/actions';
 import {
   usersSelector,
   userSelector,
-  createdUserSelector,
-  updatedUserSelector,
-  deletedUserSelector,
+  activatedUserSelector,
+  disabledUserSelector,
 } from 'modules/user/selectors';
 
 import page from './page';
@@ -22,18 +19,15 @@ import page from './page';
 const mapStateToProps = (state: StateType) => ({
   users: usersSelector(state),
   user: userSelector(state),
-  createdUser: createdUserSelector(state),
-  updatedUser: updatedUserSelector(state),
-  deletedUser: deletedUserSelector(state),
+  activatedUser: activatedUserSelector(state),
+  disabledUser: disabledUserSelector(state),
 });
 
 const dispatchProps = {
   getUsers: getUsersAction.request,
   getUserById: getUserByIdAction.request,
-  createUser: createUserAction.request,
-  updateUserById: updateUserByIdAction.request,
-  deleteUserById: deleteUserByIdAction.request,
-  setUpdatedUserEmpty: setUpdatedUserEmptyAction,
+  activateUserById: activateUserByIdAction.request,
+  disableUserById: disableUserByIdAction.request,
 };
 
 const container = connect(mapStateToProps, dispatchProps)(page);

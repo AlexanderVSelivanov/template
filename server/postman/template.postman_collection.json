@@ -280,7 +280,7 @@
 					"response": []
 				},
 				{
-					"name": "deleteUserById",
+					"name": "activateUserById",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -292,17 +292,17 @@
 								}
 							]
 						},
-						"method": "DELETE",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							},
 							{
 								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -310,12 +310,57 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/user/1",
+							"raw": "{{host}}/user/activate/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"user",
+								"activate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disableUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/user/disable/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"disable",
 								"1"
 							]
 						}
@@ -575,13 +620,13 @@
 	],
 	"variable": [
 		{
-			"id": "8128ae28-45ae-460d-8c79-015e533d83f4",
+			"id": "d237f237-f159-4c90-b150-eec2d3204f3d",
 			"key": "host",
 			"value": "http://localhost:5000",
 			"type": "string"
 		},
 		{
-			"id": "e06e8a5c-efec-4076-bb78-6f22affd2a33",
+			"id": "9907aa27-ef3a-4abd-9312-62325e528717",
 			"key": "token",
 			"value": "",
 			"type": "string"

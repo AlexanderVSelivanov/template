@@ -6,7 +6,8 @@ import documentTitleService from '../services/documentTitleService';
 import DashboardPage from './view/pages/dashboard';
 import Notebook from 'modules/notebook/view/pages/notebook';
 import CalendarPage from 'modules/calendar/view/pages/main';
-import UserPage from 'modules/user/view/pages/userTable';
+import UserPage from 'modules/user/view/pages/user';
+import UserEditDialog from 'modules/user/view/dialogs/editUser';
 import MapPage from 'modules/map/view/pages/main';
 import ReportsPage from 'modules/reports/view/pages/main';
 import SettingsPage from './view/pages/settings';
@@ -28,7 +29,12 @@ const routes = {
     // CalendarPage,
   ),
   notebook: createRoute('Notebook', 'notebook', Notebook),
+
+  userCreate: createRoute('Create user', 'user/create', UserEditDialog),
+  userEdit: createRoute('Edit user', 'user/edit/:id', UserEditDialog),
+  userDetails: createRoute('User details', 'user/:id', UserPage),
   user: createRoute('User', 'user', UserPage),
+
   // map: createRoute('Map', 'map', MapPage),
   reports: createRoute(
     'Report',
@@ -63,6 +69,7 @@ export const renderRoute = (route: RouteType) => (
   <Route
     key={route.path}
     path={route.path}
+    exact={route.exact}
     render={() => {
       documentTitleService(route.title);
       return React.createElement(route.component);

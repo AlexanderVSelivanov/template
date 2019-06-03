@@ -35,8 +35,10 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
       {type: 'setCreatedUserEmpty', template: 'sync'},
       {type: 'updateUserById', template: 'async'},
       {type: 'setUpdatedUserEmpty', template: 'sync'},
-      {type: 'deleteUserById', template: 'async'},
-      {type: 'setDeletedUserEmpty', template: 'sync'},
+      {type: 'activateUserById', template: 'async'},
+      {type: 'setActivatedUserEmpty', template: 'sync'},
+      {type: 'disableUserById', template: 'async'},
+      {type: 'setDisableUserEmpty', template: 'sync'},
     ],
   },
   {

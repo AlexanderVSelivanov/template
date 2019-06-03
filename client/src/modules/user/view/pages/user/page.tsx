@@ -1,25 +1,25 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import {RouteComponentProps, withRouter} from 'react-router';
 import {useTheme} from '@material-ui/core/styles';
 import {
+  Empty,
+  EmptyOr,
+  isEmpty,
   EntityList,
   UserEntityDto,
-  EmptyOr,
   AsyncProperty,
-  isEmpty,
   isRequestProperty,
   isSuccessProperty,
 } from 'template-common';
 import {
-  createUserAction,
-  deleteUserByIdAction,
+  activateUserByIdAction,
+  disableUserByIdAction,
   getUserByIdAction,
-  getUsersAction, setUpdatedUserEmptyAction,
-  updateUserByIdAction,
+  getUsersAction,
 } from 'modules/user/actions';
 import {
   Button,
   Fab,
-  Grid,
   Table,
   TableBody,
   TableCell,
@@ -28,50 +28,47 @@ import {
   TableRow,
   TablePagination,
   TextField,
-  Typography, Toolbar,
+  Typography, Toolbar, Tooltip,
 } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import EditIcon from '@material-ui/icons/Edit';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import AddIcon from '@material-ui/icons/Add';
 import useStyles from './styles';
-import InProgress from '../../../../../root/view/components/InProgress';
+import InProgress from 'root/view/components/InProgress';
+import UserDetailsDialog from '../../dialogs/userDetails';
+import routes from 'root/routes';
 
-type PageProps = {
+type PageProps = RouteComponentProps<{ id?: string }> & {
   users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
   user: EmptyOr<AsyncProperty<UserEntityDto>>,
-  createdUser: EmptyOr<AsyncProperty<UserEntityDto>>,
-  updatedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
-  deletedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+  activatedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+  disabledUser: EmptyOr<AsyncProperty<UserEntityDto>>,
 
   getUsers: typeof getUsersAction.request,
   getUserById: typeof getUserByIdAction.request,
-  createUser: typeof createUserAction.request,
-  updateUserById: typeof updateUserByIdAction.request,
-  deleteUserById: typeof deleteUserByIdAction.request,
-  setUpdateUserEmpty: typeof setUpdatedUserEmptyAction,
+  activateUserById: typeof activateUserByIdAction.request,
+  disableUserById: typeof disableUserByIdAction.request,
 };
 
 const Page: React.FC<PageProps> =
   ({
+     history,
      users,
-     user,
-     createdUser,
-     updatedUser,
-     deletedUser,
+     activatedUser,
+     disabledUser,
      getUsers,
-     getUserById,
-     createUser,
-     updateUserById,
-     deleteUserById,
-     setUpdateUserEmpty,
+     activateUserById,
+     disableUserById,
    }) => {
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(20);
     const [search, setSearch] = useState('');
+    const [disableToggleInProgressUserId, setDisableToggleInProgressUserId] = useState<EmptyOr<number>>(Empty);
 
     const reloadUsers = useCallback(() => {
       getUsers({skip: page * itemsPerPage, take: itemsPerPage});
@@ -81,8 +78,30 @@ const Page: React.FC<PageProps> =
       reloadUsers();
     }, []);
 
-    const handleCreateUser = () => {
+    useEffect(() => {
+      const userWasActivated = !isEmpty(activatedUser) && isSuccessProperty(activatedUser);
+      const userWasDisabled = !isEmpty(disabledUser) && isSuccessProperty(disabledUser);
+      if (userWasActivated || userWasDisabled) {
+        reloadUsers();
+        setDisableToggleInProgressUserId(Empty);
+      }
+    }, [activatedUser, disabledUser]);
 
+    const handleCreateUser = () => {
+      history.push(routes.userCreate.path);
+    };
+    const handleEditUser = ({id}: UserEntityDto) => {
+      history.push(routes.userEdit.path.replace(':id', id.toString()));
+    };
+    const handleShowUserDetails = ({id}: UserEntityDto) => {
+      history.push(routes.userDetails.path.replace(':id', id.toString()));
+    };
+    const handleToggleUserActiveFlag = ({id, disable}: UserEntityDto) => {
+      if (disable) {
+        activateUserById({id});
+      } else {
+        disableUserById({id});
+      }
     };
 
     function handleChangePage(
@@ -126,19 +145,56 @@ const Page: React.FC<PageProps> =
                     <TableCell align="right">Email</TableCell>
                     <TableCell align="right">Created</TableCell>
                     <TableCell align="right">Updated</TableCell>
-                    <TableCell align="right">Disable</TableCell>
+                    <TableCell align="right">Active</TableCell>
+                    <TableCell align="right"/>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {
                     users.value.items.map(userItem => (
-                      <TableRow key={userItem.id}>
+                      <TableRow key={userItem.id} hover onClick={() => handleShowUserDetails(userItem)}>
                         <TableCell>{userItem.firstName}</TableCell>
                         <TableCell>{userItem.lastName}</TableCell>
                         <TableCell align="right">{userItem.email}</TableCell>
                         <TableCell align="right">{new Date(userItem.created).toLocaleString()}</TableCell>
                         <TableCell align="right">{new Date(userItem.updated).toLocaleString()}</TableCell>
-                        <TableCell align="right">{userItem.disable ? 'disable' : 'active'}</TableCell>
+                        <TableCell align="right">
+                          {
+                            !isEmpty(disableToggleInProgressUserId) && disableToggleInProgressUserId === userItem.id
+                              ? <InProgress text="Updating..."/>
+                              : (
+                                <Tooltip title={userItem.disable ? 'Activate' : 'Deactivate'}>
+                                  <Button
+                                    size="small"
+                                    onClick={
+                                      event => {
+                                        event.stopPropagation();
+                                        handleToggleUserActiveFlag(userItem);
+                                      }
+                                    }
+                                  >
+                                    {userItem.disable ? 'disabled' : 'active'}
+                                  </Button>
+                                </Tooltip>
+                              )
+                          }
+                        </TableCell>
+                        <TableCell align="right">
+                          <Tooltip title="Edit user">
+                            <IconButton
+                              size="small"
+                              aria-label="Edit"
+                              onClick={
+                                event => {
+                                  event.stopPropagation();
+                                  handleEditUser(userItem);
+                                }
+                              }
+                            >
+                              <EditIcon/>
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
                       </TableRow>
                     ))
                   }
@@ -147,7 +203,7 @@ const Page: React.FC<PageProps> =
                   <TableRow>
                     <TablePagination
                       rowsPerPageOptions={[5, 10, 25]}
-                      colSpan={6}
+                      colSpan={7}
                       count={users.value.items.length}
                       rowsPerPage={itemsPerPage}
                       page={page}
@@ -168,11 +224,13 @@ const Page: React.FC<PageProps> =
         <Fab className={classes.addButton} color="primary" onClick={handleCreateUser}>
           <AddIcon/>
         </Fab>
+
+        <UserDetailsDialog/>
       </>
     );
   };
 
-export default Page;
+export default withRouter(Page);
 
 type TablePaginationActionsProps = {
   count: number;
