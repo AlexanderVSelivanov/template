@@ -1,8 +1,9 @@
-import EntityListRequest from './src/types/EntityListRequest';
-
 export {Empty, isEmpty, EmptyProperty, EmptyOr} from './src/EmptyProperty';
 export {
   AsyncProperty,
+  RequestAsyncProperty,
+  SuccessAsyncProperty,
+  FailureAsyncProperty,
   RequestProperty,
   isRequestProperty,
   setSuccessProperty,

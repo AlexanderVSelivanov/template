@@ -2,6 +2,8 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
   {
     name: 'root', specialPath: 'root',
     actions: [
+      {type: 'notify', template: 'sync'},
+      {type: 'setNewNotificationsFrom', template: 'sync'},
       {type: 'initializeComplete', template: 'sync'},
       {type: 'initializeFail', template: 'sync'},
       {type: 'error', template: 'sync'},
@@ -49,12 +51,6 @@ const modules: Array<{ name: string, specialPath?: string, actions: Action[] }> 
       {type: 'setUpdatedNoteEmpty', template: 'sync'},
       {type: 'deleteNoteById', template: 'async'},
       {type: 'setDeletedNoteEmpty', template: 'sync'},
-    ],
-  },
-  {
-    name: 'notification',
-    actions: [
-      {type: 'notify', template: 'sync'},
     ],
   },
   {

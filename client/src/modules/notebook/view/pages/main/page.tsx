@@ -92,6 +92,7 @@ const Page: React.FC<PageProps> =
     }, [note]);
     useEffect(() => {
       if (!isEmpty(createdNote) && isSuccessProperty(createdNote)) {
+        setSelectedNote(createdNote.value);
         reloadNotes();
       }
     }, [createdNote]);

@@ -7,6 +7,17 @@ type RootActionType = ActionType<typeof actions>;
 
 const reducer = (state = initialState, action: RootActionType) => {
   switch (action.type) {
+    case getType(actions.notify):
+      return {
+        ...state,
+        notifications: [action.payload, ...state.notifications],
+      };
+    case getType(actions.setNewNotificationsFromAction):
+      return {
+        ...state,
+        newNotificationsFrom: action.payload,
+      };
+
     case getType(actions.initializeCompleteAction):
       return {
         ...state,

@@ -10,22 +10,53 @@ import UserPage from 'modules/user/view/pages/main';
 import MapPage from 'modules/map/view/pages/main';
 import ReportsPage from 'modules/reports/view/pages/main';
 import SettingsPage from './view/pages/settings';
+import NotificationsPage from 'root/view/pages/notifications';
 import HelpPage from './view/pages/help';
 import AccountPage from 'modules/account/view/pages/account';
+import {Typography} from '@material-ui/core';
+import EmptyPagePlaceholder from './view/components/EmptyPagePlaceholder';
 
 const routes = {
-  dashboard: createRoute('Dashboard', 'dashboard', DashboardPage),
-  calendar: createRoute('Calendar', 'calendar', CalendarPage),
+  dashboard: createRoute(
+    'Dashboard',
+    'dashboard',
+    () => underConstruction('Dashboard'),
+    // DashboardPage,
+  ),
+  calendar: createRoute(
+    'Calendar',
+    'calendar',
+    () => underConstruction('Calendar'),
+    // CalendarPage,
+  ),
   notebook: createRoute('Notebook', 'notebook', Notebook),
   user: createRoute('User', 'user', UserPage),
-  map: createRoute('Map', 'map', MapPage),
-  reports: createRoute('Report', 'report', ReportsPage),
+  // map: createRoute('Map', 'map', MapPage),
+  reports: createRoute(
+    'Report',
+    'report',
+    () => underConstruction('Report'),
+    // ReportsPage,
+  ),
   settings: createRoute('Settings', 'settings', SettingsPage),
-  help: createRoute('Help', 'help', HelpPage),
+  help: createRoute(
+    'Help',
+    'help',
+    HelpPage,
+  ),
 
-  settingsGeneral: createRoute('Settings - General', 'settings/general', () => <>General</>),
+  settingsGeneral: createRoute(
+    'Settings - General',
+    'settings/general',
+    () => underConstruction('General settings'),
+  ),
   settingsAccount: createRoute('Settings - Account', 'settings/account', AccountPage),
-  settingsTheme: createRoute('Settings - Theme', 'settings/theme', () => <>Theme</>),
+  settingsTheme: createRoute(
+    'Settings - Theme',
+    'settings/theme',
+    () => underConstruction('Theme settings'),
+  ),
+  settingsNotifications: createRoute('Settings - Notifications', 'settings/notifications', NotificationsPage),
 };
 
 export default routes;
@@ -40,3 +71,5 @@ export const renderRoute = (route: RouteType) => (
     }}
   />
 );
+
+const underConstruction = (title: string) => <EmptyPagePlaceholder text={title + ' is under construction'}/>;

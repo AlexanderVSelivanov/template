@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  search: {
+    minWidth: 250,
+  },
 }));
 
 export default useStyles;

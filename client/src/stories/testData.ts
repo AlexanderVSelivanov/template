@@ -1,4 +1,5 @@
-import {AccountEntityDto, UserEntityDto, NoteEntityDto} from 'template-common';
+import {AccountEntityDto, NoteEntityDto, UserEntityDto} from 'template-common';
+import {AppNotification,  AppNotificationPriority} from '../types/AppNotification';
 
 export const userEntityDto1: UserEntityDto = {
   id: 1,
@@ -59,4 +60,10 @@ export const noteEntityDto2: NoteEntityDto = {
   created: new Date(),
   updated: new Date(),
   disable: false,
+};
+
+export const appNotification: AppNotification = {
+  created: new Date(),
+  priority: AppNotificationPriority.Information,
+  text: 'Test notification',
 };

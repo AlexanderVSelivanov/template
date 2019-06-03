@@ -73,3 +73,8 @@ export const LOCAL_STORAGE_TOKEN_KEY_NAME = 'token';
  * @type {string}
  */
 export const LOCAL_STORAGE_LAST_USER_NAME_KEY_NAME = 'lastLoggedUserName';
+
+/**
+ * Popup message show timeout
+ */
+export const POPUP_MESSAGE_TIMEOUT = 5000;

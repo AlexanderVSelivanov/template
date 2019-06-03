@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
-
 import {logoutAction} from 'modules/account/actions';
-
 import Header from '../../blocks/header';
 import MainMenu from '../../blocks/mainMenu';
-
 import useStyles from './styles';
 import {Paper} from '@material-ui/core';
+import {AppNotification} from 'types/AppNotification';
 
 type PrivateLayoutProps = {
   logout: typeof logoutAction.request,
+  notifications: AppNotification[],
+  newNotificationsFrom: Date,
   children: React.ReactNode | React.ReactNodeArray,
 };
 
-const PrivateLayout: React.FC<PrivateLayoutProps> = ({logout, children}) => {
+const PrivateLayout: React.FC<PrivateLayoutProps> = ({logout, notifications, newNotificationsFrom, children}) => {
   const classes = useStyles();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
@@ -22,6 +22,8 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({logout, children}) => {
         isDrawerOpen={isDrawerOpen}
         setIsDrawerOpen={setIsDrawerOpen}
         logout={logout}
+        notifications={notifications}
+        newNotificationsFrom={newNotificationsFrom}
       />
       <MainMenu
         isDrawerOpen={isDrawerOpen}

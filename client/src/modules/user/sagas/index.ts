@@ -1,5 +1,7 @@
-import {takeLatest} from 'redux-saga/effects';
+import {takeLatest, debounce} from 'redux-saga/effects';
 import {getType} from 'typesafe-actions';
+
+import {API_REQUEST_DEBOUNCE} from '../../../config';
 
 import {
   createUserAction,
@@ -8,7 +10,6 @@ import {
   getUsersAction,
   updateUserByIdAction,
 } from '../actions';
-
 import createUserSaga from './createUserSaga';
 import deleteUserByIdSaga from './deleteUserByIdSaga';
 import getUserByIdSaga from './getUserByIdSaga';
@@ -19,6 +20,6 @@ export default function* accountSagas() {
   yield takeLatest(getType(createUserAction.request), createUserSaga);
   yield takeLatest(getType(deleteUserByIdAction.request), deleteUserByIdSaga);
   yield takeLatest(getType(getUserByIdAction.request), getUserByIdSaga);
-  yield takeLatest(getType(getUsersAction.request), getUsersSaga);
+  yield debounce(API_REQUEST_DEBOUNCE, getType(getUsersAction.request), getUsersSaga);
   yield takeLatest(getType(updateUserByIdAction.request), updateUserByIdSaga);
 }

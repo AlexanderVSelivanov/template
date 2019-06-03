@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import useStyles from './styles';
 import {Tab, Tabs} from '@material-ui/core';
-import {Redirect, Route, RouteComponentProps, Switch, withRouter} from 'react-router';
+import {Redirect, RouteComponentProps, Switch, withRouter} from 'react-router';
 import routes, {renderRoute} from '../../../routes';
 
 type PageProps = RouteComponentProps & {};
@@ -21,12 +21,14 @@ const Page: React.FC<PageProps> = ({history, location}) => {
         <Tab label="General" value={routes.settingsGeneral.path}/>
         <Tab label="Account" value={routes.settingsAccount.path}/>
         <Tab label="Theme" value={routes.settingsTheme.path}/>
+        <Tab label="Notifications" value={routes.settingsNotifications.path}/>
       </Tabs>
 
       <Switch>
         {renderRoute(routes.settingsGeneral)}
         {renderRoute(routes.settingsAccount)}
         {renderRoute(routes.settingsTheme)}
+        {renderRoute(routes.settingsNotifications)}
         <Redirect to={routes.settingsGeneral.path}/>
       </Switch>
 

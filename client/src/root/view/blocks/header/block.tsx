@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,89 +17,105 @@ import {logoutAction} from 'modules/account/actions';
 import useStyles from './styles';
 import {RouteComponentProps, withRouter} from 'react-router';
 import routes from '../../../routes';
+import {AppNotification} from '../../../../types/AppNotification';
 
 type HeaderBlockProps = RouteComponentProps & {
+  notifications: AppNotification[],
+  newNotificationsFrom: Date,
   isDrawerOpen: boolean,
   setIsDrawerOpen: (value: boolean) => void,
   logout: typeof logoutAction.request,
 };
 
-const HeaderBlock: React.FC<HeaderBlockProps> = ({logout, isDrawerOpen, setIsDrawerOpen, history}) => {
+const HeaderBlock: React.FC<HeaderBlockProps> =
+  ({
+     notifications, newNotificationsFrom, logout, isDrawerOpen, setIsDrawerOpen, history,
+   }) => {
+    const classes = useStyles();
+    const [accountMenuAnchorEl, setAccountMenuAnchorEl] = useState<null | HTMLElement>(null);
 
-  const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState<null | HTMLElement>(null);
+    const newNotificationsCount = useMemo(
+      () => notifications.filter(notification => notification.created > newNotificationsFrom).length,
+      [notifications, newNotificationsFrom],
+    );
 
-  const classes = useStyles();
+    function handleDrawerOpen() {
+      setIsDrawerOpen(true);
+    }
 
-  function handleDrawerOpen() {
-    setIsDrawerOpen(true);
-  }
+    function handleAccountMenuOpen(event: React.MouseEvent<HTMLElement>) {
+      setAccountMenuAnchorEl(event.currentTarget);
+    }
 
-  function handleProfileMenuOpen(event: React.MouseEvent<HTMLElement>) {
-    setProfileMenuAnchorEl(event.currentTarget);
-  }
+    function handleProfileMenuClose() {
+      setAccountMenuAnchorEl(null);
+    }
 
-  function handleProfileMenuClose() {
-    setProfileMenuAnchorEl(null);
-  }
+    function handleOpenAccount() {
+      history.push(routes.settingsAccount.path);
+      handleProfileMenuClose();
+    }
 
-  function handleOpenAccount() {
-    history.push(routes.settingsAccount.path);
-    handleProfileMenuClose();
-  }
+    function handleNotificationClick() {
+      history.push(routes.settingsNotifications.path);
+    }
 
-  const isProfileMenuOpen = Boolean(profileMenuAnchorEl);
+    const isProfileMenuOpen = Boolean(accountMenuAnchorEl);
 
-  const renderMenu = (
-    <Menu
-      anchorEl={profileMenuAnchorEl}
-      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-      transformOrigin={{vertical: 'top', horizontal: 'right'}}
-      open={isProfileMenuOpen}
-      onClose={handleProfileMenuClose}
-    >
-      <MenuItem onClick={handleOpenAccount}>Account</MenuItem>
-      <MenuItem onClick={() => logout() && handleProfileMenuClose}>Logout</MenuItem>
-    </Menu>
-  );
-  return (
-    <AppBar
-      position="fixed"
-      className={classNames(classes.appBar, {
-        [classes.appBarShift]: isDrawerOpen,
-      })}
-    >
-      <Toolbar disableGutters={!isDrawerOpen}>
-        <IconButton
-          color="inherit"
-          aria-label="Open drawer"
-          onClick={handleDrawerOpen}
-          className={classNames(classes.menuButton, {
-            [classes.hide]: isDrawerOpen,
-          })}
-        >
-          <MenuIcon/>
-        </IconButton>
-        <Typography variant="h6" color="inherit" noWrap>
-          template <sup>{VERSION}</sup>
-        </Typography>
-        <div className={classes.grow}/>
-        <IconButton color="inherit">
-          <Badge badgeContent={1} color="secondary">
-            <NotificationsIcon/>
-          </Badge>
-        </IconButton>
-        <IconButton
-          aria-owns={isProfileMenuOpen ? 'material-appbar' : undefined}
-          aria-haspopup="true"
-          onClick={handleProfileMenuOpen}
-          color="inherit"
-        >
-          <AccountCircle/>
-        </IconButton>
-      </Toolbar>
-      {renderMenu}
-    </AppBar>
-  );
-};
+    const renderMenu = (
+      <Menu
+        anchorEl={accountMenuAnchorEl}
+        anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+        transformOrigin={{vertical: 'top', horizontal: 'right'}}
+        open={isProfileMenuOpen}
+        onClose={handleProfileMenuClose}
+      >
+        <MenuItem onClick={handleOpenAccount}>Account</MenuItem>
+        <MenuItem onClick={() => logout() && handleProfileMenuClose}>Logout</MenuItem>
+      </Menu>
+    );
+    return (
+      <AppBar
+        position="fixed"
+        className={classNames(classes.appBar, {
+          [classes.appBarShift]: isDrawerOpen,
+        })}
+      >
+        <Toolbar disableGutters={!isDrawerOpen}>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={handleDrawerOpen}
+            className={classNames(classes.menuButton, {
+              [classes.hide]: isDrawerOpen,
+            })}
+          >
+            <MenuIcon/>
+          </IconButton>
+          <Typography variant="h6" color="inherit" noWrap>
+            template <sup>{VERSION}</sup>
+          </Typography>
+          <div className={classes.grow}/>
+          <IconButton
+            color="inherit"
+            onClick={handleNotificationClick}
+          >
+            <Badge badgeContent={newNotificationsCount} color="secondary">
+              <NotificationsIcon/>
+            </Badge>
+          </IconButton>
+          <IconButton
+            aria-owns={isProfileMenuOpen ? 'material-appbar' : undefined}
+            aria-haspopup="true"
+            onClick={handleAccountMenuOpen}
+            color="inherit"
+          >
+            <AccountCircle/>
+          </IconButton>
+        </Toolbar>
+        {renderMenu}
+      </AppBar>
+    );
+  };
 
 export default withRouter(HeaderBlock);

@@ -6,7 +6,7 @@ import noteToNoteDto from '../../../types/mappers/noteToNoteDto';
 const getNotesController: Controller<EntityListRequest, EntityList<NoteEntityDto>> = async ({input}) => {
   const noteRepository = noteRepositoryFactory();
   const [notes, count] = await noteRepository
-    .findAndCount({skip: input.skip, take: input.take});
+    .findAndCount({skip: input.skip, take: input.take, order: {created: 'DESC'}});
   const entityList: EntityList<NoteEntityDto> = {
     count,
     items: notes.map(note => noteToNoteDto(note)),

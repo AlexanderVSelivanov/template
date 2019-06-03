@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import useStyles from './styles';
-import {EmptyOr, AccountEntityDto} from 'template-common';
+import {EmptyOr, isEmpty, isSuccessProperty, AsyncProperty, AccountEntityDto} from 'template-common';
 import {Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core';
 
 type PageProps = {
-  account: EmptyOr<AccountEntityDto>,
+  account: EmptyOr<AsyncProperty<AccountEntityDto>>,
 };
 
 const Page: React.FC<PageProps> = ({account}) => {
   const classes = useStyles();
-  if (account) {
+  if (isEmpty(account)) {
+    return <></>;
+  }
+  if (isSuccessProperty(account)) {
     return (
       <Table>
         <TableHead>
@@ -21,30 +24,30 @@ const Page: React.FC<PageProps> = ({account}) => {
         <TableBody>
           <TableRow>
             <TableCell>Username</TableCell>
-            <TableCell align="right">{account.username}</TableCell>
+            <TableCell align="right">{account.value.username}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Created</TableCell>
-            <TableCell align="right">{new Date(account.created).toLocaleString()}</TableCell>
+            <TableCell align="right">{new Date(account.value.created).toLocaleString()}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Updated</TableCell>
-            <TableCell align="right">{new Date(account.updated).toLocaleString()}</TableCell>
+            <TableCell align="right">{new Date(account.value.updated).toLocaleString()}</TableCell>
           </TableRow>
           {
-            account.user
+            account.value.user
             && <>
               <TableRow>
                 <TableCell>First Name</TableCell>
-                <TableCell align="right">{account.user.firstName}</TableCell>
+                <TableCell align="right">{account.value.user.firstName}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Last Name</TableCell>
-                <TableCell align="right">{account.user.lastName}</TableCell>
+                <TableCell align="right">{account.value.user.lastName}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Email</TableCell>
-                <TableCell align="right">{account.user.email}</TableCell>
+                <TableCell align="right">{account.value.user.email}</TableCell>
               </TableRow>
             </>
           }
@@ -52,7 +55,7 @@ const Page: React.FC<PageProps> = ({account}) => {
       </Table>
     );
   }
-  return <></>;
+  return <>Account not loaded</>;
 };
 
 export default Page;

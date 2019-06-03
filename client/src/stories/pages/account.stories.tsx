@@ -1,6 +1,6 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import {Empty} from 'template-common';
+import {Empty, setSuccessProperty} from 'template-common';
 import {withTheme} from 'root/view/theme';
 import {loginAction} from 'modules/account/actions';
 import {accountEntityDto1} from '../testData';
@@ -14,7 +14,7 @@ storiesOf('Pages - Account', module)
     'Account page',
     () => withTheme(
       <AccountPage
-        account={accountEntityDto1}
+        account={setSuccessProperty(accountEntityDto1)}
       />,
     ),
   )
@@ -22,8 +22,9 @@ storiesOf('Pages - Account', module)
     'Login page',
     () => withTheme(
       <LoginPage
-        error={Empty}
         login={payload => ActionMock(loginAction.request(payload))}
+        token={Empty}
+        currentAccount={Empty}
       />,
     ),
   );

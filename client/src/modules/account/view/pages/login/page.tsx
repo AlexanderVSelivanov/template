@@ -5,7 +5,15 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import {EmptyOr, ApplicationError} from 'template-common';
+import {
+  EmptyOr,
+  isEmpty,
+  isSuccessProperty,
+  isFailureProperty,
+  AsyncProperty,
+  TokenDto,
+  AccountEntityDto,
+} from 'template-common';
 import {loginAction} from 'modules/account/actions';
 import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
 
@@ -14,13 +22,14 @@ import {VERSION} from 'config';
 import useStyles from './styles';
 
 type LoginPageProps = {
-  error: EmptyOr<ApplicationError>,
   defaultLogin?: EmptyOr<string>,
+  token: EmptyOr<AsyncProperty<TokenDto>>,
+  currentAccount: EmptyOr<AsyncProperty<AccountEntityDto>>,
 
   login: typeof loginAction.request,
 };
 
-const LoginPage: React.FC<LoginPageProps> = ({error, defaultLogin, login}) => {
+const LoginPage: React.FC<LoginPageProps> = ({defaultLogin, token, currentAccount, login}) => {
   const classes = useStyles();
   const [username, setUsername] = useState(defaultLogin ? defaultLogin : '');
   const [password, setPassword] = useState('');
@@ -33,6 +42,16 @@ const LoginPage: React.FC<LoginPageProps> = ({error, defaultLogin, login}) => {
   };
 
   const isValid = useMemo(() => Boolean(username && password), [username, password]);
+
+  const errorMessage = useMemo(() => {
+    if (!isEmpty(token) && isFailureProperty(token)) {
+      return token.error.message;
+    }
+    if (!isEmpty(token) && !isEmpty(currentAccount) && isSuccessProperty(token) && isFailureProperty(currentAccount)) {
+      return currentAccount.error.message;
+    }
+    return '';
+  }, [token, currentAccount]);
 
   return (
     <form onSubmit={loginSubmit}>
@@ -61,8 +80,8 @@ const LoginPage: React.FC<LoginPageProps> = ({error, defaultLogin, login}) => {
           />
         </Grid>
         {
-          error && <Grid item xs={12} className={classes.error}>
-            <Typography className={classes.error}>{error.message}</Typography>
+          errorMessage && <Grid item xs={12} className={classes.error}>
+            <Typography className={classes.error}>{errorMessage}</Typography>
           </Grid>
         }
         <Grid item xs={12}>

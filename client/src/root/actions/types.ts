@@ -8,6 +8,10 @@
 
 import {createStandardAction, createAsyncAction} from 'typesafe-actions';
 
+const ROOT_NOTIFY = '@ROOT/NOTIFY';
+export const notifyCreator = createStandardAction(ROOT_NOTIFY);
+const ROOT_SET_NEW_NOTIFICATIONS_FROM = '@ROOT/SET_NEW_NOTIFICATIONS_FROM';
+export const setNewNotificationsFromCreator = createStandardAction(ROOT_SET_NEW_NOTIFICATIONS_FROM);
 const ROOT_INITIALIZE_COMPLETE = '@ROOT/INITIALIZE_COMPLETE';
 export const initializeCompleteCreator = createStandardAction(ROOT_INITIALIZE_COMPLETE);
 const ROOT_INITIALIZE_FAIL = '@ROOT/INITIALIZE_FAIL';

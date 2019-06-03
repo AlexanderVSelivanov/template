@@ -1,6 +1,6 @@
-import {Empty, EmptyOr, TokenDto, AccountEntityDto} from 'template-common';
+import {Empty, EmptyOr, AsyncProperty, TokenDto, AccountEntityDto} from 'template-common';
 
 export default {
-  token: Empty as EmptyOr<TokenDto>,
-  currentAccount: Empty as EmptyOr<AccountEntityDto>,
+  token: Empty as EmptyOr<AsyncProperty<TokenDto>>,
+  currentAccount: Empty as EmptyOr<AsyncProperty<AccountEntityDto>>,
 };
