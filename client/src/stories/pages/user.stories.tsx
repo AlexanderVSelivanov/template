@@ -13,7 +13,7 @@ import {
 import ActionMock from '../ActionMock';
 import {userEntityDto1, userEntityDto2} from '../testData';
 
-import UserPage from 'modules/user/view/pages/main/page';
+import UserPage from 'modules/user/view/pages/userTable/page';
 
 storiesOf('Pages - User', module)
   .add(

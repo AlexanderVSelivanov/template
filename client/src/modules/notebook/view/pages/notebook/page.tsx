@@ -1,7 +1,8 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Fab,
-  Grid, IconButton,
+  Grid,
+  IconButton,
   List,
   ListItem,
   ListItemSecondaryAction,
@@ -65,12 +66,12 @@ const Page: React.FC<PageProps> =
    }) => {
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [notesPerPage, setNotesPerPage] = useState(20);
+    const [itemsPerPage, setItemsPerPage] = useState(20);
     const [selectedNote, setSelectedNote] = useState<EmptyOr<NoteEntityDto>>(Empty);
 
     const reloadNotes = useCallback(() => {
-      getNotes({skip: page * notesPerPage, take: notesPerPage});
-    }, [page, notesPerPage]);
+      getNotes({skip: page * itemsPerPage, take: itemsPerPage});
+    }, [page, itemsPerPage]);
 
     useEffect(() => {
       reloadNotes();
@@ -225,7 +226,7 @@ const Page: React.FC<PageProps> =
 
         <div className={classes.noteList}>
           {
-            !isEmpty(notes) && isRequestProperty(notes) && <InProgress text="Notes loading..."/>
+            !isEmpty(notes) && isRequestProperty(notes) && <InProgress text="Notes are loading..."/>
           }
           {
             !isEmpty(notes) && isSuccessProperty(notes) && (
@@ -240,13 +241,13 @@ const Page: React.FC<PageProps> =
                     <NavigateBeforeIcon/>
                   </IconButton>
                   <Typography>
-                    {page * notesPerPage + 1}-{page * notesPerPage + notes.value.items.length} of {notes.value.count}
+                    {page * itemsPerPage + 1}-{page * itemsPerPage + notes.value.items.length} of {notes.value.count}
                   </Typography>
                   <IconButton
                     edge="end"
                     aria-label="Next"
                     onClick={handleNavigateNext}
-                    disabled={page * notesPerPage + notes.value.items.length >= notes.value.count}
+                    disabled={page * itemsPerPage + notes.value.items.length >= notes.value.count}
                   >
                     <NavigateNextIcon/>
                   </IconButton>

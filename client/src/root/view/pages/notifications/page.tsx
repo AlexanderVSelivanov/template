@@ -2,22 +2,14 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Empty, EmptyOr, isEmpty} from 'template-common';
 import useStyles from './styles';
 import {setNewNotificationsFromAction} from '../../../actions';
-import {AppNotification, AppNotificationPriority} from 'types/AppNotification';
+import {AppNotification} from 'types/AppNotification';
 import {
   FormControlLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText, Switch,
+  Switch,
   TextField,
   Toolbar,
-  Typography,
 } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import WarningIcon from '@material-ui/icons/Warning';
-import ErrorIcon from '@material-ui/icons/Error';
-import EmptyPagePlaceholder from '../../components/EmptyPagePlaceholder';
+import NotificationList from '../../components/NotificationList';
 
 type PageProps = {
   notifications: AppNotification[],
@@ -44,32 +36,6 @@ const Page: React.FC<PageProps> = ({notifications, newNotificationsFrom, setNewN
     }
     return result;
   }, [notifications, search, showOnlyNew, newNotificationsFromOldValue]);
-  const renderIcon = (priority: AppNotificationPriority): React.ReactElement => {
-    switch (priority) {
-      case AppNotificationPriority.Information:
-        return <InfoIcon className={classes.informationIcon}/>;
-      case AppNotificationPriority.Success:
-        return <CheckCircleIcon className={classes.successIcon}/>;
-      case AppNotificationPriority.Warning:
-        return <WarningIcon className={classes.warningIcon}/>;
-      case AppNotificationPriority.Error:
-        return <ErrorIcon className={classes.errorIcon}/>;
-    }
-  };
-  if (notifications.length === 0) {
-    return <EmptyPagePlaceholder text="There aren't any notifications yet."/>;
-  }
-
-  function formatText(text: string) {
-    if (search) {
-      const textSplit = text.split(search);
-      if (textSplit.length === 1) {
-        return text;
-      }
-      return <span dangerouslySetInnerHTML={{__html: textSplit.join(`<strong>${search}</strong>`)}}/>;
-    }
-    return text;
-  }
 
   return (
     <>
@@ -94,16 +60,7 @@ const Page: React.FC<PageProps> = ({notifications, newNotificationsFrom, setNewN
         />
 
       </Toolbar>
-      <List>
-        {filteredNotifications.map(notification => (
-          <ListItem key={notification.created.toString()}>
-            <ListItemIcon>
-              {renderIcon(notification.priority)}
-            </ListItemIcon>
-            <ListItemText primary={formatText(notification.text)} secondary={notification.created.toLocaleString()}/>
-          </ListItem>
-        ))}
-      </List>
+      <NotificationList notifications={filteredNotifications} highlightedText={search}/>
     </>
   );
 };

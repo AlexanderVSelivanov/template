@@ -13,7 +13,7 @@ import {
 import ActionMock from '../ActionMock';
 import {noteEntityDto1, noteEntityDto2} from '../testData';
 
-import NotebookPage from 'modules/notebook/view/pages/main/page';
+import NotebookPage from 'modules/notebook/view/pages/notebook/page';
 
 storiesOf('Pages - Notebook', module)
   .add(

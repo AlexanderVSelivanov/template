@@ -4,24 +4,22 @@ import {createRoute, Route as RouteType} from 'types/Route';
 import documentTitleService from '../services/documentTitleService';
 
 import DashboardPage from './view/pages/dashboard';
-import Notebook from 'modules/notebook/view/pages/main';
+import Notebook from 'modules/notebook/view/pages/notebook';
 import CalendarPage from 'modules/calendar/view/pages/main';
-import UserPage from 'modules/user/view/pages/main';
+import UserPage from 'modules/user/view/pages/userTable';
 import MapPage from 'modules/map/view/pages/main';
 import ReportsPage from 'modules/reports/view/pages/main';
 import SettingsPage from './view/pages/settings';
 import NotificationsPage from 'root/view/pages/notifications';
 import HelpPage from './view/pages/help';
 import AccountPage from 'modules/account/view/pages/account';
-import {Typography} from '@material-ui/core';
 import EmptyPagePlaceholder from './view/components/EmptyPagePlaceholder';
 
 const routes = {
   dashboard: createRoute(
     'Dashboard',
     'dashboard',
-    () => underConstruction('Dashboard'),
-    // DashboardPage,
+    DashboardPage,
   ),
   calendar: createRoute(
     'Calendar',

@@ -36,7 +36,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import AddIcon from '@material-ui/icons/Add';
-import DialogLayout from '../../../../../root/view/layouts/dialog';
 import useStyles from './styles';
 import InProgress from '../../../../../root/view/components/InProgress';
 
@@ -71,21 +70,17 @@ const Page: React.FC<PageProps> =
    }) => {
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(20);
-    const [showEditUserDialog, setShowEditUserDialog] = useState(false);
+    const [itemsPerPage, setItemsPerPage] = useState(20);
     const [search, setSearch] = useState('');
 
     const reloadUsers = useCallback(() => {
-      getUsers({skip: page * rowsPerPage, take: rowsPerPage});
-    }, [page, rowsPerPage]);
+      getUsers({skip: page * itemsPerPage, take: itemsPerPage});
+    }, [page, itemsPerPage]);
 
     useEffect(() => {
       reloadUsers();
     }, []);
 
-    const handleOpenCreateUserDialog = () => {
-      setShowEditUserDialog(true);
-    };
     const handleCreateUser = () => {
 
     };
@@ -100,7 +95,7 @@ const Page: React.FC<PageProps> =
     function handleChangeRowsPerPage(
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) {
-      setRowsPerPage(parseInt(event.target.value, 10));
+      setItemsPerPage(parseInt(event.target.value, 10));
     }
 
     return (
@@ -109,7 +104,7 @@ const Page: React.FC<PageProps> =
           isEmpty(users) && <Typography>There aren't any users yet.</Typography>
         }
         {
-          !isEmpty(users) && isRequestProperty(users) && <InProgress text="Users loading..."/>
+          !isEmpty(users) && isRequestProperty(users) && <InProgress text="Users are loading..."/>
         }
         {
           !isEmpty(users) && isSuccessProperty(users) && (
@@ -154,7 +149,7 @@ const Page: React.FC<PageProps> =
                       rowsPerPageOptions={[5, 10, 25]}
                       colSpan={6}
                       count={users.value.items.length}
-                      rowsPerPage={rowsPerPage}
+                      rowsPerPage={itemsPerPage}
                       page={page}
                       SelectProps={{
                         native: true,
@@ -170,65 +165,14 @@ const Page: React.FC<PageProps> =
           )
         }
 
-        <Fab className={classes.addButton} color="primary" onClick={handleOpenCreateUserDialog}>
+        <Fab className={classes.addButton} color="primary" onClick={handleCreateUser}>
           <AddIcon/>
         </Fab>
-
-        {/*todo: use route to add/edit user*/}
-        <DialogLayout
-          fullWidth
-          open={showEditUserDialog}
-          title="Create new user"
-          actions={
-            <>
-              <Button color="primary" onClick={handleCreateUser}>Create</Button>
-              <Button color="secondary" onClick={() => setShowEditUserDialog(false)}>Cancel</Button>
-            </>
-          }
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                label="First Name"
-                // value={}
-                // onChange={event => set(event.target.value)}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-
-              <TextField
-                label="Last Name"
-                // value={}
-                // onChange={event => set(event.target.value)}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Email"
-                // value={}
-                // onChange={event => set(event.target.value)}
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-        </DialogLayout>
       </>
     );
   };
 
 export default Page;
-
-// const useStyles1 = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       flexShrink: 0,
-//       color: theme.palette.text.secondary,
-//       marginLeft: theme.spacing(2.5),
-//     },
-//   }),
-// );
 
 type TablePaginationActionsProps = {
   count: number;
@@ -238,7 +182,7 @@ type TablePaginationActionsProps = {
 };
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
-  // const classes = useStyles1();
+  const classes = useStyles();
   const theme = useTheme();
   const {count, page, rowsPerPage, onChangePage} = props;
 
@@ -260,12 +204,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
   return (
     <div
-      // className={classes.root}
-      style={{
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing(2.5),
-      }}
+      className={classes.tablePaginationRoot}
     >
       <IconButton
         onClick={handleFirstPageButtonClick}
