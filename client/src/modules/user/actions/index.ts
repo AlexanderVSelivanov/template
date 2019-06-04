@@ -1,4 +1,4 @@
-import {ApplicationError, IdDto, UserDto, UserEntityDto, EntityListRequest, EntityList} from 'template-common';
+import {ApplicationError, IdDto, UserDto, UserEntityDto, EntityListRequest, EntityList, Id} from 'template-common';
 
 import {
   getUsersCreator,
@@ -17,7 +17,7 @@ import {
 export const getUsersAction = getUsersCreator<EntityListRequest, EntityList<UserEntityDto>, ApplicationError>();
 export const getUserByIdAction = getUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
 export const createUserAction = createUserCreator<UserDto, UserEntityDto, ApplicationError>();
-export const updateUserByIdAction = updateUserByIdCreator<UserDto, UserEntityDto, ApplicationError>();
+export const updateUserByIdAction = updateUserByIdCreator<{ id: Id } & UserDto, UserEntityDto, ApplicationError>();
 export const activateUserByIdAction = activateUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
 export const disableUserByIdAction = disableUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
 export const setUserEmptyAction = setUserEmptyCreator();

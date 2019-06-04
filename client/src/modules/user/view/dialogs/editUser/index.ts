@@ -5,6 +5,9 @@ import {
   getUserByIdAction,
   createUserAction,
   updateUserByIdAction,
+  setUserEmptyAction,
+  setCreatedUserEmptyAction,
+  setUpdatedUserEmptyAction,
 } from 'modules/user/actions';
 import {
   userSelector,
@@ -24,6 +27,9 @@ const dispatchProps = {
   getUserById: getUserByIdAction.request,
   createUser: createUserAction.request,
   updateUserById: updateUserByIdAction.request,
+  setUserEmpty: setUserEmptyAction,
+  setCreatedUserEmpty: setCreatedUserEmptyAction,
+  setUpdatedUserEmpty: setUpdatedUserEmptyAction,
 };
 
 const container = connect(mapStateToProps, dispatchProps)(page);
