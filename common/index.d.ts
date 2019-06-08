@@ -64,6 +64,8 @@ export {default as UserDto, UserEntityDto} from './src/dto/User';
 export {default as AccountDto, AccountEntityDto} from './src/dto/Account';
 export {default as NoteDto, NoteEntityDto} from './src/dto/Note';
 
+export {default as UserListRequest} from './src/requestData/UserListRequest';
+
 export enum Environment {
   Production = 'production',
   Development = 'development',

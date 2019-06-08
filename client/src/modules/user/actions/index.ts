@@ -1,4 +1,12 @@
-import {ApplicationError, IdDto, UserDto, UserEntityDto, EntityListRequest, EntityList, Id} from 'template-common';
+import {
+  ApplicationError,
+  IdDto,
+  UserDto,
+  UserEntityDto,
+  EntityList,
+  Id,
+  UserListRequest,
+} from 'template-common';
 
 import {
   getUsersCreator,
@@ -14,7 +22,7 @@ import {
   setDisableUserEmptyCreator,
 } from './types';
 
-export const getUsersAction = getUsersCreator<EntityListRequest, EntityList<UserEntityDto>, ApplicationError>();
+export const getUsersAction = getUsersCreator<UserListRequest, EntityList<UserEntityDto>, ApplicationError>();
 export const getUserByIdAction = getUserByIdCreator<IdDto, UserEntityDto, ApplicationError>();
 export const createUserAction = createUserCreator<UserDto, UserEntityDto, ApplicationError>();
 export const updateUserByIdAction = updateUserByIdCreator<{ id: Id } & UserDto, UserEntityDto, ApplicationError>();

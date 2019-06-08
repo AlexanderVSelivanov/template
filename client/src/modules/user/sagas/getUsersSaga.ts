@@ -10,7 +10,8 @@ import {AxiosResponse} from 'axios';
 export default function* getUsersSaga(action: ActionType<typeof getUsersAction.request>) {
   try {
     const token: SuccessAsyncProperty<TokenDto> = yield select(tokenSelector);
-    const usersResponse: AxiosResponse<EntityList<UserEntityDto>> = yield call(getUsersEndPoint, action.payload, token.value);
+    const usersResponse: AxiosResponse<EntityList<UserEntityDto>> =
+      yield call(getUsersEndPoint, action.payload, token.value);
     const users = usersResponse.data;
     yield put(getUsersAction.success(users));
   } catch (error) {

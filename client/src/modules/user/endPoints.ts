@@ -1,10 +1,10 @@
 import {getEndPoint, patchEndPoint, postEndPoint, putEndPoint} from 'services/endPointService';
 
-import {IdDto, UserDto, UserEntityDto, EntityListRequest, EntityList} from 'template-common';
+import {IdDto, UserDto, UserEntityDto, EntityList, UserListRequest} from 'template-common';
 
 const prefix = '/user';
 
-export const getUsersEndPoint = getEndPoint<EntityListRequest, EntityList<UserEntityDto>>(`${prefix}`);
+export const getUsersEndPoint = getEndPoint<UserListRequest, EntityList<UserEntityDto>>(`${prefix}`);
 export const getUserByIdEndPoint = getEndPoint<IdDto, UserEntityDto>(`${prefix}/{id}`);
 export const createUserEndPoint = postEndPoint<UserDto, UserEntityDto>(`${prefix}`);
 export const updateUserByIdEndPoint = putEndPoint<UserDto, UserEntityDto>(`${prefix}/{id}`);

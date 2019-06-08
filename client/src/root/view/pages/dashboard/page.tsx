@@ -187,7 +187,7 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
             </List>
           )
         }
-      </DashboardWidget>;
+      </DashboardWidget>
       <DashboardWidget
         title="Notes"
         page={notesPage}
@@ -218,7 +218,7 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
             </List>
           )
         }
-      </DashboardWidget>;
+      </DashboardWidget>
       <DashboardWidget
         title="Events"
         page={0}
@@ -232,7 +232,7 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
         showAllCallback={() => history.push(routes.calendar.path)}
       >
         <EmptyPagePlaceholder text="Under construction"/>
-      </DashboardWidget>;
+      </DashboardWidget>
     </div>
   )
     ;

@@ -1,8 +1,6 @@
-type EntityListRequest<Filter = undefined, OrderBy = undefined> = {
+type EntityListRequest = {
   skip: number,
   take: number,
-  filter?: Filter,
-  orderBy?: OrderBy,
 }
 
 export default EntityListRequest;

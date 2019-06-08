@@ -71,12 +71,16 @@ const Page: React.FC<PageProps> =
     const [disableToggleInProgressUserId, setDisableToggleInProgressUserId] = useState<EmptyOr<number>>(Empty);
 
     const reloadUsers = useCallback(() => {
-      getUsers({skip: page * itemsPerPage, take: itemsPerPage});
-    }, [page, itemsPerPage]);
+      getUsers({skip: page * itemsPerPage, take: itemsPerPage, search});
+    }, [page, itemsPerPage, search]);
 
     useEffect(() => {
       reloadUsers();
     }, []);
+
+    useEffect(() => {
+      reloadUsers();
+    }, [page, itemsPerPage, search]);
 
     useEffect(() => {
       const userWasActivated = !isEmpty(activatedUser) && isSuccessProperty(activatedUser);
@@ -119,6 +123,14 @@ const Page: React.FC<PageProps> =
 
     return (
       <>
+        <Toolbar>
+          <TextField
+            placeholder="Search..."
+            className={classes.search}
+            value={search}
+            onChange={event => setSearch(event.target.value)}
+          />
+        </Toolbar>
         {
           isEmpty(users) && <Typography>There aren't any users yet.</Typography>
         }
@@ -127,97 +139,86 @@ const Page: React.FC<PageProps> =
         }
         {
           !isEmpty(users) && isSuccessProperty(users) && (
-            <>
-              <Toolbar>
-                <TextField
-                  placeholder="Search..."
-                  className={classes.search}
-                  value={search}
-                  onChange={event => setSearch(event.target.value)}
-                />
-
-              </Toolbar>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>First Name</TableCell>
-                    <TableCell>Last Name</TableCell>
-                    <TableCell align="right">Email</TableCell>
-                    <TableCell align="right">Created</TableCell>
-                    <TableCell align="right">Updated</TableCell>
-                    <TableCell align="right">Active</TableCell>
-                    <TableCell align="right"/>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {
-                    users.value.items.map(userItem => (
-                      <TableRow key={userItem.id} hover onClick={() => handleShowUserDetails(userItem)}>
-                        <TableCell>{userItem.firstName}</TableCell>
-                        <TableCell>{userItem.lastName}</TableCell>
-                        <TableCell align="right">{userItem.email}</TableCell>
-                        <TableCell align="right">{new Date(userItem.created).toLocaleString()}</TableCell>
-                        <TableCell align="right">{new Date(userItem.updated).toLocaleString()}</TableCell>
-                        <TableCell align="right">
-                          {
-                            !isEmpty(disableToggleInProgressUserId) && disableToggleInProgressUserId === userItem.id
-                              ? <InProgress text="Updating..."/>
-                              : (
-                                <Tooltip title={userItem.disable ? 'Activate' : 'Deactivate'}>
-                                  <Button
-                                    size="small"
-                                    onClick={
-                                      event => {
-                                        event.stopPropagation();
-                                        handleToggleUserActiveFlag(userItem);
-                                      }
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell align="right">Email</TableCell>
+                  <TableCell align="right">Created</TableCell>
+                  <TableCell align="right">Updated</TableCell>
+                  <TableCell align="right">Active</TableCell>
+                  <TableCell align="right"/>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  users.value.items.map(userItem => (
+                    <TableRow key={userItem.id} hover onClick={() => handleShowUserDetails(userItem)}>
+                      <TableCell>{userItem.firstName}</TableCell>
+                      <TableCell>{userItem.lastName}</TableCell>
+                      <TableCell align="right">{userItem.email}</TableCell>
+                      <TableCell align="right">{new Date(userItem.created).toLocaleString()}</TableCell>
+                      <TableCell align="right">{new Date(userItem.updated).toLocaleString()}</TableCell>
+                      <TableCell align="right">
+                        {
+                          !isEmpty(disableToggleInProgressUserId) && disableToggleInProgressUserId === userItem.id
+                            ? <InProgress text="Updating..."/>
+                            : (
+                              <Tooltip title={userItem.disable ? 'Activate' : 'Deactivate'}>
+                                <Button
+                                  size="small"
+                                  onClick={
+                                    event => {
+                                      event.stopPropagation();
+                                      handleToggleUserActiveFlag(userItem);
                                     }
-                                  >
-                                    {userItem.disable ? 'disabled' : 'active'}
-                                  </Button>
-                                </Tooltip>
-                              )
-                          }
-                        </TableCell>
-                        <TableCell align="right">
-                          <Tooltip title="Edit user">
-                            <IconButton
-                              size="small"
-                              aria-label="Edit"
-                              onClick={
-                                event => {
-                                  event.stopPropagation();
-                                  handleEditUser(userItem);
-                                }
+                                  }
+                                >
+                                  {userItem.disable ? 'disabled' : 'active'}
+                                </Button>
+                              </Tooltip>
+                            )
+                        }
+                      </TableCell>
+                      <TableCell align="right">
+                        <Tooltip title="Edit user">
+                          <IconButton
+                            size="small"
+                            aria-label="Edit"
+                            onClick={
+                              event => {
+                                event.stopPropagation();
+                                handleEditUser(userItem);
                               }
-                            >
-                              <EditIcon/>
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  }
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      rowsPerPageOptions={[5, 10, 25]}
-                      colSpan={7}
-                      count={users.value.items.length}
-                      rowsPerPage={itemsPerPage}
-                      page={page}
-                      SelectProps={{
-                        native: true,
-                      }}
-                      onChangePage={handleChangePage}
-                      onChangeRowsPerPage={handleChangeRowsPerPage}
-                      ActionsComponent={TablePaginationActions}
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </>
+                            }
+                          >
+                            <EditIcon/>
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    colSpan={7}
+                    count={users.value.items.length}
+                    rowsPerPage={itemsPerPage}
+                    page={page}
+                    SelectProps={{
+                      native: true,
+                    }}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
           )
         }
 
