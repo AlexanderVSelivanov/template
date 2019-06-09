@@ -1,7 +1,8 @@
 import Entity from './Entity';
+import Disable from './Disable';
 import {AccountEntityDto} from './Account';
 
-type User = Readonly<{
+type User = Readonly<Disable & {
   firstName: string
   lastName: string
   email: string

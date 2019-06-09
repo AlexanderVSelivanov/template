@@ -25,12 +25,20 @@ import {
   TextField,
   Typography,
   Dialog,
+  FormControlLabel,
+  Switch,
+  Checkbox,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import useStyles from './styles';
 import {RouteComponentProps, withRouter} from 'react-router';
-import EmptyPagePlaceholder from '../../../../../root/view/components/EmptyPagePlaceholder';
-import InProgress from '../../../../../root/view/components/InProgress';
+import EmptyPagePlaceholder from 'root/view/components/EmptyPagePlaceholder';
+import InProgress from 'root/view/components/InProgress';
+import isValidEmail from 'utils/validation/isValidEmail';
+import dateFormatter from 'utils/formatters/dateFormatter';
+
+type UserEntityDtoValidationKeys =
+  keyof Omit<UserEntityDto, 'id' | 'created' | 'updated' | 'disable' | 'account'> | 'username';
 
 type PageProps = RouteComponentProps<{ id?: string }> & {
   user: EmptyOr<AsyncProperty<UserEntityDto>>,
@@ -65,6 +73,9 @@ const Page: React.FC<PageProps> =
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [disable, setDisable] = useState(false);
+    const [hasAccount, setHasAccount] = useState(false);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
       if (match.params.id) {
@@ -83,6 +94,11 @@ const Page: React.FC<PageProps> =
         setFirstName(user.value.firstName);
         setLastName(user.value.lastName);
         setEmail(user.value.email);
+        setDisable(user.value.disable);
+        if (user.value.account) {
+          setHasAccount(true);
+          setUsername(user.value.account.username);
+        }
       }
     }, [user, userId]);
 
@@ -97,6 +113,31 @@ const Page: React.FC<PageProps> =
         }
       }
     }, [createdUser, updatedUser]);
+
+    const validation = useMemo(() => {
+      const result = new Map<UserEntityDtoValidationKeys, string>();
+      if (!firstName.trim()) {
+        result.set('firstName', 'First name required');
+      }
+      if (!lastName.trim()) {
+        result.set('lastName', 'Last name required');
+      }
+      if (!isValidEmail(email)) {
+        result.set('email', 'Invalid email');
+      }
+      if (hasAccount) {
+        if (!username.trim()) {
+          result.set('username', 'Username required');
+        }
+      }
+      return result;
+    }, [firstName, lastName, email]);
+    const isValid = (key?: UserEntityDtoValidationKeys) => {
+      if (!key) {
+        return validation.size === 0;
+      }
+      return !validation.has(key);
+    };
 
     const isUserLoading = useMemo(
       () => userId && !isEmpty(user) && isRequestProperty(user),
@@ -122,6 +163,8 @@ const Page: React.FC<PageProps> =
         firstName,
         lastName,
         email,
+        disable,
+        // account: hasAccount ? {username, id: -1, disable: false} : undefined,
       };
       if (userId && !isEmpty(user) && isSuccessProperty(user)) {
         updateUserById({
@@ -152,7 +195,7 @@ const Page: React.FC<PageProps> =
             {
               isUserCreating && <InProgress text="Creating..."/>
             }
-            <Button color="inherit" onClick={handleSave} disabled={inProgress}>
+            <Button color="inherit" onClick={handleSave} disabled={inProgress || !isValid()}>
               Save
             </Button>
           </Toolbar>
@@ -162,33 +205,99 @@ const Page: React.FC<PageProps> =
             ? <EmptyPagePlaceholder text="User is loading..." inProgress/>
             : (
               <form className={classes.content}>
-                <Grid container spacing={2}>
+                <Grid container spacing={4}>
                   <Grid item xs={6}>
-                    <TextField
-                      label="First Name"
-                      value={firstName}
-                      onChange={event => setFirstName(event.target.value)}
-                      disabled={inProgress}
-                      fullWidth
-                    />
+                    <Grid container spacing={4}>
+
+                      <Grid item xs={12}>
+                        <TextField
+                          label="First Name"
+                          value={firstName}
+                          onChange={event => setFirstName(event.target.value)}
+                          disabled={inProgress}
+                          error={!isValid('firstName')}
+                          helperText={validation.get('firstName')}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Last Name"
+                          value={lastName}
+                          onChange={event => setLastName(event.target.value)}
+                          disabled={inProgress}
+                          error={!isValid('lastName')}
+                          helperText={validation.get('lastName')}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Email"
+                          value={email}
+                          onChange={event => setEmail(event.target.value)}
+                          disabled={inProgress}
+                          error={!isValid('email')}
+                          helperText={validation.get('email')}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={disable}
+                              onChange={() => setDisable(oldValue => !oldValue)}
+                              color="primary"
+                            />
+                          }
+                          label="Disable"
+                          labelPlacement="start"
+                        />
+                      </Grid>
+
+                    </Grid>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      label="Last Name"
-                      value={lastName}
-                      onChange={event => setLastName(event.target.value)}
-                      disabled={inProgress}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      label="Email"
-                      value={email}
-                      onChange={event => setEmail(event.target.value)}
-                      disabled={inProgress}
-                      fullWidth
-                    />
+                    <Grid container spacing={4}>
+
+                      {
+                        userId && !isEmpty(user) && isSuccessProperty(user) && (
+                          <>
+                            <Grid item xs={12}>
+                              <Typography>Created: {dateFormatter(user.value.created)}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Typography>Updated: {dateFormatter(user.value.updated)}</Typography>
+                            </Grid>
+                          </>
+                        )
+                      }
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={hasAccount}
+                              onChange={() => setHasAccount(oldValue => !oldValue)}
+                              color="primary"
+                            />
+                          }
+                          label="Has account"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Username"
+                          value={username}
+                          onChange={event => setUsername(event.target.value)}
+                          disabled={inProgress || !hasAccount}
+                          error={!isValid('username')}
+                          helperText={validation.get('username')}
+                          fullWidth
+                        />
+                      </Grid>
+
+                    </Grid>
                   </Grid>
                 </Grid>
               </form>

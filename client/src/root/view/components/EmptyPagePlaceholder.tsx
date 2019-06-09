@@ -23,11 +23,11 @@ const EmptyPagePlaceholder: React.FC<{ text: string, inProgress?: boolean }> =
   React.memo(({text, inProgress = false}) => {
     const classes = useStyles();
     return (
-      <div className={classes.container}>
-        <Typography className={classes.text}>
+      <span className={classes.container}>
+        <Typography className={classes.text} component="span">
           {inProgress ? <InProgress text={text}/> : text}
         </Typography>
-      </div>
+      </span>
     );
   });
 

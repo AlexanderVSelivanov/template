@@ -8,12 +8,13 @@ import {
   isSuccessProperty,
 } from 'template-common';
 import {getUserByIdAction} from 'modules/user/actions';
-import {Button, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core';
+import {Button, Table, TableBody, TableCell, TableHead, TableRow, Typography} from '@material-ui/core';
 import DialogLayout from 'root/view/layouts/dialog';
 import useStyles from './styles';
 import {RouteComponentProps, withRouter} from 'react-router';
 import routes from 'root/routes';
 import EmptyPagePlaceholder from 'root/view/components/EmptyPagePlaceholder';
+import dateFormatter from 'utils/formatters/dateFormatter';
 
 type DialogProps = RouteComponentProps<{ id: string }> & {
   user: EmptyOr<AsyncProperty<UserEntityDto>>,
@@ -83,16 +84,41 @@ const Dialog: React.FC<DialogProps> =
               </TableRow>
               <TableRow>
                 <TableCell>Created</TableCell>
-                <TableCell align="right">{user.value.created}</TableCell>
+                <TableCell align="right">{dateFormatter(user.value.created)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Updated</TableCell>
-                <TableCell align="right">{user.value.updated}</TableCell>
+                <TableCell align="right">{dateFormatter(user.value.updated)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Active</TableCell>
                 <TableCell align="right">{user.value.disable ? 'disable' : 'active'}</TableCell>
               </TableRow>
+              {
+                user.value.account && [
+                  <>
+                    <TableRow>
+                      <TableCell align="center" colSpan={2}><Typography variant="h6">Account</Typography></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Username</TableCell>
+                      <TableCell align="right">{user.value.account.username}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Created</TableCell>
+                      <TableCell align="right">{dateFormatter(user.value.account.created)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Updated</TableCell>
+                      <TableCell align="right">{dateFormatter(user.value.account.updated)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Active</TableCell>
+                      <TableCell align="right">{user.value.account.disable ? 'disable' : 'active'}</TableCell>
+                    </TableRow>
+                  </>,
+                ]
+              }
             </TableBody>
           </Table>
         }

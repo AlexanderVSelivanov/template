@@ -33,7 +33,8 @@ import {
   updateNoteByIdAction,
 } from 'modules/notebook/actions';
 import useStyles from './styles';
-import InProgress from '../../../../../root/view/components/InProgress';
+import InProgress from 'root/view/components/InProgress';
+import dateFormatter from 'utils/formatters/dateFormatter';
 
 type PageProps = {
   notes: EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
@@ -66,7 +67,7 @@ const Page: React.FC<PageProps> =
    }) => {
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(20);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectedNote, setSelectedNote] = useState<EmptyOr<NoteEntityDto>>(Empty);
 
     const reloadNotes = useCallback(() => {
@@ -128,11 +129,11 @@ const Page: React.FC<PageProps> =
 
     const handleNavigateBefore = () => {
       if (page > 0) {
-        setPage(page - 1);
+        setPage(oldPage => oldPage - 1);
       }
     };
     const handleNavigateNext = () => {
-      setPage(page + 1);
+      setPage(oldPage => oldPage + 1);
     };
 
     const updateSelectedNote = (
@@ -199,10 +200,10 @@ const Page: React.FC<PageProps> =
                 />
               </Grid>
               <Grid item xs={4}>
-                <Typography>Created: {new Date(selectedNote.created).toLocaleString()}</Typography>
+                <Typography>Created: {dateFormatter(selectedNote.created)}</Typography>
               </Grid>
               <Grid item xs={4}>
-                <Typography>Updated: {new Date(selectedNote.updated).toLocaleString()}</Typography>
+                <Typography>Updated: {dateFormatter(selectedNote.updated)}</Typography>
               </Grid>
               <Grid item xs={2}>
                 {!isEmpty(note) && isRequestProperty(note) && <InProgress text="Loading..."/>}

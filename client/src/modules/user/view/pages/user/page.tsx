@@ -41,6 +41,7 @@ import useStyles from './styles';
 import InProgress from 'root/view/components/InProgress';
 import UserDetailsDialog from '../../dialogs/userDetails';
 import routes from 'root/routes';
+import dateFormatter from 'utils/formatters/dateFormatter';
 
 type PageProps = RouteComponentProps<{ id?: string }> & {
   users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
@@ -158,8 +159,8 @@ const Page: React.FC<PageProps> =
                       <TableCell>{userItem.firstName}</TableCell>
                       <TableCell>{userItem.lastName}</TableCell>
                       <TableCell align="right">{userItem.email}</TableCell>
-                      <TableCell align="right">{new Date(userItem.created).toLocaleString()}</TableCell>
-                      <TableCell align="right">{new Date(userItem.updated).toLocaleString()}</TableCell>
+                      <TableCell align="right">{dateFormatter(userItem.created)}</TableCell>
+                      <TableCell align="right">{dateFormatter(userItem.updated)}</TableCell>
                       <TableCell align="right">
                         {
                           !isEmpty(disableToggleInProgressUserId) && disableToggleInProgressUserId === userItem.id

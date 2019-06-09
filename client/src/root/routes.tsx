@@ -1,6 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router';
-import {createRoute, Route as RouteType} from 'types/Route';
+import {createRoute, AppRoute as RouteType, AppRoute} from 'types/AppRoute';
 import documentTitleService from '../services/documentTitleService';
 
 import DashboardPage from './view/pages/dashboard';
@@ -9,19 +8,16 @@ import CalendarPage from 'modules/calendar/view/pages/main';
 import UserPage from 'modules/user/view/pages/user';
 import UserEditDialog from 'modules/user/view/dialogs/editUser';
 import MapPage from 'modules/map/view/pages/main';
-import ReportsPage from 'modules/reports/view/pages/main';
+import ReportsPage from 'modules/reports/view/pages/report';
 import SettingsPage from './view/pages/settings';
 import NotificationsPage from 'root/view/pages/notifications';
 import HelpPage from './view/pages/help';
 import AccountPage from 'modules/account/view/pages/account';
 import EmptyPagePlaceholder from './view/components/EmptyPagePlaceholder';
+import {Route} from 'react-router';
 
-const routes = {
-  dashboard: createRoute(
-    'Dashboard',
-    'dashboard',
-    DashboardPage,
-  ),
+const routes: { [route: string]: AppRoute } = {
+  dashboard: createRoute('Dashboard', 'dashboard', DashboardPage),
   calendar: createRoute(
     'Calendar',
     'calendar',
@@ -36,31 +32,22 @@ const routes = {
   user: createRoute('User', 'user', UserPage),
 
   // map: createRoute('Map', 'map', MapPage),
-  reports: createRoute(
-    'Report',
-    'report',
-    () => underConstruction('Report'),
-    // ReportsPage,
-  ),
-  settings: createRoute('Settings', 'settings', SettingsPage),
-  help: createRoute(
-    'Help',
-    'help',
-    HelpPage,
-  ),
-
-  settingsGeneral: createRoute(
-    'Settings - General',
-    'settings/general',
-    () => underConstruction('General settings'),
-  ),
-  settingsAccount: createRoute('Settings - Account', 'settings/account', AccountPage),
-  settingsTheme: createRoute(
-    'Settings - Theme',
-    'settings/theme',
-    () => underConstruction('Theme settings'),
-  ),
-  settingsNotifications: createRoute('Settings - Notifications', 'settings/notifications', NotificationsPage),
+  reports: createRoute('Report', 'report', ReportsPage),
+  settings: createRoute('Settings', 'settings', SettingsPage, {
+    general: createRoute(
+      'Settings - General',
+      'settings/general',
+      () => underConstruction('General settings'),
+    ),
+    account: createRoute('Settings - Account', 'settings/account', AccountPage),
+    theme: createRoute(
+      'Settings - Theme',
+      'settings/theme',
+      () => underConstruction('Theme settings'),
+    ),
+    notifications: createRoute('Settings - Notifications', 'settings/notifications', NotificationsPage),
+  }),
+  help: createRoute('Help', 'help', HelpPage),
 };
 
 export default routes;
@@ -69,7 +56,6 @@ export const renderRoute = (route: RouteType) => (
   <Route
     key={route.path}
     path={route.path}
-    exact={route.exact}
     render={() => {
       documentTitleService(route.title);
       return React.createElement(route.component);

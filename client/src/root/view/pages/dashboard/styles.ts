@@ -10,34 +10,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'flex-start',
     alignContent: 'stretch',
   },
-  widget: {
-    flexGrow: 1,
-    minWidth: 350,
-    minHeight: 400,
-    maxHeight: 600,
-    padding: 10,
-    margin: 10,
-    overflow: 'auto',
-  },
-  widgetToolbar: {
-    padding: 0,
-    minHeight: theme.spacing(5),
-    borderBottomWidth: 1,
-    borderBottomColor: theme.palette.primary.light,
-    borderBottomStyle: 'solid',
-  },
-  widgetToolbarPagination: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '&>*': {
-      marginLeft: 5,
-      marginRight: 5,
-    },
-  },
-  widgetToolbarButton: {},
-  grow: {
-    flexGrow: 1,
+  reportWidgetContainer: {
+    position: 'relative',
+    width: '80vw',
+    margin: '0 auto',
   },
 }));
 

@@ -52,12 +52,12 @@ const HeaderBlock: React.FC<HeaderBlockProps> =
     }
 
     function handleOpenAccount() {
-      history.push(routes.settingsAccount.path);
+      history.push(routes.settings.subroutes!.account.path);
       handleProfileMenuClose();
     }
 
     function handleNotificationClick() {
-      history.push(routes.settingsNotifications.path);
+      history.push(routes.settings.subroutes!.notifications.path);
     }
 
     const isProfileMenuOpen = Boolean(accountMenuAnchorEl);

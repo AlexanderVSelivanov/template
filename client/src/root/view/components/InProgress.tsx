@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 const InProgress: React.FC<{ text?: string }> = React.memo(({text = 'Loading...'}) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <span className={classes.root}>
       <CircularProgress className={classes.icon}/>
       {text && <Typography variant="caption" className={classes.text}>{text}</Typography>}
-    </div>
+    </span>
   );
 });
 

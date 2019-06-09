@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import useStyles from './styles';
 import {Tab, Tabs} from '@material-ui/core';
@@ -9,6 +9,11 @@ type PageProps = RouteComponentProps & {};
 
 const Page: React.FC<PageProps> = ({history, location}) => {
   const classes = useStyles();
+  if (location.pathname === routes.settings.path) {
+    return <Redirect to={routes.settings.subroutes!.account.path}/>;
+    {/*<Redirect to={routes.settings.subroutes!.general.path}/>*/}
+  }
+
   return (
     <div className={classes.root}>
       <Tabs
@@ -18,19 +23,17 @@ const Page: React.FC<PageProps> = ({history, location}) => {
         textColor="primary"
         variant="fullWidth"
       >
-        {/*<Tab label="General" value={routes.settingsGeneral.path}/>*/}
-        <Tab label="Account" value={routes.settingsAccount.path}/>
-        {/*<Tab label="Theme" value={routes.settingsTheme.path}/>*/}
-        <Tab label="Notifications" value={routes.settingsNotifications.path}/>
+        {/*<Tab label="General" value={routes.settings.subroutes!.general.path}/>*/}
+        <Tab label="Account" value={routes.settings.subroutes!.account.path}/>
+        {/*<Tab label="Theme" value={routes.settings.subroutes!.theme.path}/>*/}
+        <Tab label="Notifications" value={routes.settings.subroutes!.notifications.path}/>
       </Tabs>
 
       <Switch>
-        {/*{renderRoute(routes.settingsGeneral)}*/}
-        {renderRoute(routes.settingsAccount)}
-        {/*{renderRoute(routes.settingsTheme)}*/}
-        {renderRoute(routes.settingsNotifications)}
-        {/*<Redirect to={routes.settingsGeneral.path}/>*/}
-        <Redirect to={routes.settingsAccount.path}/>
+        {/*{renderRoute(routes.settings.subroutes!.general)}*/}
+        {renderRoute(routes.settings.subroutes!.account)}
+        {/*{renderRoute(routes.settings.subroutes!.theme)}*/}
+        {renderRoute(routes.settings.subroutes!.notifications)}
       </Switch>
 
     </div>

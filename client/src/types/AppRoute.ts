@@ -2,11 +2,11 @@ import React from 'react';
 
 import {ROUTER_PREFIX} from 'config';
 
-export type Route = {
+export type AppRoute = {
   title: string,
   path: string,
   component: React.ComponentType<any>,
-  exact: boolean,
+  subroutes?: { [route: string]: AppRoute },
 };
 
 export const createRoute =
@@ -14,11 +14,11 @@ export const createRoute =
     title: string,
     path: string,
     component: React.ComponentType<any>,
-    exact: boolean = false,
-  ): Route =>
+    subroutes?: { [route: string]: AppRoute },
+  ): AppRoute =>
     ({
       title,
       path: ROUTER_PREFIX + '/' + path,
       component,
-      exact,
+      subroutes,
     });

@@ -13,6 +13,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import EmptyPagePlaceholder from './EmptyPagePlaceholder';
 import {makeStyles} from '@material-ui/styles';
 import {amber, green} from '@material-ui/core/colors';
+import dateFormatter from '../../../utils/formatters/dateFormatter';
 
 const useStyles = makeStyles((theme: Theme) => ({
   informationIcon: {
@@ -72,7 +73,10 @@ const NotificationList: React.FC<NotificationListProps> = ({notifications, highl
           <ListItemIcon>
             {renderIcon(notification.priority)}
           </ListItemIcon>
-          <ListItemText primary={formatText(notification.text)} secondary={notification.created.toLocaleString()}/>
+          <ListItemText
+            primary={formatText(notification.text)}
+            secondary={dateFormatter(notification.created)}
+          />
         </ListItem>
       ))}
     </List>

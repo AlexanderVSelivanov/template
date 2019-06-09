@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import useStyles from './styles';
+import React from 'react';
 import {EmptyOr, isEmpty, isSuccessProperty, AsyncProperty, AccountEntityDto} from 'template-common';
 import {Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core';
+import dateFormatter from 'utils/formatters/dateFormatter';
 
 type PageProps = {
   account: EmptyOr<AsyncProperty<AccountEntityDto>>,
 };
 
 const Page: React.FC<PageProps> = ({account}) => {
-  const classes = useStyles();
   if (isEmpty(account)) {
     return <></>;
   }
@@ -28,11 +27,11 @@ const Page: React.FC<PageProps> = ({account}) => {
           </TableRow>
           <TableRow>
             <TableCell>Created</TableCell>
-            <TableCell align="right">{new Date(account.value.created).toLocaleString()}</TableCell>
+            <TableCell align="right">{dateFormatter(account.value.created)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Updated</TableCell>
-            <TableCell align="right">{new Date(account.value.updated).toLocaleString()}</TableCell>
+            <TableCell align="right">{dateFormatter(account.value.updated)}</TableCell>
           </TableRow>
           {
             account.value.user

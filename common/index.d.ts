@@ -60,6 +60,7 @@ export {default as TokenDto} from './src/dto/Token';
 export {default as TokenPayloadDto} from './src/dto/TokenPayload';
 
 export {default as EntityDto} from './src/dto/Entity';
+export {default as DisableDto} from './src/dto/Disable';
 export {default as UserDto, UserEntityDto} from './src/dto/User';
 export {default as AccountDto, AccountEntityDto} from './src/dto/Account';
 export {default as NoteDto, NoteEntityDto} from './src/dto/Note';

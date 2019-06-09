@@ -49,7 +49,6 @@ export const noteEntityDto1: NoteEntityDto = {
   tags: ['tag1', 'tag2'],
   created: new Date(),
   updated: new Date(),
-  disable: false,
 };
 
 export const noteEntityDto2: NoteEntityDto = {
@@ -59,7 +58,6 @@ export const noteEntityDto2: NoteEntityDto = {
   tags: ['tag3', 'tag4'],
   created: new Date(),
   updated: new Date(),
-  disable: false,
 };
 
 export const appNotification: AppNotification = {

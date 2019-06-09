@@ -1,108 +1,35 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import useStyles from './styles';
 import {
-  EmptyOr,
   AsyncProperty,
+  EmptyOr,
   EntityList,
-  UserEntityDto,
-  NoteEntityDto,
   isEmpty,
-  isRequestProperty, isSuccessProperty,
+  isRequestProperty,
+  isSuccessProperty,
+  NoteEntityDto,
+  UserEntityDto,
 } from 'template-common';
-import {
-  Button, IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
+import {List, ListItem, ListItemText} from '@material-ui/core';
 import {RouteComponentProps, withRouter} from 'react-router';
-import routes from '../../../routes';
-import EmptyPagePlaceholder from '../../components/EmptyPagePlaceholder';
-import {AppNotification} from '../../../../types/AppNotification';
-import {getUsersAction} from '../../../../modules/user/actions';
-import {getNotesAction} from '../../../../modules/notebook/actions';
+
+import {Bar, Doughnut} from 'react-chartjs-2';
+import {
+  AppNotification,
+  isAppNotificationError,
+  isAppNotificationInformation,
+  isAppNotificationSuccess,
+  isAppNotificationWarning,
+} from 'types/AppNotification';
+import {getUsersAction} from 'modules/user/actions';
+import {getNotesAction} from 'modules/notebook/actions';
 import NotificationList from '../../components/NotificationList';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import EmptyPagePlaceholder from '../../components/EmptyPagePlaceholder';
+import routes from '../../../routes';
+import DashboardWidget from '../../components/DashboardWidget';
+import Pagination from '../../components/inputs/Pagination';
 
 const ITEMS_ON_DASHBOARD = 10;
-
-type DashboardWidgetProps = {
-  title: string,
-  page: number,
-  itemsPerPage: number,
-  count: number,
-  countAll: number,
-  handleNavigateBefore: () => void,
-  handleNavigateNext: () => void,
-  showAllCallback?: () => void,
-};
-
-const DashboardWidget: React.FC<DashboardWidgetProps> =
-  ({
-     title,
-     page,
-     itemsPerPage,
-     count,
-     countAll,
-     handleNavigateBefore,
-     handleNavigateNext,
-     showAllCallback,
-     children,
-   }) => {
-    const classes = useStyles();
-    return (
-      <Paper className={classes.widget}>
-        <Toolbar className={classes.widgetToolbar}>
-          <Typography variant="h6" component="h3">
-            {title}
-          </Typography>
-          <span className={classes.grow}/>
-          {
-            countAll > 0 && (
-              <div className={classes.widgetToolbarPagination}>
-                <IconButton
-                  edge="end"
-                  aria-label="Before"
-                  onClick={handleNavigateBefore}
-                  disabled={page === 0}
-                >
-                  <NavigateBeforeIcon/>
-                </IconButton>
-                <Typography>
-                  {page * itemsPerPage + 1}-{page * itemsPerPage + count} of {countAll}
-                </Typography>
-                <IconButton
-                  edge="end"
-                  aria-label="Next"
-                  onClick={handleNavigateNext}
-                  disabled={page * itemsPerPage + count >= countAll}
-                >
-                  <NavigateNextIcon/>
-                </IconButton>
-              </div>
-            )
-          }
-          <span className={classes.grow}/>
-          {
-            showAllCallback && (
-              <Button
-                className={classes.widgetToolbarButton}
-                onClick={showAllCallback}
-                size="small"
-              >
-                Show all
-              </Button>
-            )
-          }
-        </Toolbar>
-        {children}
-      </Paper>
-    );
-  };
 
 type PageProps = RouteComponentProps & {
   notifications: AppNotification[],
@@ -146,25 +73,17 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
   return (
     <div className={classes.root}>
       <DashboardWidget
-        title="Notifications"
-        page={notificationsPage}
-        itemsPerPage={notificationsPerPage}
-        count={notificationList.length}
-        countAll={notifications.length}
-        handleNavigateBefore={() => setNotesPage(notificationsPage - 1)}
-        handleNavigateNext={() => setNotesPage(notificationsPage + 1)}
-        showAllCallback={() => history.push(routes.settingsNotifications.path)}
-      >
-        <NotificationList notifications={notificationList}/>
-      </DashboardWidget>
-      <DashboardWidget
         title="Users"
-        page={usersPage}
-        itemsPerPage={usersPerPage}
-        count={!isEmpty(users) && isSuccessProperty(users) ? users.value.items.length : 0}
-        countAll={!isEmpty(users) && isSuccessProperty(users) ? users.value.count : 0}
-        handleNavigateBefore={() => setUsersPage(usersPage - 1)}
-        handleNavigateNext={() => setUsersPage(usersPage + 1)}
+        extraTitle={
+          <Pagination
+            page={usersPage}
+            itemsPerPage={usersPerPage}
+            count={!isEmpty(users) && isSuccessProperty(users) ? users.value.items.length : 0}
+            countAll={!isEmpty(users) && isSuccessProperty(users) ? users.value.count : 0}
+            handleNavigateBefore={() => setUsersPage(usersPage - 1)}
+            handleNavigateNext={() => setUsersPage(usersPage + 1)}
+          />
+        }
         showAllCallback={() => history.push(routes.user.path)}
       >
         {
@@ -190,12 +109,16 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
       </DashboardWidget>
       <DashboardWidget
         title="Notes"
-        page={notesPage}
-        itemsPerPage={notesPerPage}
-        count={!isEmpty(notes) && isSuccessProperty(notes) ? notes.value.items.length : 0}
-        countAll={!isEmpty(notes) && isSuccessProperty(notes) ? notes.value.count : 0}
-        handleNavigateBefore={() => setNotesPage(notesPage - 1)}
-        handleNavigateNext={() => setNotesPage(notesPage + 1)}
+        extraTitle={
+          <Pagination
+            page={notesPage}
+            itemsPerPage={notesPerPage}
+            count={!isEmpty(notes) && isSuccessProperty(notes) ? notes.value.items.length : 0}
+            countAll={!isEmpty(notes) && isSuccessProperty(notes) ? notes.value.count : 0}
+            handleNavigateBefore={() => setNotesPage(notesPage - 1)}
+            handleNavigateNext={() => setNotesPage(notesPage + 1)}
+          />
+        }
         showAllCallback={() => history.push(routes.notebook.path)}
       >
         {
@@ -221,17 +144,115 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
       </DashboardWidget>
       <DashboardWidget
         title="Events"
-        page={0}
-        itemsPerPage={0}
-        count={0}
-        countAll={0}
-        handleNavigateBefore={() => {/* todo */
-        }}
-        handleNavigateNext={() => {/* todo */
-        }}
         showAllCallback={() => history.push(routes.calendar.path)}
       >
         <EmptyPagePlaceholder text="Under construction"/>
+      </DashboardWidget>
+      <DashboardWidget
+        title="Notifications"
+        extraTitle={
+          <Pagination
+            page={notificationsPage}
+            itemsPerPage={notificationsPerPage}
+            count={notificationList.length}
+            countAll={notifications.length}
+            handleNavigateBefore={() => setNotificationsPage(notificationsPage - 1)}
+            handleNavigateNext={() => setNotificationsPage(notificationsPage + 1)}
+          />
+        }
+        showAllCallback={() => history.push(routes.settings.subroutes!.notifications.path)}
+      >
+        <NotificationList notifications={notificationList}/>
+      </DashboardWidget>
+      <DashboardWidget
+        title="Reports - Counts"
+        showAllCallback={() => history.push(routes.reports.path)}
+      >
+        <div className={classes.reportWidgetContainer}>
+          <Doughnut
+            data={{
+              labels: ['Notifications', 'User', 'Notes', 'Events'],
+              datasets: [
+                {
+                  label: 'Count',
+                  data: [
+                    notifications.length,
+                    !isEmpty(users) && isSuccessProperty(users) ? users.value.count : 0,
+                    !isEmpty(notes) && isSuccessProperty(notes) ? notes.value.count : 0,
+                    0,
+                  ],
+                  backgroundColor: [
+                    'SEAGREEN',
+                    'DARKBLUE',
+                    'LIGHTSTEELBLUE',
+                    'GOLD',
+                  ],
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              animation: {
+                animateScale: true,
+                animateRotate: true,
+              },
+            }}
+          />
+        </div>
+      </DashboardWidget>
+      <DashboardWidget
+        title="Reports - Notifications"
+        showAllCallback={() => history.push(routes.reports.path)}
+      >
+        <div className={classes.reportWidgetContainer}>
+          <Bar
+            data={{
+              labels: ['Information', 'Success', 'Warning', 'Error'],
+              datasets: [
+                {
+                  label: 'Count',
+                  data: [
+                    notifications
+                      .filter(isAppNotificationInformation).length,
+                    notifications
+                      .filter(isAppNotificationSuccess).length,
+                    notifications
+                      .filter(isAppNotificationWarning).length,
+                    notifications
+                      .filter(isAppNotificationError).length,
+                  ],
+                  backgroundColor: [
+                    'rgba(0,0,255,0.5)',
+                    'rgba(0,255,0,0.5)',
+                    'rgba(255,255,0,0.5)',
+                    'rgba(255,0,0,0.5)',
+                  ],
+                },
+              ],
+            }}
+            options={{
+              title: {
+                display: true,
+                text: 'Notifications',
+              },
+              responsive: true,
+              legend: {
+                position: 'bottom',
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                }],
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true,
+              },
+            }}
+          />
+        </div>
       </DashboardWidget>
     </div>
   )

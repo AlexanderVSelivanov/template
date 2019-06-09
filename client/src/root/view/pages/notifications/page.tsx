@@ -51,14 +51,13 @@ const Page: React.FC<PageProps> = ({notifications, newNotificationsFrom, setNewN
           control={
             <Switch
               checked={showOnlyNew}
-              onChange={() => setShowOnlyNew(!showOnlyNew)}
+              onChange={() => setShowOnlyNew(oldValue => !oldValue)}
               color="primary"
             />
           }
           label="Only new"
           labelPlacement="start"
         />
-
       </Toolbar>
       <NotificationList notifications={filteredNotifications} highlightedText={search}/>
     </>
