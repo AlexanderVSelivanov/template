@@ -1,6 +1,6 @@
 import {put, call, select} from 'redux-saga/effects';
 import {ActionType} from 'typesafe-actions';
-import {SuccessAsyncProperty, TokenDto, UserEntityDto} from 'template-common';
+import {SuccessAsyncProperty, TokenDto, UserDto} from 'template-common';
 
 import {getUserByIdAction} from '../actions';
 import {getUserByIdEndPoint} from '../endPoints';
@@ -10,7 +10,7 @@ import {AxiosResponse} from 'axios';
 export default function* getUserByIdSaga(action: ActionType<typeof getUserByIdAction.request>) {
   try {
     const token: SuccessAsyncProperty<TokenDto> = yield select(tokenSelector);
-    const userResponse: AxiosResponse<UserEntityDto> = yield call(getUserByIdEndPoint, action.payload, token.value);
+    const userResponse: AxiosResponse<UserDto> = yield call(getUserByIdEndPoint, action.payload, token.value);
     const user = userResponse.data;
     yield put(getUserByIdAction.success(user));
   } catch (error) {

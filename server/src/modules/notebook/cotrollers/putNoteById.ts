@@ -1,9 +1,9 @@
-import {Id, NoteDto, NoteEntityDto} from 'template-common';
+import {Id, NoteDto} from 'template-common';
 import noteRepositoryFactory from '../../../store/repository/noteRepository';
 import {badRequest, Controller, notFound, ok} from '../../../utils/ControllerBuilder';
 import noteToNoteDto from '../../../types/mappers/noteToNoteDto';
 
-const putNoteByIdController: Controller<NoteDto & { id: Id }, NoteEntityDto> = async ({input}) => {
+const putNoteByIdController: Controller<NoteDto & { id: Id }, NoteDto> = async ({input}) => {
   if (input && input.id) {
     const noteRepository = noteRepositoryFactory();
     const note = await noteRepository.findOne(input.id);

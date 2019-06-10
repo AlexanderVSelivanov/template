@@ -1,6 +1,7 @@
 import Id from './Id';
 
-type Entity = Id & Readonly<{
+type Entity = Readonly<{
+  id: Id,
   created: Date,
   updated: Date,
 }>

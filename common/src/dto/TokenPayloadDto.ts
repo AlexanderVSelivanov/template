@@ -1,8 +1,8 @@
 import Id from '../types/Id';
 
-type TokenPayload = {
+type TokenPayloadDto = {
   accountId: Id,
   username: string,
 };
 
-export default TokenPayload;
+export default TokenPayloadDto;

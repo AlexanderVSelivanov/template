@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {BrowserRouter, Redirect, Switch} from 'react-router-dom';
-import {EmptyOr, isEmpty, AsyncProperty, ApplicationError, AccountEntityDto} from 'template-common';
+import {EmptyOr, isEmpty, AsyncProperty, ApplicationError, AccountDto} from 'template-common';
 import {withTheme} from './theme';
 import {logoutAction} from 'modules/account/actions';
 import PublicLayout from './layouts/public';
@@ -13,7 +13,7 @@ import {AppNotification} from '../../types/AppNotification';
 
 type RootProps = {
   isApplicationInitialized: boolean,
-  account: EmptyOr<AsyncProperty<AccountEntityDto>>,
+  account: EmptyOr<AsyncProperty<AccountDto>>,
   logout: typeof logoutAction.request,
   notifications: AppNotification[],
   newNotificationsFrom: Date,

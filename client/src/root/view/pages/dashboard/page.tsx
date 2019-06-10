@@ -7,8 +7,8 @@ import {
   isEmpty,
   isRequestProperty,
   isSuccessProperty,
-  NoteEntityDto,
-  UserEntityDto,
+  NoteDto,
+  UserDto,
 } from 'template-common';
 import {List, ListItem, ListItemText} from '@material-ui/core';
 import {RouteComponentProps, withRouter} from 'react-router';
@@ -33,8 +33,8 @@ const ITEMS_ON_DASHBOARD = 10;
 
 type PageProps = RouteComponentProps & {
   notifications: AppNotification[],
-  users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
-  notes: EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
+  users: EmptyOr<AsyncProperty<EntityList<UserDto>>>,
+  notes: EmptyOr<AsyncProperty<EntityList<NoteDto>>>,
   getUsers: typeof getUsersAction.request,
   getNotes: typeof getNotesAction.request,
 };
@@ -94,7 +94,7 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
             <List>
               {
                 users.value.items.map(user => (
-                    <ListItem key={user.id}>
+                    <ListItem key={user.entity!.id}>
                       <ListItemText
                         primary={`${user.firstName} ${user.lastName}`}
                         secondary={user.email}
@@ -129,7 +129,7 @@ const Page: React.FC<PageProps> = ({history, notifications, users, notes, getUse
             <List>
               {
                 notes.value.items.map(note => (
-                    <ListItem key={note.id}>
+                    <ListItem key={note.entity!.id}>
                       <ListItemText
                         primary={note.title}
                         secondary={note.tags && note.tags.join ? note.tags.join(', ') : note.tags}

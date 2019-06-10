@@ -31,7 +31,7 @@ const reducer = createReducer<UserStateType, UserActionType>(initialState)
         && isSuccessProperty(users)
         && users.value.items.length > 0
       ) {
-        const index = users.value.items.findIndex(user => user.id === action.payload.id);
+        const index = users.value.items.findIndex(user => user.entity!.id === action.payload.entity!.id);
         users.value.items[index] = action.payload;
       }
       return {
@@ -64,7 +64,7 @@ const reducer = createReducer<UserStateType, UserActionType>(initialState)
         && isSuccessProperty(users)
         && users.value.items.length > 0
       ) {
-        const index = users.value.items.findIndex(user => user.id === action.payload.id);
+        const index = users.value.items.findIndex(user => user.entity!.id === action.payload.entity!.id);
         users.value.items[index] = action.payload;
       }
       return {

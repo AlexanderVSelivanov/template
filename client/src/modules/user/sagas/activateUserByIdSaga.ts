@@ -1,6 +1,6 @@
 import {put, call, select} from 'redux-saga/effects';
 import {ActionType} from 'typesafe-actions';
-import {SuccessAsyncProperty, TokenDto, UserEntityDto} from 'template-common';
+import {SuccessAsyncProperty, TokenDto, UserDto} from 'template-common';
 
 import {activateUserByIdAction} from '../actions';
 import {activateUserByIdEndPoint} from '../endPoints';
@@ -11,7 +11,7 @@ import {notifySuccess} from '../../../root/actions';
 export default function* deleteUserByIdSaga(action: ActionType<typeof activateUserByIdAction.request>) {
   try {
     const token: SuccessAsyncProperty<TokenDto> = yield select(tokenSelector);
-    const userResponse: AxiosResponse<UserEntityDto> =
+    const userResponse: AxiosResponse<UserDto> =
       yield call(activateUserByIdEndPoint, action.payload, token.value);
     const user = userResponse.data;
     yield put(activateUserByIdAction.success(user));

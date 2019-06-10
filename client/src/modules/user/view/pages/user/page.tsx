@@ -6,7 +6,7 @@ import {
   EmptyOr,
   isEmpty,
   EntityList,
-  UserEntityDto,
+  UserDto,
   AsyncProperty,
   isRequestProperty,
   isSuccessProperty,
@@ -44,10 +44,10 @@ import routes from 'root/routes';
 import dateFormatter from 'utils/formatters/dateFormatter';
 
 type PageProps = RouteComponentProps<{ id?: string }> & {
-  users: EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
-  user: EmptyOr<AsyncProperty<UserEntityDto>>,
-  activatedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
-  disabledUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+  users: EmptyOr<AsyncProperty<EntityList<UserDto>>>,
+  user: EmptyOr<AsyncProperty<UserDto>>,
+  activatedUser: EmptyOr<AsyncProperty<UserDto>>,
+  disabledUser: EmptyOr<AsyncProperty<UserDto>>,
 
   getUsers: typeof getUsersAction.request,
   getUserById: typeof getUserByIdAction.request,
@@ -95,17 +95,17 @@ const Page: React.FC<PageProps> =
     const handleCreateUser = () => {
       history.push(routes.userCreate.path);
     };
-    const handleEditUser = ({id}: UserEntityDto) => {
-      history.push(routes.userEdit.path.replace(':id', id.toString()));
+    const handleEditUser = ({entity}: UserDto) => {
+      history.push(routes.userEdit.path.replace(':id', entity!.id.toString()));
     };
-    const handleShowUserDetails = ({id}: UserEntityDto) => {
-      history.push(routes.userDetails.path.replace(':id', id.toString()));
+    const handleShowUserDetails = ({entity}: UserDto) => {
+      history.push(routes.userDetails.path.replace(':id', entity!.id.toString()));
     };
-    const handleToggleUserActiveFlag = ({id, disable}: UserEntityDto) => {
+    const handleToggleUserActiveFlag = ({entity, disable}: UserDto) => {
       if (disable) {
-        activateUserById({id});
+        activateUserById({id: entity!.id});
       } else {
-        disableUserById({id});
+        disableUserById({id: entity!.id});
       }
     };
 
@@ -155,15 +155,16 @@ const Page: React.FC<PageProps> =
               <TableBody>
                 {
                   users.value.items.map(userItem => (
-                    <TableRow key={userItem.id} hover onClick={() => handleShowUserDetails(userItem)}>
+                    <TableRow key={userItem.entity!.id} hover onClick={() => handleShowUserDetails(userItem)}>
                       <TableCell>{userItem.firstName}</TableCell>
                       <TableCell>{userItem.lastName}</TableCell>
                       <TableCell align="right">{userItem.email}</TableCell>
-                      <TableCell align="right">{dateFormatter(userItem.created)}</TableCell>
-                      <TableCell align="right">{dateFormatter(userItem.updated)}</TableCell>
+                      <TableCell align="right">{dateFormatter(userItem.entity!.created)}</TableCell>
+                      <TableCell align="right">{dateFormatter(userItem.entity!.updated)}</TableCell>
                       <TableCell align="right">
                         {
-                          !isEmpty(disableToggleInProgressUserId) && disableToggleInProgressUserId === userItem.id
+                          !isEmpty(disableToggleInProgressUserId)
+                          && disableToggleInProgressUserId === userItem.entity!.id
                             ? <InProgress text="Updating..."/>
                             : (
                               <Tooltip title={userItem.disable ? 'Activate' : 'Deactivate'}>

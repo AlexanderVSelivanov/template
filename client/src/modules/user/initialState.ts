@@ -1,16 +1,16 @@
 import {
   EntityList,
-  UserEntityDto,
+  UserDto,
   Empty,
   EmptyOr,
   AsyncProperty,
 } from 'template-common';
 
 export default {
-  users: Empty as EmptyOr<AsyncProperty<EntityList<UserEntityDto>>>,
-  user: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
-  createdUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
-  updatedUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
-  activatedUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
-  disabledUser: Empty as EmptyOr<AsyncProperty<UserEntityDto>>,
+  users: Empty as EmptyOr<AsyncProperty<EntityList<UserDto>>>,
+  user: Empty as EmptyOr<AsyncProperty<UserDto>>,
+  createdUser: Empty as EmptyOr<AsyncProperty<UserDto>>,
+  updatedUser: Empty as EmptyOr<AsyncProperty<UserDto>>,
+  activatedUser: Empty as EmptyOr<AsyncProperty<UserDto>>,
+  disabledUser: Empty as EmptyOr<AsyncProperty<UserDto>>,
 };

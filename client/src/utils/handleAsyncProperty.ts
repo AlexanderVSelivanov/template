@@ -1,9 +1,10 @@
 import {AsyncActionCreator, isActionOf, PayloadAction} from 'typesafe-actions';
 import {
   ApplicationError,
-  AsyncProperty, Empty,
+  AsyncProperty,
+  Empty,
   EmptyOr,
-  RequestProperty,
+  setRequestProperty,
   setFailureProperty,
   setSuccessProperty,
 } from 'template-common';
@@ -13,7 +14,7 @@ export default function handleAsyncProperty<T>(
   asyncActionCreator: AsyncActionCreator<any, [string, T], [string, ApplicationError]>,
 ): EmptyOr<AsyncProperty<T>> {
   if (isActionOf(asyncActionCreator.request, action)) {
-    return RequestProperty;
+    return setRequestProperty();
   }
   if (isActionOf(asyncActionCreator.success, action)) {
     return setSuccessProperty((action as PayloadAction<string, T>).payload);

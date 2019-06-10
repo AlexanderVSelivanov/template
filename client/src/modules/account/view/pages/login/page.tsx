@@ -12,7 +12,7 @@ import {
   isFailureProperty,
   AsyncProperty,
   TokenDto,
-  AccountEntityDto,
+  AccountDto,
 } from 'template-common';
 import {loginAction} from 'modules/account/actions';
 import PasswordTextField from 'root/view/components/inputs/PasswordTextField';
@@ -24,7 +24,7 @@ import useStyles from './styles';
 type LoginPageProps = {
   defaultLogin?: EmptyOr<string>,
   token: EmptyOr<AsyncProperty<TokenDto>>,
-  currentAccount: EmptyOr<AsyncProperty<AccountEntityDto>>,
+  currentAccount: EmptyOr<AsyncProperty<AccountDto>>,
 
   login: typeof loginAction.request,
 };

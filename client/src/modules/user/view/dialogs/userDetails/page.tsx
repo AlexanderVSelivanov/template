@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {
-  UserEntityDto,
+  UserDto,
   EmptyOr,
   AsyncProperty,
   isEmpty,
@@ -17,7 +17,7 @@ import EmptyPagePlaceholder from 'root/view/components/EmptyPagePlaceholder';
 import dateFormatter from 'utils/formatters/dateFormatter';
 
 type DialogProps = RouteComponentProps<{ id: string }> & {
-  user: EmptyOr<AsyncProperty<UserEntityDto>>,
+  user: EmptyOr<AsyncProperty<UserDto>>,
   getUserById: typeof getUserByIdAction.request,
 };
 
@@ -48,7 +48,7 @@ const Dialog: React.FC<DialogProps> =
               !isEmpty(user) && isSuccessProperty(user)
               && <Button
                 color="primary"
-                onClick={() => history.push(routes.userEdit.path.replace(':id', user.value.id.toString()))}
+                onClick={() => history.push(routes.userEdit.path.replace(':id', user.value.entity!.id.toString()))}
               >
                 Edit
               </Button>
@@ -84,11 +84,11 @@ const Dialog: React.FC<DialogProps> =
               </TableRow>
               <TableRow>
                 <TableCell>Created</TableCell>
-                <TableCell align="right">{dateFormatter(user.value.created)}</TableCell>
+                <TableCell align="right">{dateFormatter(user.value.entity!.created)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Updated</TableCell>
-                <TableCell align="right">{dateFormatter(user.value.updated)}</TableCell>
+                <TableCell align="right">{dateFormatter(user.value.entity!.updated)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Active</TableCell>
@@ -106,11 +106,11 @@ const Dialog: React.FC<DialogProps> =
                     </TableRow>
                     <TableRow>
                       <TableCell>Created</TableCell>
-                      <TableCell align="right">{dateFormatter(user.value.account.created)}</TableCell>
+                      <TableCell align="right">{dateFormatter(user.value.account.entity!.created)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Updated</TableCell>
-                      <TableCell align="right">{dateFormatter(user.value.account.updated)}</TableCell>
+                      <TableCell align="right">{dateFormatter(user.value.account.entity!.updated)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Active</TableCell>

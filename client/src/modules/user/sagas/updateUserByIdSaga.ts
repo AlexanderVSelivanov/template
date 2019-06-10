@@ -1,6 +1,6 @@
 import {put, call, select} from 'redux-saga/effects';
 import {ActionType} from 'typesafe-actions';
-import {SuccessAsyncProperty, TokenDto, UserEntityDto} from 'template-common';
+import {SuccessAsyncProperty, TokenDto, UserDto} from 'template-common';
 
 import {updateUserByIdAction} from '../actions';
 import {updateUserByIdEndPoint} from '../endPoints';
@@ -11,7 +11,7 @@ import {notifySuccess} from '../../../root/actions';
 export default function* updateUserByIdSaga(action: ActionType<typeof updateUserByIdAction.request>) {
   try {
     const token: SuccessAsyncProperty<TokenDto> = yield select(tokenSelector);
-    const userResponse: AxiosResponse<UserEntityDto> = yield call(updateUserByIdEndPoint, action.payload, token.value);
+    const userResponse: AxiosResponse<UserDto> = yield call(updateUserByIdEndPoint, action.payload, token.value);
     const user = userResponse.data;
     yield put(updateUserByIdAction.success(user));
     yield put(notifySuccess(`User was updated (${user.firstName} ${user.lastName})`));

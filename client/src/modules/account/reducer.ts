@@ -1,5 +1,4 @@
-import {ActionType, createReducer, getType} from 'typesafe-actions';
-import {Empty} from 'template-common';
+import {ActionType, createReducer} from 'typesafe-actions';
 
 import * as actions from './actions';
 import initialState from './initialState';
@@ -29,40 +28,5 @@ const reducer = createReducer<UserStateType, UserActionType>(initialState)
       currentAccount: handleAsyncProperty(action, actions.getAccountAction),
     }),
   );
-
-// const reducer = (state = initialState, action: UserActionType) => {
-//   switch (action.type) {
-//     case getType(actions.loginAction.success):
-//       return {
-//         ...state,
-//         token: action.payload,
-//       };
-//     case getType(actions.loginAction.failure):
-//       return {
-//         ...state,
-//         token: Empty,
-//       };
-//
-//     case getType(actions.logoutAction.success):
-//       return {
-//         ...state,
-//         token: Empty,
-//       };
-//
-//     case getType(actions.getAccountAction.success):
-//       return {
-//         ...state,
-//         currentAccount: action.payload,
-//       };
-//     case getType(actions.getAccountAction.failure):
-//       return {
-//         ...state,
-//         currentAccount: Empty,
-//       };
-//
-//     default:
-//       return state;
-//   }
-// };
 
 export default reducer;

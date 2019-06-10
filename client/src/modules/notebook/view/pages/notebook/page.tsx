@@ -16,7 +16,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import {
   EntityList,
-  NoteEntityDto,
+  NoteDto,
   Empty,
   EmptyOr,
   AsyncProperty,
@@ -37,11 +37,11 @@ import InProgress from 'root/view/components/InProgress';
 import dateFormatter from 'utils/formatters/dateFormatter';
 
 type PageProps = {
-  notes: EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
-  note: EmptyOr<AsyncProperty<NoteEntityDto>>,
-  createdNote: EmptyOr<AsyncProperty<NoteEntityDto>>,
-  updatedNote: EmptyOr<AsyncProperty<NoteEntityDto>>,
-  deletedNote: EmptyOr<AsyncProperty<NoteEntityDto>>,
+  notes: EmptyOr<AsyncProperty<EntityList<NoteDto>>>,
+  note: EmptyOr<AsyncProperty<NoteDto>>,
+  createdNote: EmptyOr<AsyncProperty<NoteDto>>,
+  updatedNote: EmptyOr<AsyncProperty<NoteDto>>,
+  deletedNote: EmptyOr<AsyncProperty<NoteDto>>,
 
   getNotes: typeof getNotesAction.request,
   getNoteById: typeof getNoteByIdAction.request,
@@ -68,7 +68,7 @@ const Page: React.FC<PageProps> =
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [selectedNote, setSelectedNote] = useState<EmptyOr<NoteEntityDto>>(Empty);
+    const [selectedNote, setSelectedNote] = useState<EmptyOr<NoteDto>>(Empty);
 
     const reloadNotes = useCallback(() => {
       getNotes({skip: page * itemsPerPage, take: itemsPerPage});
@@ -83,7 +83,7 @@ const Page: React.FC<PageProps> =
     useEffect(() => {
       if (isEmpty(selectedNote) && !isEmpty(notes) && isSuccessProperty(notes) && notes.value.items.length > 0) {
         const firstNote = notes.value.items[0];
-        getNoteById({id: firstNote.id});
+        getNoteById({id: firstNote.entity!.id});
       }
     }, [notes]);
     useEffect(() => {
@@ -102,7 +102,10 @@ const Page: React.FC<PageProps> =
       if (!isEmpty(selectedNote) && !isEmpty(updatedNote) && isSuccessProperty(updatedNote)) {
         setSelectedNote({
           ...selectedNote,
-          updated: updatedNote.value.updated,
+          entity: {
+            ...selectedNote.entity!,
+            updated: updatedNote.value.entity!.updated,
+          },
         });
       }
     }, [updatedNote]);
@@ -115,16 +118,16 @@ const Page: React.FC<PageProps> =
     const handleCreateNote = () => {
       createNote({title: 'New Note'});
     };
-    const handleNoteClick = (noteItem: NoteEntityDto) => {
-      if (isEmpty(selectedNote) || selectedNote.id !== noteItem.id) {
-        getNoteById({id: noteItem.id});
+    const handleNoteClick = (noteItem: NoteDto) => {
+      if (isEmpty(selectedNote) || selectedNote.entity!.id !== noteItem.entity!.id) {
+        getNoteById({id: noteItem.entity!.id});
       }
     };
-    const handleNoteDelete = (noteItem: NoteEntityDto) => {
-      if (!isEmpty(selectedNote) && selectedNote.id === noteItem.id) {
+    const handleNoteDelete = (noteItem: NoteDto) => {
+      if (!isEmpty(selectedNote) && selectedNote.entity!.id === noteItem.entity!.id) {
         setSelectedNote(Empty);
       }
-      deleteNoteById({id: noteItem.id});
+      deleteNoteById({id: noteItem.entity!.id});
     };
 
     const handleNavigateBefore = () => {
@@ -142,7 +145,7 @@ const Page: React.FC<PageProps> =
     ) => {
       if (!isEmpty(selectedNote)) {
         const value = event.target.value;
-        const newNote: NoteEntityDto = {
+        const newNote: NoteDto = {
           ...selectedNote,
           [property]: value,
         };
@@ -200,10 +203,10 @@ const Page: React.FC<PageProps> =
                 />
               </Grid>
               <Grid item xs={4}>
-                <Typography>Created: {dateFormatter(selectedNote.created)}</Typography>
+                <Typography>Created: {dateFormatter(selectedNote.entity!.created)}</Typography>
               </Grid>
               <Grid item xs={4}>
-                <Typography>Updated: {dateFormatter(selectedNote.updated)}</Typography>
+                <Typography>Updated: {dateFormatter(selectedNote.entity!.updated)}</Typography>
               </Grid>
               <Grid item xs={2}>
                 {!isEmpty(note) && isRequestProperty(note) && <InProgress text="Loading..."/>}
@@ -257,9 +260,9 @@ const Page: React.FC<PageProps> =
                   {
                     notes.value.items.map(noteItem => (
                         <ListItem
-                          key={noteItem.id}
+                          key={noteItem.entity!.id}
                           onClick={() => handleNoteClick(noteItem)}
-                          selected={Boolean(selectedNote && selectedNote.id === noteItem.id)}
+                          selected={Boolean(selectedNote && selectedNote.entity!.id === noteItem.entity!.id)}
                           disabled={!isEmpty(note) && isRequestProperty(note)}
                           button
                         >

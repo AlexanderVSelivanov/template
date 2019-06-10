@@ -4,7 +4,7 @@ export {
   RequestAsyncProperty,
   SuccessAsyncProperty,
   FailureAsyncProperty,
-  RequestProperty,
+  setRequestProperty,
   isRequestProperty,
   setSuccessProperty,
   isSuccessProperty,
@@ -15,19 +15,18 @@ export {
 export {default as ApplicationError} from './src/ApplicationError';
 
 export {default as Id} from './src/types/Id';
+export {default as Entity} from './src/types/Entity';
+export {default as Disable} from './src/types/Disable';
 export {default as EntityListRequest} from './src/types/EntityListRequest';
 export {default as EntityList} from './src/types/EntityList';
 
-export {default as IdDto} from './src/dto/Id';
-export {default as LoginDto} from './src/dto/Login';
-export {default as TokenDto} from './src/dto/Token';
-export {default as TokenPayloadDto} from './src/dto/TokenPayload';
-
-export {default as EntityDto} from './src/dto/Entity';
-export {default as DisableDto} from './src/dto/Disable';
-export {default as UserDto, UserEntityDto} from './src/dto/User';
-export {default as AccountDto, AccountEntityDto} from './src/dto/Account';
-export {default as NoteDto, NoteEntityDto} from './src/dto/Note';
+export {default as IdDto} from './src/dto/IdDto';
+export {default as LoginDto} from './src/dto/LoginDto';
+export {default as TokenDto} from './src/dto/TokenDto';
+export {default as TokenPayloadDto} from './src/dto/TokenPayloadDto';
+export {default as UserDto} from './src/dto/UserDto';
+export {default as AccountDto} from './src/dto/AccountDto';
+export {default as NoteDto} from './src/dto/NoteDto';
 
 export {default as UserListRequest} from './src/requestData/UserListRequest';
 
@@ -52,5 +51,3 @@ export enum ResponseStatus {
 }
 
 export enum AsyncPropertyState { Request, Success, Failure}
-
-export enum EditPropertyType {Create, Update, Delete}

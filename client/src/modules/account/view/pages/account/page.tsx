@@ -1,10 +1,10 @@
 import React from 'react';
-import {EmptyOr, isEmpty, isSuccessProperty, AsyncProperty, AccountEntityDto} from 'template-common';
+import {EmptyOr, isEmpty, isSuccessProperty, AsyncProperty, AccountDto} from 'template-common';
 import {Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core';
 import dateFormatter from 'utils/formatters/dateFormatter';
 
 type PageProps = {
-  account: EmptyOr<AsyncProperty<AccountEntityDto>>,
+  account: EmptyOr<AsyncProperty<AccountDto>>,
 };
 
 const Page: React.FC<PageProps> = ({account}) => {
@@ -27,11 +27,11 @@ const Page: React.FC<PageProps> = ({account}) => {
           </TableRow>
           <TableRow>
             <TableCell>Created</TableCell>
-            <TableCell align="right">{dateFormatter(account.value.created)}</TableCell>
+            <TableCell align="right">{dateFormatter(account.value.entity!.created)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Updated</TableCell>
-            <TableCell align="right">{dateFormatter(account.value.updated)}</TableCell>
+            <TableCell align="right">{dateFormatter(account.value.entity!.updated)}</TableCell>
           </TableRow>
           {
             account.value.user

@@ -1,9 +1,9 @@
-import {Empty, EmptyOr, AsyncProperty, EntityList, NoteEntityDto} from 'template-common';
+import {Empty, EmptyOr, AsyncProperty, EntityList, NoteDto} from 'template-common';
 
 export default {
-  notes: Empty as EmptyOr<AsyncProperty<EntityList<NoteEntityDto>>>,
-  note: Empty as EmptyOr<AsyncProperty<NoteEntityDto>>,
-  createdNote: Empty as EmptyOr<AsyncProperty<NoteEntityDto>>,
-  updatedNote: Empty as EmptyOr<AsyncProperty<NoteEntityDto>>,
-  deletedNote: Empty as EmptyOr<AsyncProperty<NoteEntityDto>>,
+  notes: Empty as EmptyOr<AsyncProperty<EntityList<NoteDto>>>,
+  note: Empty as EmptyOr<AsyncProperty<NoteDto>>,
+  createdNote: Empty as EmptyOr<AsyncProperty<NoteDto>>,
+  updatedNote: Empty as EmptyOr<AsyncProperty<NoteDto>>,
+  deletedNote: Empty as EmptyOr<AsyncProperty<NoteDto>>,
 };

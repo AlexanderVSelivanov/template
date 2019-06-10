@@ -1,10 +1,10 @@
 import userRepositoryFactory from '../../../store/repository/userRepository';
-import {EntityList, UserEntityDto, UserListRequest} from 'template-common';
+import {EntityList, UserDto, UserListRequest} from 'template-common';
 import {Controller, ok} from '../../../utils/ControllerBuilder';
 import userToUserDto from '../../../types/mappers/userToUserDto';
 import {Like} from 'typeorm';
 
-const getUsersController: Controller<UserListRequest, EntityList<UserEntityDto>> =
+const getUsersController: Controller<UserListRequest, EntityList<UserDto>> =
   async ({input}) => {
     const userRepository = userRepositoryFactory();
     const [users, count] = await userRepository
@@ -19,7 +19,7 @@ const getUsersController: Controller<UserListRequest, EntityList<UserEntityDto>>
           email: Like(`%${input.search}%`),
         }],
       });
-    const entityList: EntityList<UserEntityDto> = {
+    const entityList: EntityList<UserDto> = {
       count,
       items: users.map(user => userToUserDto(user)),
     };

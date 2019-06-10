@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
-  UserEntityDto,
+  UserDto,
   EmptyOr,
   Empty,
   isEmpty,
   AsyncProperty,
   isRequestProperty,
-  isSuccessProperty, UserDto,
+  isSuccessProperty,
 } from 'template-common';
 import {
   createUserAction,
@@ -37,13 +37,13 @@ import InProgress from 'root/view/components/InProgress';
 import isValidEmail from 'utils/validation/isValidEmail';
 import dateFormatter from 'utils/formatters/dateFormatter';
 
-type UserEntityDtoValidationKeys =
-  keyof Omit<UserEntityDto, 'id' | 'created' | 'updated' | 'disable' | 'account'> | 'username';
+type UserDtoValidationKeys =
+  keyof Omit<UserDto, 'id' | 'created' | 'updated' | 'disable' | 'account'> | 'username';
 
 type PageProps = RouteComponentProps<{ id?: string }> & {
-  user: EmptyOr<AsyncProperty<UserEntityDto>>,
-  createdUser: EmptyOr<AsyncProperty<UserEntityDto>>,
-  updatedUser: EmptyOr<AsyncProperty<UserEntityDto>>,
+  user: EmptyOr<AsyncProperty<UserDto>>,
+  createdUser: EmptyOr<AsyncProperty<UserDto>>,
+  updatedUser: EmptyOr<AsyncProperty<UserDto>>,
 
   getUserById: typeof getUserByIdAction.request,
   createUser: typeof createUserAction.request,
@@ -115,7 +115,7 @@ const Page: React.FC<PageProps> =
     }, [createdUser, updatedUser]);
 
     const validation = useMemo(() => {
-      const result = new Map<UserEntityDtoValidationKeys, string>();
+      const result = new Map<UserDtoValidationKeys, string>();
       if (!firstName.trim()) {
         result.set('firstName', 'First name required');
       }
@@ -132,7 +132,7 @@ const Page: React.FC<PageProps> =
       }
       return result;
     }, [firstName, lastName, email]);
-    const isValid = (key?: UserEntityDtoValidationKeys) => {
+    const isValid = (key?: UserDtoValidationKeys) => {
       if (!key) {
         return validation.size === 0;
       }
@@ -168,7 +168,7 @@ const Page: React.FC<PageProps> =
       };
       if (userId && !isEmpty(user) && isSuccessProperty(user)) {
         updateUserById({
-          id: user.value.id,
+          id: user.value.entity!.id,
           ...userDto,
         });
       } else {
@@ -265,10 +265,10 @@ const Page: React.FC<PageProps> =
                         userId && !isEmpty(user) && isSuccessProperty(user) && (
                           <>
                             <Grid item xs={12}>
-                              <Typography>Created: {dateFormatter(user.value.created)}</Typography>
+                              <Typography>Created: {dateFormatter(user.value.entity!.created)}</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                              <Typography>Updated: {dateFormatter(user.value.updated)}</Typography>
+                              <Typography>Updated: {dateFormatter(user.value.entity!.updated)}</Typography>
                             </Grid>
                           </>
                         )

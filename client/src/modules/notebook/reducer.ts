@@ -31,7 +31,7 @@ const reducer = createReducer<NotebookStateType, NotebookActionType>(initialStat
         && isSuccessProperty(notes)
         && notes.value.items.length > 0
       ) {
-        const index = notes.value.items.findIndex(note => note.id === action.payload.id);
+        const index = notes.value.items.findIndex(note => note.entity!.id === action.payload.entity!.id);
         notes.value.items[index] = action.payload;
       }
       return {
@@ -64,7 +64,7 @@ const reducer = createReducer<NotebookStateType, NotebookActionType>(initialStat
         && isSuccessProperty(notes)
         && notes.value.items.length > 0
       ) {
-        const index = notes.value.items.findIndex(note => note.id === action.payload.id);
+        const index = notes.value.items.findIndex(note => note.entity!.id === action.payload.entity!.id);
         notes.value.items[index] = action.payload;
       }
       return {

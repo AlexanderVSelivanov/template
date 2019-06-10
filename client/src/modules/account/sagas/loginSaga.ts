@@ -2,7 +2,7 @@ import {put, call} from 'redux-saga/effects';
 import {ActionType} from 'typesafe-actions';
 import {AxiosResponse} from 'axios';
 
-import {TokenDto, AccountEntityDto} from 'template-common';
+import {TokenDto, AccountDto} from 'template-common';
 
 import {getAccountAction, loginAction} from '../actions';
 import {getAccountEndPoint, loginEndPoint} from '../endPoints';
@@ -14,7 +14,7 @@ export default function* loginSaga(action: ActionType<typeof loginAction.request
     const token = loginResponse.data;
     yield put(loginAction.success(token));
 
-    const accountResponse: AxiosResponse<AccountEntityDto> = yield call(getAccountEndPoint, null, token);
+    const accountResponse: AxiosResponse<AccountDto> = yield call(getAccountEndPoint, null, token);
     const account = accountResponse.data;
     yield put(getAccountAction.success(account));
 

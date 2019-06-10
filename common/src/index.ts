@@ -4,7 +4,7 @@ export {default as ResponseStatus} from './ResponseStatus';
 export {Empty, isEmpty} from './EmptyProperty';
 export {
   AsyncPropertyState,
-  RequestProperty,
+  setRequestProperty,
   isRequestProperty,
   isSuccessProperty,
   isFailureProperty,
