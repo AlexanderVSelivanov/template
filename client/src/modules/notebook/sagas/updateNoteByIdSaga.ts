@@ -10,7 +10,11 @@ import {AxiosResponse} from 'axios';
 export default function* updateNoteByIdSaga(action: ActionType<typeof updateNoteByIdAction.request>) {
   try {
     const token: SuccessAsyncProperty<TokenDto> = yield select(tokenSelector);
-    const noteResponse: AxiosResponse<NoteDto> = yield call(updateNoteByIdEndPoint, action.payload, token.value);
+    const noteResponse: AxiosResponse<NoteDto> = yield call(
+      updateNoteByIdEndPoint,
+      {id: action.payload.entity!.id, ...action.payload},
+      token.value,
+    );
     const note = noteResponse.data;
     yield put(updateNoteByIdAction.success(note));
   } catch (error) {
