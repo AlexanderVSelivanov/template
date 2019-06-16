@@ -77,6 +77,11 @@ const Page: React.FC<PageProps> =
     const [hasAccount, setHasAccount] = useState(false);
     const [username, setUsername] = useState('');
 
+    const setCreatedAndUpdatedStoreUserEmpty = () => {
+      setCreatedUserEmpty();
+      setUpdatedUserEmpty();
+    }
+
     useEffect(() => {
       if (match.params.id) {
         const id = parseInt(match.params.id, 10);
@@ -85,8 +90,7 @@ const Page: React.FC<PageProps> =
       } else {
         setUserEmpty();
       }
-      setCreatedUserEmpty();
-      setUpdatedUserEmpty();
+      setCreatedAndUpdatedStoreUserEmpty();
     }, []);
 
     useEffect(() => {
@@ -155,6 +159,7 @@ const Page: React.FC<PageProps> =
     const inProgress = isUserLoading || isUserUpdating || isUserCreating;
 
     const handleClose = () => {
+      setCreatedAndUpdatedStoreUserEmpty();
       history.goBack();
     };
 
@@ -164,7 +169,12 @@ const Page: React.FC<PageProps> =
         lastName,
         email,
         disable,
-        // account: hasAccount ? {username, id: -1, disable: false} : undefined,
+        account: hasAccount
+          ? {
+            username,
+            disable: false,
+          }
+          : undefined,
       };
       if (userId && !isEmpty(user) && isSuccessProperty(user)) {
         updateUserById({

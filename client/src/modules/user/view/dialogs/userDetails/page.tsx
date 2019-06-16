@@ -37,6 +37,12 @@ const Dialog: React.FC<DialogProps> =
       }
     }, []);
 
+    const handleEditUserClick = () => {
+      if (!isEmpty(user) && isSuccessProperty(user)) {
+        history.push(routes.userEdit.path.replace(':id', user.value.entity!.id.toString()));
+      }
+    };
+
     return (
       <DialogLayout
         fullWidth
@@ -48,7 +54,7 @@ const Dialog: React.FC<DialogProps> =
               !isEmpty(user) && isSuccessProperty(user)
               && <Button
                 color="primary"
-                onClick={() => history.push(routes.userEdit.path.replace(':id', user.value.entity!.id.toString()))}
+                onClick={handleEditUserClick}
               >
                 Edit
               </Button>
@@ -95,7 +101,7 @@ const Dialog: React.FC<DialogProps> =
                 <TableCell align="right">{user.value.disable ? 'disable' : 'active'}</TableCell>
               </TableRow>
               {
-                user.value.account && [
+                user.value.account && (
                   <>
                     <TableRow>
                       <TableCell align="center" colSpan={2}><Typography variant="h6">Account</Typography></TableCell>
@@ -116,8 +122,8 @@ const Dialog: React.FC<DialogProps> =
                       <TableCell>Active</TableCell>
                       <TableCell align="right">{user.value.account.disable ? 'disable' : 'active'}</TableCell>
                     </TableRow>
-                  </>,
-                ]
+                  </>
+                )
               }
             </TableBody>
           </Table>
