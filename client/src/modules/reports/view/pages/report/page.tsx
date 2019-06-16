@@ -1,18 +1,23 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-
-import useStyles from './styles';
+import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 import {FormControl, MenuItem, Select, Toolbar} from '@material-ui/core';
 import {Route, RouteComponentProps, Switch, withRouter} from 'react-router';
-import routes from '../../../../../root/routes';
-import EmptyPagePlaceholder from '../../../../../root/view/components/EmptyPagePlaceholder';
+import routes from 'root/routes';
+import EmptyPagePlaceholder from 'root/view/components/EmptyPagePlaceholder';
+import NotebookTableReport from '../../blocks/notebookTableReport';
+import NotificationBarReport from '../../blocks/notificationBarReport';
+import NotificationDoughnutReport from '../../blocks/notificationDoughnutReport';
+import NotificationTableReport from '../../blocks/notificationTableReport';
+
+import useStyles from './styles';
 
 enum ReportEntity {
+  Empty,
   Notifications = 'notifications',
   Notes = 'notes',
-  Events = 'events',
 }
 
 enum ReportType {
+  Empty,
   Table = 'table',
   Bar = 'bar',
   Doughnut = 'doughnut',
@@ -20,12 +25,41 @@ enum ReportType {
 
 type PageProps = RouteComponentProps & {};
 
-const Page: React.FC<PageProps> = ({history}) => {
+const Page: React.FC<PageProps> = ({history, location}) => {
   const classes = useStyles();
-  const [reportEntity, setReportEntity] = useState(ReportEntity.Notifications);
-  const [reportType, setReportType] = useState(ReportType.Table);
+  const locationReportEntity = useMemo(() => {
+    if (location.pathname.includes(ReportEntity.Notifications)) {
+      return ReportEntity.Notifications;
+    }
+    if (location.pathname.includes(ReportEntity.Notes)) {
+      return ReportEntity.Notes;
+    }
+    return ReportEntity.Empty;
+  }, [location]);
+  const locationReportType = useMemo(() => {
+    if (location.pathname.includes(ReportType.Table)) {
+      return ReportType.Table;
+    }
+    if (location.pathname.includes(ReportType.Bar)) {
+      return ReportType.Bar;
+    }
+    if (location.pathname.includes(ReportType.Doughnut)) {
+      return ReportType.Doughnut;
+    }
+    return ReportType.Empty;
+  }, [location]);
+
+  const [reportEntity, setReportEntity] = useState(locationReportEntity);
+  const [reportType, setReportType] = useState(locationReportType);
 
   useEffect(() => {
+    if (reportEntity === ReportEntity.Empty || reportType === ReportType.Empty) {
+      setReportEntity(ReportEntity.Notifications);
+      setReportType(ReportType.Table);
+    }
+    if (reportEntity === ReportEntity.Notes && reportType !== ReportType.Table) {
+      setReportType(ReportType.Table);
+    }
     history.push(`${routes.reports.path}/${reportEntity}/${reportType}`);
   }, [reportEntity, reportType]);
 
@@ -49,7 +83,6 @@ const Page: React.FC<PageProps> = ({history}) => {
           >
             <MenuItem value={ReportEntity.Notifications}>Notifications</MenuItem>
             <MenuItem value={ReportEntity.Notes}>Notes</MenuItem>
-            <MenuItem value={ReportEntity.Events}>Events</MenuItem>
           </Select>
         </FormControl>
         <span className={classes.grow}/>
@@ -73,27 +106,24 @@ const Page: React.FC<PageProps> = ({history}) => {
 
       <Switch>
         <Route
-          path={`${routes.reports.path}/:entity/:path`}
+          path={`${routes.reports.path}/:entity/:type`}
           render={
             (props: RouteComponentProps<{ entity: string, type: string }>) => {
               const entity = props.match.params.entity;
               const type = props.match.params.type;
               if (entity === ReportEntity.Notifications) {
                 if (type === ReportType.Table) {
-
+                  return <NotificationTableReport/>;
                 }
                 if (type === ReportType.Doughnut) {
-
+                  return <NotificationDoughnutReport/>;
                 }
                 if (type === ReportType.Bar) {
-
+                  return <NotificationBarReport/>;
                 }
               }
               if (entity === ReportEntity.Notes) {
-
-              }
-              if (entity === ReportEntity.Events) {
-
+                return <NotebookTableReport/>;
               }
               return <EmptyPagePlaceholder text="Report under construction"/>;
             }

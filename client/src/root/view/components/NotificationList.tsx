@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppNotification, AppNotificationPriority} from 'types/AppNotification';
+import {AppNotification, AppNotificationType} from 'types/AppNotification';
 import {
   List,
   ListItem,
@@ -43,15 +43,15 @@ const NotificationList: React.FC<NotificationListProps> = ({notifications, highl
     return <EmptyPagePlaceholder text="There aren't any new notifications."/>;
   }
 
-  const renderIcon = (priority: AppNotificationPriority): React.ReactElement => {
-    switch (priority) {
-      case AppNotificationPriority.Information:
+  const renderIcon = (type: AppNotificationType): React.ReactElement => {
+    switch (type) {
+      case AppNotificationType.Information:
         return <InfoIcon className={classes.informationIcon}/>;
-      case AppNotificationPriority.Success:
+      case AppNotificationType.Success:
         return <CheckCircleIcon className={classes.successIcon}/>;
-      case AppNotificationPriority.Warning:
+      case AppNotificationType.Warning:
         return <WarningIcon className={classes.warningIcon}/>;
-      case AppNotificationPriority.Error:
+      case AppNotificationType.Error:
         return <ErrorIcon className={classes.errorIcon}/>;
     }
   };
@@ -61,7 +61,7 @@ const NotificationList: React.FC<NotificationListProps> = ({notifications, highl
       {notifications.map(notification => (
         <ListItem key={notification.created.getTime()}>
           <ListItemIcon>
-            {renderIcon(notification.priority)}
+            {renderIcon(notification.type)}
           </ListItemIcon>
           <ListItemText
             primary={highlightText(notification.text, highlightedText)}

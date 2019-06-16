@@ -212,9 +212,6 @@ const Page: React.FC<PageProps> =
                     count={users.value.count}
                     rowsPerPage={itemsPerPage}
                     page={page}
-                    SelectProps={{
-                      native: true,
-                    }}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     ActionsComponent={TablePaginationActions}

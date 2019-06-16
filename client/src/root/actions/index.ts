@@ -7,17 +7,17 @@ import {
   notifyCreator,
   setNewNotificationsFromCreator,
 } from './types';
-import {AppNotification, AppNotificationPriority} from 'types/AppNotification';
+import {AppNotification, AppNotificationType} from 'types/AppNotification';
 
 export const notify = notifyCreator<AppNotification>();
 export const notifyInformation =
-  (text: string) => notify({created: new Date(), priority: AppNotificationPriority.Information, text});
+  (text: string) => notify({created: new Date(), type: AppNotificationType.Information, text});
 export const notifySuccess =
-  (text: string) => notify({created: new Date(), priority: AppNotificationPriority.Success, text});
+  (text: string) => notify({created: new Date(), type: AppNotificationType.Success, text});
 export const notifyWarning =
-  (text: string) => notify({created: new Date(), priority: AppNotificationPriority.Warning, text});
+  (text: string) => notify({created: new Date(), type: AppNotificationType.Warning, text});
 export const notifyError =
-  (text: string) => notify({created: new Date(), priority: AppNotificationPriority.Error, text});
+  (text: string) => notify({created: new Date(), type: AppNotificationType.Error, text});
 export const setNewNotificationsFromAction = setNewNotificationsFromCreator<Date>();
 export const initializeCompleteAction = initializeCompleteCreator<undefined>();
 export const initializeFailAction = initializeFailCreator<ApplicationError>();
