@@ -168,7 +168,7 @@ const Page: React.FC<PageProps> =
       };
       if (userId && !isEmpty(user) && isSuccessProperty(user)) {
         updateUserById({
-          id: user.value.entity!.id,
+          entity: user.value.entity,
           ...userDto,
         });
       } else {
