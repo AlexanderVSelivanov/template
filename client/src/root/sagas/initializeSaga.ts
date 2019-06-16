@@ -18,7 +18,6 @@ export default function* initializeSaga() {
     }
     yield put(initializeCompleteAction());
   } catch (error) {
-    yield put(initializeFailAction());
-    yield put(errorAction(error));
+    yield put(initializeFailAction(error));
   }
 }

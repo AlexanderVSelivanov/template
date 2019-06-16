@@ -20,5 +20,5 @@ export const notifyError =
   (text: string) => notify({created: new Date(), priority: AppNotificationPriority.Error, text});
 export const setNewNotificationsFromAction = setNewNotificationsFromCreator<Date>();
 export const initializeCompleteAction = initializeCompleteCreator<undefined>();
-export const initializeFailAction = initializeFailCreator<undefined>();
+export const initializeFailAction = initializeFailCreator<ApplicationError>();
 export const errorAction = errorCreator<ApplicationError>();
