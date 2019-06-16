@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, OneToOne} from 'typeorm';
+import {Column, Entity, JoinColumn, OneToOne, Unique} from 'typeorm';
 
 import BaseEntity from './BaseEntity';
 import UserEntity from './UserEntity';
@@ -16,7 +16,7 @@ class AccountEntity extends BaseEntity {
     return {hash, salt};
   }
 
-  @Column()
+  @Column({unique: true})
   username!: string;
   @Column({nullable: true})
   passwordHash?: string;
