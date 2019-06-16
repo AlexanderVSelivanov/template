@@ -14,6 +14,7 @@ import EmptyPagePlaceholder from './EmptyPagePlaceholder';
 import {makeStyles} from '@material-ui/styles';
 import {amber, green} from '@material-ui/core/colors';
 import dateFormatter from '../../../utils/formatters/dateFormatter';
+import {highlightText} from '../../../utils/StringHelper';
 
 const useStyles = makeStyles((theme: Theme) => ({
   informationIcon: {
@@ -42,17 +43,6 @@ const NotificationList: React.FC<NotificationListProps> = ({notifications, highl
     return <EmptyPagePlaceholder text="There aren't any new notifications."/>;
   }
 
-  function formatText(text: string) {
-    if (highlightedText) {
-      const textSplit = text.split(highlightedText);
-      if (textSplit.length === 1) {
-        return text;
-      }
-      return <span dangerouslySetInnerHTML={{__html: textSplit.join(`<strong>${highlightedText}</strong>`)}}/>;
-    }
-    return text;
-  }
-
   const renderIcon = (priority: AppNotificationPriority): React.ReactElement => {
     switch (priority) {
       case AppNotificationPriority.Information:
@@ -69,12 +59,12 @@ const NotificationList: React.FC<NotificationListProps> = ({notifications, highl
   return (
     <List>
       {notifications.map(notification => (
-        <ListItem key={notification.created.toString()}>
+        <ListItem key={notification.created.getTime()}>
           <ListItemIcon>
             {renderIcon(notification.priority)}
           </ListItemIcon>
           <ListItemText
-            primary={formatText(notification.text)}
+            primary={highlightText(notification.text, highlightedText)}
             secondary={dateFormatter(notification.created)}
           />
         </ListItem>

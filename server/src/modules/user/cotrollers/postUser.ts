@@ -21,6 +21,10 @@ const postUserController: Controller<UserDto, UserDto> = async ({input}) => {
       account.passwordSalt = password.salt;
     }
     const accountRepository = accountRepositoryFactory();
+    const accountWithSameUsername = await accountRepository.isUsernameExist(account.username);
+    if (accountWithSameUsername) {
+      throw Error('Username not unique');
+    }
     user.account = await accountRepository.save(account);
   }
   const createUser = await userRepository.save(user);

@@ -32,7 +32,8 @@ const Page: React.FC<PageProps> = ({notifications, newNotificationsFrom, setNewN
       result = result.filter(notification => notification.created > newNotificationsFromOldValue);
     }
     if (search) {
-      result = result.filter(notification => notification.text.includes(search));
+      result = result
+        .filter(notification => notification.text.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
     }
     return result;
   }, [notifications, search, showOnlyNew, newNotificationsFromOldValue]);

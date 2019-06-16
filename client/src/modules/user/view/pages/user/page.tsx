@@ -42,6 +42,7 @@ import InProgress from 'root/view/components/InProgress';
 import UserDetailsDialog from '../../dialogs/userDetails';
 import routes from 'root/routes';
 import dateFormatter from 'utils/formatters/dateFormatter';
+import {highlightText} from 'utils/StringHelper';
 
 type PageProps = RouteComponentProps<{ id?: string }> & {
   users: EmptyOr<AsyncProperty<EntityList<UserDto>>>,
@@ -156,9 +157,9 @@ const Page: React.FC<PageProps> =
                 {
                   users.value.items.map(userItem => (
                     <TableRow key={userItem.entity!.id} hover onClick={() => handleShowUserDetails(userItem)}>
-                      <TableCell>{userItem.firstName}</TableCell>
-                      <TableCell>{userItem.lastName}</TableCell>
-                      <TableCell align="right">{userItem.email}</TableCell>
+                      <TableCell>{highlightText(userItem.firstName, search)}</TableCell>
+                      <TableCell>{highlightText(userItem.lastName, search)}</TableCell>
+                      <TableCell align="right">{highlightText(userItem.email, search)}</TableCell>
                       <TableCell align="right">{dateFormatter(userItem.entity!.created)}</TableCell>
                       <TableCell align="right">{dateFormatter(userItem.entity!.updated)}</TableCell>
                       <TableCell align="right">
@@ -206,9 +207,9 @@ const Page: React.FC<PageProps> =
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[10, 20, 30]}
                     colSpan={7}
-                    count={users.value.items.length}
+                    count={users.value.count}
                     rowsPerPage={itemsPerPage}
                     page={page}
                     SelectProps={{

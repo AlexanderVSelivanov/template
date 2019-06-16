@@ -12,6 +12,14 @@ class AccountRepository extends Repository<AccountEntity> {
     return account && account.validatePassword(login.password)
       ? account : null;
   }
+
+  async isUsernameExist(username: string): Promise<AccountEntity | null> {
+    if (!username) {
+      return null;
+    }
+    const account = await this.findOne({username});
+    return account ? account : null;
+  }
 }
 
 const repositoryFactory = () => getCustomRepository(AccountRepository);

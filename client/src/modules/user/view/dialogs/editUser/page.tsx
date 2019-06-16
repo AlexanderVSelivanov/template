@@ -38,7 +38,7 @@ import isValidEmail from 'utils/validation/isValidEmail';
 import dateFormatter from 'utils/formatters/dateFormatter';
 
 type UserDtoValidationKeys =
-  keyof Omit<UserDto, 'id' | 'created' | 'updated' | 'disable' | 'account'> | 'username';
+  keyof Omit<UserDto, 'id' | 'created' | 'updated' | 'disable' | 'account'> | 'username' | 'password';
 
 type PageProps = RouteComponentProps<{ id?: string }> & {
   user: EmptyOr<AsyncProperty<UserDto>>,
@@ -76,11 +76,12 @@ const Page: React.FC<PageProps> =
     const [disable, setDisable] = useState(false);
     const [hasAccount, setHasAccount] = useState(false);
     const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const setCreatedAndUpdatedStoreUserEmpty = () => {
       setCreatedUserEmpty();
       setUpdatedUserEmpty();
-    }
+    };
 
     useEffect(() => {
       if (match.params.id) {
@@ -133,9 +134,12 @@ const Page: React.FC<PageProps> =
         if (!username.trim()) {
           result.set('username', 'Username required');
         }
+        if (password.trim().length !== 0 && password.trim().length < 6) {
+          result.set('password', 'Password have to be at least 6 letters');
+        }
       }
       return result;
-    }, [firstName, lastName, email]);
+    }, [firstName, lastName, email, hasAccount, username, password]);
     const isValid = (key?: UserDtoValidationKeys) => {
       if (!key) {
         return validation.size === 0;
@@ -172,6 +176,7 @@ const Page: React.FC<PageProps> =
         account: hasAccount
           ? {
             username,
+            password,
             disable: false,
           }
           : undefined,
@@ -303,6 +308,17 @@ const Page: React.FC<PageProps> =
                           disabled={inProgress || !hasAccount}
                           error={!isValid('username')}
                           helperText={validation.get('username')}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Password"
+                          value={password}
+                          onChange={event => setPassword(event.target.value)}
+                          disabled={inProgress || !hasAccount}
+                          error={!isValid('password')}
+                          helperText={validation.get('password')}
                           fullWidth
                         />
                       </Grid>
