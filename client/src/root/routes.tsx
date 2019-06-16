@@ -18,12 +18,33 @@ import {Route} from 'react-router';
 
 const routes: { [route: string]: AppRoute } = {
   dashboard: createRoute('Dashboard', 'dashboard', DashboardPage),
-  calendar: createRoute(
-    'Calendar',
-    'calendar',
-    () => underConstruction('Calendar'),
-    // CalendarPage,
-  ),
+  calendar: createRoute('Calendar', 'calendar', CalendarPage, {
+    agenda: createRoute(
+      'Calendar - Agenda',
+      'calendar/agenda',
+      () => underConstruction('Calendar - Agenda'),
+    ),
+    day: createRoute(
+      'Calendar - Day',
+      'calendar/day',
+      () => underConstruction('Calendar - Day'),
+    ),
+    week: createRoute(
+      'Calendar - Week',
+      'calendar/week',
+      () => underConstruction('Calendar - Week'),
+    ),
+    month: createRoute(
+      'Calendar - Month',
+      'calendar/month',
+      () => underConstruction('Calendar - Month'),
+    ),
+    year: createRoute(
+      'Calendar - Year',
+      'calendar/year',
+      () => underConstruction('Calendar - Year'),
+    ),
+  }),
   notebook: createRoute('Notebook', 'notebook', Notebook),
 
   userCreate: createRoute('Create user', 'user/create', UserEditDialog),
