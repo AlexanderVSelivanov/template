@@ -2,6 +2,22 @@
 
 Application template
 
+# Start application
+1. build common package
+  - cd common
+  - yarn
+  - yarn build
+2. setup and start backend
+  - cd ../server
+  - yarn
+  - yarn setup
+  - \# edit configuration file .env
+  - yarn start
+3. setup and start frontend
+  - cd ../client
+  - yarn
+  - yarn start
+
 ## Tech stack
 
 ### Development
