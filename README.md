@@ -11,11 +11,13 @@ Application template
   - cd ../server
   - yarn
   - yarn setup
-  - \# edit configuration file .env
+  - \# edit configuration file .env (not required)
   - yarn start
 3. setup and start frontend
   - cd ../client
   - yarn
+  - yarn setup
+  - \# edit configuration file .env (not required)
   - yarn start
 
 ## Tech stack
@@ -39,10 +41,10 @@ https://editorconfig.org/
 
 ### Backend
 
-Express
-TypeORM
-Winston
-sql.js
+Express  
+TypeORM  
+Winston  
+sql.js  
 
 ### Frontend
 
