@@ -1,6 +1,7 @@
 # development environment
 .idea
 *.code-workspace
+template.sqlite
 
 # dependencies
 node_modules
