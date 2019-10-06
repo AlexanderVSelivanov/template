@@ -20,6 +20,8 @@ Application template
   - \# edit configuration file .env (not required)
   - yarn start
 
+Default user: admin password: admin
+
 ## Tech stack
 
 ### Development

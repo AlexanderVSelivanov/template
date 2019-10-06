@@ -11,10 +11,9 @@
   "main": "build/index.js",
   "description": "",
   "scripts": {
-    "build": "rm -r -f build && tsc --build",
-    "test": "jest"
+    "build": "rm -r -f build && tsc --build"
   },
   "devDependencies": {
-    "typescript": "^3.5.2"
+    "typescript": "^3.6.3"
   }
 }

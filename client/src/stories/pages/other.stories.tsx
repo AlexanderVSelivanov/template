@@ -49,5 +49,5 @@ storiesOf('Pages - Other', module)
   )
   .add(
     'Settings page -  Account',
-    () => <button onClick={linkTo('Pages - Account', 'Account page')}>Open account page</button>,
+    () => <button onClick={() => linkTo('Pages - Account', 'Account page')}>Open account page</button>,
   );
